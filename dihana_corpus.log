@@ -1,0 +1,70 @@
+U0404:quiero ir a Segovia desde Valencia
+quiero ir:consulta
+a Segovia:ciudad_destino
+desde Valencia:ciudad_origen
+U0405:sí
+sí:<afirmacion>
+U0406:sí
+sí:<afirmacion>
+U0407:el próximo sábado día trece antes de las once
+el próximo sábado día trece:fecha
+antes de las once:hora
+U0408:sí quiero los horarios antes de las once
+sí:<afirmacion>
+quiero:consulta
+los horarios:<hora>
+antes de las once:hora
+U0409:no
+no:<negacion>
+U0410:quiero conocer horario y precio a Valencia
+quiero conocer:consulta
+horario:<hora>
+y precio:<precio>
+a Valencia:ciudad_destino
+U0411:no quiero salir desde Murcia
+no:<negacion>
+quiero:consulta
+salir:m_salida
+desde Murcia:ciudad_origen
+U0412:el próximo sábado por la mañana
+el próximo sábado:fecha
+por la mañana:hora
+U0413:sí
+sí:<afirmacion>
+U0414:sí conocer el horario de los trenes por la mañana
+sí:<afirmacion>
+conocer:consulta
+el horario de los trenes:<hora>
+por la mañana:hora
+U0415:sí quiero saber el precio
+sí:<afirmacion>
+quiero saber:consulta
+el precio:<precio>
+U0417:quiero conocer el precio de los trenes hacia Ávila
+quiero conocer:consulta
+el precio de los trenes:<precio>
+hacia Ávila:ciudad_destino
+me gustaría viajar:consulta
+en litera:clase_billete
+U6271:no gracias
+no:<negacion>
+gracias:coletilla
+U6272:buenas tardes me gustaría saber los horarios y los precios para un viaje de Barcelona a Valencia de ida y vuelta es para ver las fallas es para llegar diecisiete de marzo entre
+buenas tardes:cortesia
+me gustaría saber:consulta
+los horarios:<hora>
+y los precios para un viaje:<precio>
+de Barcelona:ciudad_origen
+a Valencia:ciudad_destino
+de ida y vuelta:tipo_viaje
+es para ver:consulta
+las fallas:fecha
+es para:consulta
+llegar:m_llegada
+diecisiete de marzo:fecha
+entre:nada_?
+U6278:sí me gustaría saber los precios para el trayecto de ida y de vuelta
+sí:<afirmacion>
+me gustaría saber:consulta
+los precios:<precio>
+para el trayecto de ida y de vuelta:tipo_viaje

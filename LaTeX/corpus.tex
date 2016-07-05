@@ -1,0 +1,142 @@
+\chapter{Descripción del \ingles{corpus}}
+\label{ch:corpus}
+
+El \ingles{corpus} utilizado para el sistema de comprensión del habla del presente proyecto es el \texttt{DIHANA} \cite{Benedi:Dihana}. Se trata de un \ingles{corpus} en castellano de diálogos transcrito y etiquetado manualmente a nivel de concepto. Está adquirido en tres laboratorios de investigación en diferentes universidades de España (Universidad del País Vasco, Universidad de Zaragoza y Universidad Politécnica de Valencia) siguiendo la técnica del Mago de Oz. Esta técnica se basa en una interacción persona-computador donde los usuarios interactúan con un sistema aparentemente independiente pero controlado por un experto, lo que permite que se presenten la mayoría de las características del habla espontánea.
+\newline
+\newline
+\texttt{DIHANA} está formado por un total de 900 diálogos entre 225 usuarios (153 varones y 72 mujeres) formando un total de 6.278 turnos, de los cuales 4.887 son de entrenamiento, y posee un vocabulario de 811 palabras diferentes.
+\newline
+\newline
+La tarea de este \ingles{corpus} consiste en un sistema de información sobre los horarios y precios de viajes de larga distancia en diferentes tipos de trenes por ciudades españolas.
+
+\section{Representación semántica del \ingles{corpus}}
+En el \ingles{corpus} se han definido un total de 30 etiquetas semánticas que se pueden clasificar en tres categorías diferentes:
+
+\begin{enumerate}
+
+  \item Etiquetas independientes de la tarea: no están relacionadas directamente con el vocabulario específico de la tarea y no son tenidas en cuenta para realizar la consulta al sistema de información. Por ejemplo: ``coletilla'', ``consulta'', ``cortesia''...
+
+  \item Etiquetas dependientes de la tarea:
+
+  \begin{enumerate}
+
+    \item Etiquetas que son atributos: la etiqueta está asociada a un segmento que contiene un valor relevante para la comprensión. Por ejemplo: ``ciudad\_destino'', ``ciudad\_origen'', ``clase\_billete''...
+
+    \item Entidades del sistema de información: son aquellas etiquetas que guardan relación con la tarea del \ingles{corpus} y los valores consultados por el usuario. Estas etiquetas además se colocan entre las marcas $<$ y $>$ para diferenciarlas de las del punto $a$. Por ejemplo: ``$<$afirmacion$>$'', ``$<$hora\_llegada$>$'', ``$<$hora\_salida$>$''...
+
+  \end{enumerate}
+
+\end{enumerate}
+
+La representación semántica del turno de usuario se basa en una segmentación de la frase donde a cada segmento se le asocia una etiqueta semántica. Se puede observar un ejemplo de la representación semántica del \ingles{corpus} en la \autoref{fig:ejemplo-corpus}. En este ejemplo se representa la frase ``\ingles{Hola buenos días quería horarios de trenes a Sevilla desde Almería}'' con los conceptos semánticos asociados a cada segmento de la frase.
+\newline
+
+\begin{figure}[h]
+\centering
+\footnotesize
+\begin{tabular}{l@{\centering}c@{\hspace{4em}}c@{\centering}}
+\toprule
+\multicolumn{1}{c}{\texttt{Segmento}}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{\texttt{Etiqueta semántica}}\\
+\midrule
+hola buenos días          &&  cortesia\\
+quería                    &&  consulta\\
+horarios de trenes        &&  $<$hora$>$\\
+a Sevilla                 &&  ciudad\_destino\\
+desde Almería             &&  ciudad\_origen\\
+\bottomrule
+\end{tabular}
+\caption{\label{fig:ejemplo-corpus}Ejemplos de representación semántica del \ingles{corpus}}
+\end{figure}
+
+Como se ha explicado antes y tal y como se ha podido ver en la figura anterior, cada segmento de la frase tiene asociada una etiqueta semántica. Podemos representar por tanto una frase como una secuencia de segmentos con una etiqueta semántica asociada y un segmento como una secuencia de palabras.
+\newline
+\newline
+En la \autoref{fig:tabla-corpus} se puede ver una tabla donde se resumen las principales características del \ingles{corpus} etiquetado semánticamente.
+
+\begin{figure}
+\centering
+\begin{tabular}{|l|c|}\hline
+Número total de turnos de usuario:& 6.229\\\hline
+Número total de palabras:& 47.222\\\hline
+Tamaño del vocabulario:& 811\\\hline
+Número medio de palabras por turno de usuario:& 7,6\\\hline
+Número total de segmentos semánticos:& 18.588\\\hline
+Número medio de palabras por segmento semántico:& 2,5\\\hline
+Número medio de segmentos por turno de usuario:& 3,0\\\hline
+Número medio de muestras por unidad semántica:& 599,6\\\hline
+\end{tabular}
+\caption{\label{fig:tabla-corpus}Características del \ingles{corpus} etiquetado semánticamente}
+\end{figure}
+
+\section{Sistema de información}
+\label{sec:sistema_informacion}
+
+Cabe recordar que el objetivo principal del sistema de comprensión es el de extraer la información que proporciona el usuario y transformarla en un formato que entienda el gestor de diálogo. En última instancia lo que el usuario necesita es recuperar información sobre un dominio determinado.
+\newline
+\newline
+Por ello, cuando el sistema de comprensión del habla recibe la frase de entrada del usuario, asigna una secuencia de etiquetas semánticas a cada palabra de la frase. Cuando la frase está etiquetada se realiza la conversión al formato que entiende el gestor de diálogo. Esta evolución es realizada a partir de un conjunto de reglas que transforman esta representación intermedia en un \ingles{frame}, que consiste en una secuencia de conceptos y atributos con sus valores asociados. En este proceso se eliminan las etiquetas semánticas irrelevantes para la consulta y sus valores asociados y se reordenan las etiquetas siguiendo un orden preestablecido. En la \autoref{fig:template} se puede ver un ejemplo de frase etiquetada semánticamente en el \ingles{corpus} \texttt{DIHANA} y otro de un ejemplo de \ingles{frame} obtenido a partir de esta frase. La frase de ejemplo es ``\ingles{Sí quería saber el precio de un viaje de ida y vuelta de Valencia a Murcia}''.
+\newline
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{l@{\footnotesize}c@{\hspace{3em}}l@{\footnotesize}}
+\texttt{sí: <afirmacion>}                       &&                                      \\
+\texttt{quería saber: consulta}                 &&  \texttt{(AFIRMACION)}               \\
+\texttt{el precio de: <precio>}                 &&  \texttt{TIPO-VIAJE: ida\_y\_vuelta} \\
+\texttt{un viaje de ida y vuelta: tipo\_viaje}  &&  \texttt{(PRECIO)}                   \\
+\texttt{de Valencia: ciudad\_origen}            &&  \texttt{CIUDAD-ORIGEN: Valencia}    \\
+\texttt{a Murcia: ciudad\_destino}              &&  \texttt{CIUDAD-DESTINO: Murcia}
+\end{tabular}
+\caption{\label{fig:template}Ejemplo de frase etiquetada (izquierda) y su \ingles{frame} derivado (derecha)}
+\end{figure}
+
+Como se puede observar, toda la información que solicita el usuario cuando interacciona con el sistema está recogida en el \ingles{frame}. Se puede ver que el usuario empieza con una frase afirmativa, lo cual se denota por el campo ``\texttt{(AFIRMACION)}'' seguido del campo ''\texttt{(PRECIO)}'', por lo que se deduce que el usuario quiere obtener el precio del viaje. Por otra parte, el campo ``\texttt{TIPO-VIAJE: ida\_y\_vuelta}'' indica al sistema que el usuario está solicitando un viaje de ida y vuelta. Por último, los campos ``\texttt{CIUDAD-ORIGEN: Valencia}'' y ``\texttt{CIUDAD-DESTINO: Murcia}'' contienen la ciudad desde la que el usuario quiere salir y también a la que quiere llegar.
+\newline
+\newline
+Otro ejemplo se puede ver en la \autoref{fig:template-dos} con la frase ``\ingles{sí quería saber el tipo de tren de las siete y tres de la mañana}''.
+\newline
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{l@{\footnotesize}c@{\hspace{3em}}l@{\footnotesize}}
+\texttt{sí: <afirmacion>}                       &&                               \\
+\texttt{quería saber: consulta}                 &&  \texttt{TIPO-VIAJE:nil}      \\
+\texttt{el tipo de tren: <tipo\_tren>}          &&  \texttt{(TIPO-TREN)}         \\
+\texttt{de las siete y tres de la mañana: hora} &&  \texttt{HORA:+-30(07.03.AM)}
+\end{tabular}
+\caption{\label{fig:template-dos}Ejemplo de frase etiquetada y su \ingles{frame} derivado}
+\end{figure}
+
+En este último ejemplo se observa por el campo ``TIPO-VIAJE:nil'' que el usuario no ha especificado el tipo de viaje pero sí que solicita un tipo de tren por el campo ``(TIPO-TREN)''. Además, en el campo ``HORA:+-30(07.03.AM)'' se concreta la hora a la que el usuario quiere realizar el viaje.
+
+Con el \ingles{frame} ya generado, el gestor de diálogo es capaz de recuperar de la base de datos la información necesaria que es mostrada finalmente al usuario.
+
+\section{\ingles{Corpus} multilingüe}
+\label{sec:corpus-mult}
+
+El \ingles{corpus} \texttt{DIHANA} fue dividido en un conjunto de entrenamiento de 4.887 turnos y otro de prueba con 1.000 turnos. El conjunto de entrenamiento posee un total de 14.517 segmentos etiquetados, 36.930 palabras y un vocabulario de 716 palabras. El conjunto de prueba fue traducido manualmente al francés e inglés y pronunciado por usuarios nativos. El conjunto de pruebas en francés está compuesto por 1.000 turnos, 500 de los cuales fueron pronunciados por usuarios nativos. El conjunto de pruebas en inglés consiste en 1.000 turnos y todos ellos fueron pronunciados por usuarios nativos.
+\newline
+\newline
+En la \autoref{fig:tests-caract} se puede ver un resumen de las principales características de los conjuntos de prueba tanto para inglés como para francés y una comparación con las frases en castellano.
+\newline
+\newline
+En este trabajo se ha obtenido las traducciones de todas las frases del conjunto de entrenamiento del \ingles{corpus} realizando un preproceso para preparar los ficheros de traducción y un postproceso para normalizar las traducciones tal y como se explica en el \autoref{ch:procesamiento}. Además, ha sido necesario posteriormente un proceso de segmentación y alineamiento de los segmentos traducidos con cada frase traducida. Esto permite tener un conjunto de entrenamiento etiquetado semánticamente en inglés y francés a partir del \ingles{corpus} original. Este problema y su solución se abordan en el \autoref{ch:comprension_habla}.
+\newline
+\newline
+
+\begin{table}[h]
+\centering \small
+\begin{tabular}{|l|r|r|r|} \hline
+\multicolumn{4}{|c|}{Inglés}\\\hline
+&\texttt{Frases}&\texttt{Palabras}&\texttt{Vocabulario}\\\hline
+texto&1000&7700&448\\\hline
+\multicolumn{4}{|c|}{Francés}\\\hline
+&\texttt{Frases}&\texttt{Palabras}&\texttt{Vocabulario}\\\hline
+texto &1000&7669&522\\\hline
+texto &500&3788&358\\\hline
+\multicolumn{4}{|c|}{Castellano}\\\hline
+&\texttt{Frases}&\texttt{Palabras}&\texttt{Vocabulario}\\\hline
+texto&1000&7637&464\\\hline
+\end{tabular}
+\caption{\label{fig:tests-caract}Características de los conjuntos de prueba}
+\end{table}

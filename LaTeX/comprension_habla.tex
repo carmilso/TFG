@@ -1,0 +1,393 @@
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+
+\chapter{Sistema de comprensión del habla multilingüe}
+\label{ch:comprension_habla}
+
+\section{Planteamiento del problema}
+\label{sec:comprension_habla:planteamiento}
+
+En este punto del proyecto ya se han obtenido y procesado todas las traducciones para ser normalizadas como se ha explicado en el \autoref{ch:procesamiento}.
+\newline
+\newline
+En el \autoref{ch:introduccion} se ha realizado una introducción a la comprensión del habla. Como se ha comentado, es una técnica enmarcada dentro del conjunto denominado como ``Ingenierías del lenguaje''. Igual que para el contexto del presente proyecto, una de las principales aplicaciones de los sistemas de comprensión del habla es la de proporcionar de interfaz de un sistema de información con el que el usuario interactúa para obtener algún tipo de información.
+\newline
+\newline
+Como ya se ha explicado, partimos del \ingles{corpus} \texttt{DIHANA}. Es un \ingles{corpus} etiquetado a nivel de concepto del cual se puede ver una explicación detallada en el \autoref{ch:corpus}. Se dispone de una serie de frases segmentadas y etiquetadas semánticamente. El objetivo que se ha planteado llevar a cabo en este proyecto es el de conseguir un sistema de comprensión a partir del \ingles{corpus} \texttt{DIHANA} para los idiomas inglés y francés.
+\newline
+\newline
+Si el proceso de generar un \ingles{corpus} paralelo multilingüe se hiciese a mano sería una tarea que consumiría una gran cantidad de tiempo y recursos. Es por ello que se hace uso de herramientas de traducción automática con las que se traduce un subconjunto del \ingles{corpus} original y se entrena un sistema de comprensión en inglés y francés. Este \ingles{corpus} debe estar disponible en los idiomas en los que se quiere obtener el sistema de comprensión.
+
+\section{Estrategias adoptadas}
+\label{sec:medidas}
+
+Como ya se ha explicado anteriormente, el objetivo de este proyecto es conseguir un \ingles{corpus} multilingüe a partir del \ingles{corpus} \texttt{DIHANA}. Para ello se ha hecho uso de cinco traductores \ingles{online} de propósito general (\texttt{Apertium}, \texttt{Bing}, \texttt{Google}, \texttt{Lucy} y \texttt{Systranet}).
+\newline
+\newline
+Existen dos aproximaciones a la hora de construir un sistema de comprensión del habla multilingüe. La utilizada en el presente proyecto recibe el nombre de \ingles{train-on-target} y ha sido utilizada en otro proyecto \cite{SLT2012} para el \ingles{corpus} en francés \texttt{MEDIA}. Sin embargo también existe una aproximación diferente con el mismo objetivo denominada \ingles{test-on-source} cuya explicación se puede ver en la valoración de los resultados en la \autoref{sec:valoracion_resultados}.
+\newline
+\newline
+En la aproximación seguida para este proyecto, la estrategia que se plantea es la de traducir las frases del \ingles{corpus} y cada uno de los segmentos de las frases a los idiomas en los que se quiere obtener el \ingles{corpus}. Después de tener las traducciones obtenidas de cada traductor utilizado, éstas han de ser procesadas para su correcta normalización. Se debe llevar a cabo además un proceso de segmentación en el que se alineen las traducciones de los segmentos con las traducciones de las frases. Esto nos permite obtener la correspondencia de las etiquetas semánticas en la frase traducida.
+\newline
+\newline
+Una vez obtenido un \ingles{corpus} en cada uno de los idiomas objetivo para cada traductor, se realiza el entrenamiento de las frases con sus etiquetas semánticas. Después de este último proceso se obtienen los modelos semánticos para el \ingles{corpus} en ambos idiomas.
+
+\section{CRFs}
+\label{sec:crf}
+
+Los CRFs \cite{Lafferty:2001:CRF:645530.655813} (\ingles{Conditional Random Fields}), también denominados Campos de Markov aleatorios, son modelos generativos que tratan de clasificar cada una de las palabras dentro de un conjunto de etiquetas. Son actualmente muy utilizados para la comprensión del habla debido a su gran eficacia en la segmentación y el etiquetado de datos.
+\newline
+\newline
+Este ha sido el modelo estadístico escogido para abarcar el problema del entrenamiento de los modelos semánticos en este proyecto.
+\newpage
+Básicamente los CRFs tratan de encontrar la mejor etiqueta semántica en cada momento teniendo en cuenta las decisiones tomadas previamente y las características aprendidas a partir de los datos de entrenamiento. Para ello, se aprenden sus parámetros por máxima verosimilitud a partir de $N$ muestras de entrenamiento previamente etiquetadas con sus correspondientes etiquetas semánticas.
+\newline
+\newline
+Mientras que en los HMMs (\ingles{Hidden Markov Models}) cada estado $S_i$ depende de la observación $O_i$, en los CRFs cada estado puede depender de más de una observación simultáneamente.
+\newline
+\newline
+La probabilidad condicional de una serie de etiquetas semánticas $c_1,~c_2~\dots~c_N$ dada una serie de palabras de entrada $w_1,~w_2~\dots~w_N$ se puede expresar tal y como se muestra en la \autoref{eq:crf}.
+
+\begin{equation}
+\label{eq:crf}
+p(c_{1}^{N}|w_{1}^{N})=\frac{1}{Z} \left(\displaystyle\prod_{m=1}^{M} \theta_{m} \cdot h_{m}(c_{n-1},c_{n},w_{n-k}^{n+k})\right)
+\end{equation}
+\newline
+
+En la ecuación que se acaba de mostrar, $\theta_{m}$ representa el vector de parámetros que se aprende a partir de los datos de entrenamiento etiquetados mientras que $h_{m}(c_{n-1},c_{n},w_{n-k}^{n+k})$ son las dependencias entre la entrada (palabras o características aprendidas durante el proceso de entrenamiento) y los conceptos de la salida. $Z$ es el factor de normalización aplicado cuya definición se puede ver en la \autoref{eq:z}.
+
+\begin{equation}
+\label{eq:z}
+Z=\sum_{\hat{c}_1^N}\prod_{n=1}^{N}(\hat{c}_{n-1},\hat{c}_{n},w_{n-k}^{n+k})
+\end{equation}
+\newline
+
+En este caso, $\hat{c}_{n-1}$ es el concepto que se obtiene como salida para la palabra $w_{n-1}$ (la palabra previa) y $\hat{c}_{n}$ es el concepto obtenido para la palabra $w_n$ (palabra actual).
+
+\subsection{Implementación usada}
+\label{subsec:crf_impl}
+
+En este proyecto se ha usado un \ingles{toolkit} implementado en el lenguaje de programación \texttt{C++} con nombre \texttt{CRF++} \cite{crf++}.
+\newline
+\newline
+Se trata de un programa de software libre liberado bajo licencia \textsc{GPL} (\ingles{General Public License}) que permite el entrenamiento de modelos semánticos usando CRFs. Posee las características que se enuncian a continuación.
+
+\begin{itemize}
+
+  \item Tiene la capacidad de volver a definir conjuntos de características que son aprendidas durante el aprendizaje.
+
+  \item Realiza un entrenamiento notablemente rápido haciendo uso del algoritmo \ingles{quasi-Newton} LBFGS (\ingles{Broyden-Fletcher-Goldfarb-Shanno}), preparado para el procesamiento de largas escalas numéricas.
+
+  \item Hace un uso moderado de la memoria durante el proceso de entrenamiento y durante las pruebas.
+
+  \item Es capaz de mostrar una salida con los $n$ mejores resultados obtenidos durante la realización de las pruebas.
+
+  \item Puede entrenar los parámetros a partir del algoritmo MIRA (\ingles{Margin-infused relaxed algorithm}).
+
+  \item Puede mostrar en la salida las probabilidades marginales para todos los candidatos.
+
+\end{itemize}
+
+\section{Segmentación del {\ingles{corpus}} de entrenamiento}
+\label{sec:segmentacion}
+
+\subsection{Motivación}
+\label{subsec:motivacion}
+
+Tal y como se ha explicado en la \autoref{sec:medidas}, para llevar a cabo la aproximación \ingles{train-on-target} para el problema de la comprensión del habla se necesita la traducción de un \ingles{corpus} así como sus frases segmentadas y sus correspondientes etiquetas semánticas.
+\newline
+\newline
+Anteriormente se ha mencionado que la estrategia seguida para este proyecto ha sido la de separar los segmentos de las frases a la hora de traducir. El objetivo de este procedimiento es el de poder recuperar posteriormente los segmentos de la frase que se corresponden con cada concepto. Cada frase está formada por un conjunto de palabras $w_1w_2~\dots~w_N$ y cada conjunto de una o más palabras pertenecen a un segmento etiquetado de la frase $s_1:w_1w_2~\dots~w_i$ , $s_2:w_{i+1}w_{i+2}~\dots~w_m$ , $\dots$ , $s_n:w_kw_{k+1}~\dots~w_n$.
+
+\subsection{Extracción de las etiquetas semánticas}
+\label{subsec:etiquetas}
+
+El objetivo principal de la obtención de las etiquetas semánticas es el de conseguir una lista con todas ellas para poder recuperarlas después del proceso de segmentación. De esta forma, cuando se haya conseguido alinear los segmentos con las frases se hará uso de la lista de segmentos para poder asignar cada etiqueta semántica al segmento que le corresponde.
+\newline
+\newline
+Dado que los ficheros de traducción se han preparado siguiendo el mismo orden en el que aparecen las frases en el \ingles{corpus} \texttt{DIHANA}, se ha extraído cada una de las etiquetas semánticas asociadas a los segmentos detectados en el \ingles{corpus} en dicho orden.
+\newline
+\newline
+La forma de conseguir las etiquetas semánticas ha sido la que se muestra en las siguientes instrucciones.
+\newline
+
+\label{cod:etiquetas}
+\begin{lstlisting}[style=bash, caption=Instrucciones para extraer las etiquetas semánticas]
+  $ cat dihana_corpus.log | \
+    grep "[A-Z]\?[a-z]\+.*:\(.*\)" | \
+    sed "s/.*:\(.*\)/\1/g"
+\end{lstlisting}
+
+De esta forma, en primer lugar se separan los segmentos (que son el conjunto de palabras con una etiqueta semántica) de las frases que los contienen, y a continuación se extraen las etiquetas semánticas asociadas a dichos segmentos. Las etiquetas que se obtienen de esta forma se imprimen por la salida estándar y son desviadas a un fichero que actúa de contenedor de las mismas. Se obtienen un total de 14.575 etiquetas semánticas.
+\newline
+\newline
+A la hora de traducir las frases y los segmentos siguiendo la organización que se ha explicado en la \autoref{sec:contenido_fichero}, se obtienen las traducciones de las frases seguidas de las de sus segmentos (cuyas etiquetas semánticas han sido ya guardadas). El principal problema de seguir esta estrategia es que la concatenación de los segmentos traducidos es potencialmente diferente a la traducción de la frase. Esto es debido a la falta de contexto de los segmentos sobre todo en los casos en que se componen por pocas palabras.
+
+\subsection{Levenshtein}
+\label{subsec:levenshtein}
+
+El objetivo de la segmentación es el de localizar los segmentos en la frase a fin de poder realizar el correcto etiquetado de la misma. Para ello se ha implementado una modificación del algoritmo de \texttt{Levenshtein}.
+\newline
+\newline
+La distancia de \texttt{Levenshtein} es una métrica capaz de medir la distancia de edición mínima entre dos secuencias de símbolos. Se puede explicar como la cantidad de operaciones de inserción, sustitución y borrado que hay que realizar sobre una cadena $a$ para transformarla en otra cadena $b$.
+\newline
+\newline
+En la \autoref{eq:lev} se puede ver una descripción matemática de la misma y en la \autoref{fig:levenshtein-dist} se puede observar un ejemplo de edición.
+
+\begin{equation}
+lev_{a,b}(i,j) =
+  \begin{cases}
+    max(i,j) \hspace{12.9em} \text{si } min(i,j)=0 \text{ ,}\\
+    min
+    \begin{cases}
+      lev_{a,b}(i-1,j)+1\\
+      lev_{a,b}(i,j-1)+1\\
+      lev_{a,b}(i-1,j-1)+(a_i \neq b_j)\\
+    \end{cases} \text{en otro caso.}
+  \end{cases}
+\label{eq:lev}
+\end{equation}
+\newline
+
+\setlength{\tabcolsep}{2pt}
+\begin{table}[ht]
+\centering
+\begin{tabular}{c|ccccccccccccccccccccccccccc}
+\hline
+&&\texttt{d}&\texttt{o}&&\texttt{n}&\texttt{o}&\texttt{t}&&\texttt{f}&\texttt{r}&\texttt{o}&\texttt{m}&&\texttt{C}&\texttt{i}&\texttt{u}&\texttt{d}&\texttt{a}&\texttt{d}&\texttt{\_}&\texttt{R}&\texttt{e}&\texttt{a}&\texttt{l}\\
+\hline
+&\cellcolor{blue!25}0&\cellcolor{blue!25}1&\cellcolor{blue!25}2&\cellcolor{blue!25}3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18&19&20&21&22&23\\
+\texttt{n}&1&1&2&3&\cellcolor{blue!25}3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18&19&20&21&22\\
+\texttt{o}&2&2&1&2&3&\cellcolor{blue!25}3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18&19&20&21\\
+\texttt{t}&3&3&2&2&3&4&\cellcolor{blue!25}3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18&19&20\\
+\texttt{}&4&4&3&2&3&4&4&\cellcolor{blue!25}3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18&19\\
+\texttt{f}&5&5&4&3&3&4&5&4&\cellcolor{blue!25}3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18\\
+\texttt{r}&6&6&5&4&4&4&5&5&4&\cellcolor{blue!25}3&4&5&6&7&8&9&10&11&12&13&14&15&16&17\\
+\texttt{o}&7&7&6&5&5&4&5&6&5&4&\cellcolor{blue!25}3&4&5&6&7&8&9&10&11&12&13&14&15&16\\
+\texttt{m}&8&8&7&6&6&5&5&6&6&5&4&\cellcolor{blue!25}3&4&5&6&7&8&9&10&11&12&13&14&15\\
+\texttt{}&9&9&8&7&7&6&6&5&6&6&5&4&\cellcolor{blue!25}3&4&5&6&7&8&9&10&11&12&13&14\\
+\texttt{C}&10&10&9&8&8&7&7&6&6&7&6&5&4&\cellcolor{blue!25}3&4&5&6&7&8&9&10&11&12&13\\
+\texttt{i}&11&11&10&9&9&8&8&7&7&7&7&6&5&4&\cellcolor{blue!25}3&4&5&6&7&8&9&10&11&12\\
+\texttt{u}&12&12&11&10&10&9&9&8&8&8&8&7&6&5&4&\cellcolor{blue!25}3&4&5&6&7&8&9&10&11\\
+\texttt{d}&13&12&12&11&11&10&10&9&9&9&9&8&7&6&5&4&\cellcolor{blue!25}3&4&5&6&7&8&9&10\\
+\texttt{a}&14&13&13&12&12&11&11&10&10&10&10&9&8&7&6&5&4&\cellcolor{blue!25}3&4&5&6&7&8&9\\
+\texttt{d}&15&14&14&13&13&12&12&11&11&11&11&10&9&8&7&6&5&4&\cellcolor{blue!25}3&4&5&6&7&8\\
+\texttt{\_}&16&15&15&14&14&13&13&12&12&12&12&11&10&9&8&7&6&5&4&\cellcolor{blue!25}3&4&5&6&7\\
+\texttt{R}&17&16&16&15&15&14&14&13&13&13&13&12&11&10&9&8&7&6&5&4&\cellcolor{blue!25}3&4&5&6\\
+\texttt{e}&18&17&17&16&16&15&15&14&14&14&14&13&12&11&10&9&8&7&6&5&4&\cellcolor{blue!25}3&4&5\\
+\texttt{a}&19&18&18&17&17&16&16&15&15&15&15&14&13&12&11&10&9&8&7&6&5&4&\cellcolor{blue!25}3&4\\
+\texttt{l}&20&19&19&18&18&17&17&16&16&16&16&15&14&13&12&11&10&9&8&7&6&5&4&\cellcolor{blue!25}3\\
+\hline
+\end{tabular}
+\caption{\label{fig:levenshtein-dist}Ejemplo de frase resultado}
+\end{table}
+
+La distancia de \texttt{Levenshtein} se suele utilizar para calcular la distancia entre dos cadenas a nivel de carácter. Es el ejemplo que podemos ver en la figura que se acaba de mostrar, donde se calcula la distancia de edición mínima para transformar la frase ``\ingles{do not from Ciudad\_Real}'' en la frase ``\ingles{not from Ciudad\_Real}'', obteniendo como resultado final 3.
+\newline
+En este caso las sustituciones se representan diagonalmente, mientras que las inserciones lo hacen moviendo una casilla hacia abajo y los borrados se realizan moviendo una casilla a la derecha. Cada vez que se realiza una inserción o un borrado la distancia de edición aumenta en uno, mientras que si es una sustitución la distancia aumenta en uno si los caracteres son diferentes y en cero en caso contrario.
+
+\subsection{Implementación realizada}
+\label{subsec:impl_realizada}
+
+El objetivo es poder localizar los segmentos traducidos en la frase traducida. Para lograrlo, el primer paso es formar una frase a partir de la concatenación de los segmentos. Una vez conseguido, se calcula la distancia de edición mínima entre la concatenación de los segmentos y la frase completa. A medida que se han realizado los cálculos se ha guardado también el camino de edición mínima que se ha ido obteniendo.
+\newline
+\newline
+En la \autoref{eq:lev-mod} se representa la concatenación de los segmentos como $a$, mientras que la frase completa está representada por $b$. En este caso, la comparación entre ambas frases no se realiza a nivel de carácter sino a nivel de palabra. De esta forma, $w_i$ representa la palabra que ocupa la posición $i$ en la concatenación de los segmentos y $w_j$ representa la palabra en la posición $j$ de la frase completa.
+
+\begin{equation}
+lev_{a,b}(w_i,w_j) =
+  \begin{cases}
+    max(w_i,w_j) \hspace{12.1em} \text{si } min(i,j)=0 \text{ ,}\\
+    min
+    \begin{cases}
+      lev_{a,b}(w_{i-1},w_j)+1\\
+      lev_{a,b}(w_i,w_{j-1})+1\\
+      lev_{a,b}(w_{i-1},w_{j-1})+(w_i \neq w_j)\\
+    \end{cases} \text{en otro caso.}
+  \end{cases}
+\label{eq:lev-mod}
+\end{equation}
+\newline
+
+Se ha inicializado también una variable cuyo valor es la frase donde cada palabra que marca el inicio de un segmento empieza con una barra vertical ($|$). De esta forma se pueden recuperar en el momento que sea necesario los límites entre segmentos.
+\newline
+\newline
+Con la matriz de costes y del camino de edición mínima ya conseguidas, el siguiente paso ha sido el de deshacer el camino de edición mínima para obtener los segmentos en la frase completa. Antes de realizar este proceso se inicializa una lista vacía donde se irán añadiendo las palabras resultado de la segmentación. Para conseguir esto se han de tener en cuenta tres casos diferentes.
+
+\begin{enumerate}
+
+  \item Sustitución: si la operación realizada en el punto que se está tratando es una sustitución, se añade directamente la palabra correspondiente de la frase completa. Esto significa que la palabra del segmento que se está comparando se ha sustituido por la de la frase.
+
+  \item Inserción: en este caso, se añade la palabra de la frase completa igual que en el caso anterior.
+
+  \item Borrado: por último, si se ha realizado un borrado en la frase completa no se añade nada a la lista de palabras.
+
+\end{enumerate}
+
+Cada vez que se pasa por un punto del recorrido de distancia de edición mínima se comprueba si la palabra de la concatenación de los segmentos que se está tratando es la que inicia un segmento. Esto se sabe comprobando si esta palabra empieza con la barra separadora en la variable que marca los límites entre segmentos y que se ha explicado previamente. En la \autoref{fig:segmentacion} se puede ver un ejemplo de la matriz resultante del proceso explicado además de la segmentación que se ha realizado.
+\newline
+\newline
+
+\setlength{\tabcolsep}{6pt}
+\begin{table}[ht]
+\centering
+\begin{tabular}{|c|c|ccccccccccccccccc}
+\hline
+\multicolumn{19}{|c|}{\texttt{Segmentos}}\\\hline
+\multicolumn{1}{|c|}{}&\multicolumn{1}{c|}{}&\multicolumn{2}{c}{}&\multicolumn{1}{c}{}&\multicolumn{2}{|c}{\texttt{i}}&\multicolumn{2}{c}{\texttt{wanna}}&\multicolumn{2}{c}{\texttt{go}}&\multicolumn{2}{|c}{\texttt{to}}&\multicolumn{2}{c}{\texttt{Segovia}}&\multicolumn{2}{|c}{\texttt{from}}&\multicolumn{2}{c|}{\texttt{Valencia}}\\\cline{2-19}
+\multicolumn{1}{|c|}{}&\texttt{}&\multicolumn{1}{c}{}&\multicolumn{2}{c}{\cellcolor{blue!25}0}&\multicolumn{2}{|c}{1}&\multicolumn{2}{c}{2}&\multicolumn{2}{c}{3}&\multicolumn{2}{|c}{4}&\multicolumn{2}{c}{5}&\multicolumn{2}{|c}{6}&\multicolumn{2}{c|}{7}\\\cline{2-5}
+\multicolumn{1}{|c|}{}&\texttt{}&\multicolumn{1}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{|c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{|c}{}&\multicolumn{2}{c|}{}\\
+\multicolumn{1}{|c|}{}&\texttt{i}&\multicolumn{1}{c}{}&\multicolumn{2}{c}{1}&\multicolumn{2}{c}{\cellcolor{blue!25}0}&\multicolumn{2}{c}{1}&\multicolumn{2}{c}{2}&\multicolumn{2}{|c}{3}&\multicolumn{2}{c}{4}&\multicolumn{2}{|c}{5}&\multicolumn{2}{c|}{6}\\
+\multicolumn{1}{|c|}{}&\texttt{}&\multicolumn{1}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{|c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{|c}{}&\multicolumn{2}{c|}{}\\
+\multicolumn{1}{|c|}{}&\texttt{want}&\multicolumn{1}{c}{}&\multicolumn{2}{c}{2}&\multicolumn{2}{c}{\cellcolor{blue!25}1}&\multicolumn{2}{c}{1}&\multicolumn{2}{c}{2}&\multicolumn{2}{|c}{3}&\multicolumn{2}{c}{4}&\multicolumn{2}{|c}{5}&\multicolumn{2}{c|}{6}\\
+\multirow{1}{*}{\rotatebox{90}{\texttt{Frase completa}}}&\texttt{}&\multicolumn{1}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{|c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{|c}{}&\multicolumn{2}{c|}{}\\
+\multicolumn{1}{|c|}{}&\texttt{to}&\multicolumn{1}{c}{}&\multicolumn{2}{c}{3}&\multicolumn{2}{c}{2}&\multicolumn{2}{c}{\cellcolor{blue!25}2}&\multicolumn{2}{c}{2}&\multicolumn{2}{|c}{2}&\multicolumn{2}{c}{3}&\multicolumn{2}{|c}{4}&\multicolumn{2}{c|}{4}\\
+\multicolumn{1}{|c|}{}&\texttt{}&\multicolumn{1}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{|c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{|c}{}&\multicolumn{2}{c|}{}\\
+\multicolumn{1}{|c|}{}&\texttt{go}&\multicolumn{1}{c}{}&\multicolumn{2}{c}{4}&\multicolumn{2}{c}{3}&\multicolumn{2}{c}{3}&\multicolumn{2}{c}{\cellcolor{blue!25}2}&\multicolumn{2}{|c}{3}&\multicolumn{2}{c}{3}&\multicolumn{2}{|c}{4}&\multicolumn{2}{c|}{5}\\\cline{2-11}
+\multicolumn{1}{|c|}{}&\texttt{}&\multicolumn{1}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{|c}{}&\multicolumn{2}{c|}{}\\
+\multicolumn{1}{|c|}{}&\texttt{to}&\multicolumn{1}{c}{}&\multicolumn{2}{c}{5}&\multicolumn{2}{c}{4}&\multicolumn{2}{c}{4}&\multicolumn{2}{c}{3}&\multicolumn{2}{c}{\cellcolor{blue!25}2}&\multicolumn{2}{c}{3}&\multicolumn{2}{|c}{4}&\multicolumn{2}{c|}{5}\\
+\multicolumn{1}{|c|}{}&\multicolumn{1}{c|}{}&\multicolumn{13}{c}{}&\multicolumn{2}{|c}{}&\multicolumn{2}{c|}{}\\
+\multicolumn{1}{|c|}{}&\texttt{Segovia}&\multicolumn{1}{c}{}&\multicolumn{2}{c}{6}&\multicolumn{2}{c}{5}&\multicolumn{2}{c}{5}&\multicolumn{2}{c}{4}&\multicolumn{2}{c}{3}&\multicolumn{2}{c}{\cellcolor{blue!25}2}&\multicolumn{2}{|c}{3}&\multicolumn{2}{c|}{4}\\\cline{2-15}
+\multicolumn{1}{|c|}{}&\multicolumn{1}{c|}{}&\multicolumn{13}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c|}{}\\
+\multicolumn{1}{|c|}{}&\texttt{from}&\multicolumn{1}{c}{}&\multicolumn{2}{c}{7}&\multicolumn{2}{c}{6}&\multicolumn{2}{c}{6}&\multicolumn{2}{c}{5}&\multicolumn{2}{c}{4}&\multicolumn{2}{c}{3}&\multicolumn{2}{c}{\cellcolor{blue!25}2}&\multicolumn{2}{c|}{3}\\
+\multicolumn{1}{|c|}{}&\multicolumn{1}{c|}{}&\multicolumn{13}{c}{}&\multicolumn{2}{c}{}&\multicolumn{2}{c|}{}\\
+\multicolumn{1}{|c|}{}&\texttt{Valencia}&\multicolumn{1}{c}{}&\multicolumn{2}{c}{8}&\multicolumn{2}{c}{7}&\multicolumn{2}{c}{7}&\multicolumn{2}{c}{6}&\multicolumn{2}{c}{5}&\multicolumn{2}{c}{4}&\multicolumn{2}{c}{3}&\multicolumn{2}{c|}{\cellcolor{blue!25}2}\\
+\hline
+\end{tabular}
+\caption{\label{fig:segmentacion}Ejemplo de resultado de la segmentación}
+\end{table}
+
+En este ejemplo se puede observar la entrada al algoritmo de la frase ``\ingles{i want to go to Segovia from Valencia}'' y de los segmentos \ingles{``i wanna go'', ``to Segovia'', ``from Valencia''}.
+\newpage
+Como se puede ver, los pasos que ha seguido el algoritmo para obtener la matriz resultado del cálculo de la distancia de edición mínima ha sido el que se muestra a continuación.
+
+\begin{enumerate}
+
+  \item La ``\ingles{i}'' se ha sustituido por la ``\ingles{i}'' con coste cero ($\searrow$).
+
+  \item La palabra ``\ingles{want}'' se ha insertado con coste uno ($\downarrow$).
+
+  \item Se sustituye ``\ingles{to}'' por ``\ingles{wanna}'' con coste uno ($\searrow$).
+
+  \item Se sustituye ``\ingles{go}'' por ``\ingles{go}'' con coste cero ($\searrow$).
+
+  \item Se sustituye ``\ingles{to}'' por ``\ingles{to}'' con coste cero ($\searrow$).
+
+  \item Se sustituye ``\ingles{Segovia}'' por ``\ingles{Segovia}'' con coste cero ($\searrow$).
+
+  \item Se sustituye ``\ingles{from}'' por ``\ingles{from}'' con coste cero ($\searrow$).
+
+  \item Se sustituye ``\ingles{Valencia}'' por ``\ingles{Valencia}'' con coste cero ($\searrow$).
+
+\end{enumerate}
+
+Al completar la matriz de costes y con ello la del camino seguido, se deshace el camino y se segmenta la frase de la siguiente manera.
+
+\begin{itemize}
+
+  \item ``\ingles{i wanna go}'' $\rightarrow$ ``\ingles{i want to go}''.
+
+  \item ``\ingles{to Segovia}'' $\rightarrow$ ``\ingles{to Segovia}''.
+
+  \item ``\ingles{from Valencia}'' $\rightarrow$ ``\ingles{from Valencia}''.
+
+\end{itemize}
+
+De esta forma ya se tiene la frase segmentada y preparada para ser tratada por un \ingles{script} que la transforma en un formato compatible con el \ingles{toolkit} \texttt{CRF++}. Este proceso se repite para cada una de las frases del conjunto de entrenamiento traducido a inglés y francés por cada traductor \ingles{online}.
+\newline
+\newline
+La implementación del algoritmo es accesible desde la dirección que se muestra a continuación.
+\newline
+\newline
+\begin{tabular}{@{}>{\footnotesize}l@{\hspace{8em}}>{\footnotesize}l@{}}
+  \hspace{2em}\small\url{www.github.com/carmilso/TFG/blob/master/scripts/computeSegments.py}
+\end{tabular}
+\newline
+\newline
+\newline
+En la \autoref{fig:tablas-segmentos} se plasman la cantidad de frases, segmentos, vocabulario y número medio de palabras por segmento que hay para cada conjunto de entrenamiento traducido a inglés y francés después del proceso de segmentación. Además, se realiza una comparativa con el conjunto original de entrenamiento en castellano.
+\newpage
+
+\begin{table}[h]
+\centering \small
+\begin{tabular}{|l|r|r|r|r|}	\hline
+\multicolumn{5}{|c|}{Inglés}\\\hline
+\texttt{Traductor}&\texttt{Frases}&\texttt{Segmentos}&\texttt{Vocabulario}&\texttt{N. medio p. x s.}\\ \hline
+Apertium&4.887&14.521&590&2,85\\ \hline
+Bing&4.887&13.892&771&2,61\\ \hline
+Google&4.887&13.882&744&2,52\\ \hline
+Lucy&4.887&14.457&660&2,83\\ \hline
+Systranet&4.887&14.193&629&2,86\\\hline
+\multicolumn{5}{|c|}{Francés}\\\hline
+\texttt{Traductor}&\texttt{Frases}&\texttt{Segmentos}&\texttt{Vocabulario}&\texttt{N. medio p. x s.}\\ \hline
+Apertium&4.887&14.364&790&2,6\\ \hline
+Bing&4.887&14.107&1.146&2,43\\ \hline
+Google&4.887&14.002&1.029&2,39\\ \hline
+Lucy&4.887&14.502&795&2,60\\ \hline
+Systranet&4.887&14.517&819&2,56\\ \hline
+\multicolumn{5}{|c|}{Castellano}\\\hline
+&\texttt{Frases}&\texttt{Segmentos}&\texttt{Vocabulario}&\texttt{N. medio p. x s.}\\ \hline
+&4.887&14.575&716&2,53\\ \hline
+\end{tabular}
+\caption{\label{fig:tablas-segmentos}Características de la segmentación}
+\end{table}
+
+Como se puede observar en la tabla que se acaba de mostrar, el número de segmentos etiquetados en los conjuntos de entrenamiento en inglés y francés es diferente al de la referencia en castellano. Esto se debe a varias razones: hay palabras que no son entendidas por los traductores \ingles{online} y por tanto no se traducen correctamente; algunas frases son reordenadas de activo a pasivo; y se añaden algunas expresiones propias del lenguaje. Por estas razones hay segmentos que no se pueden alinear con la frase completa en el proceso de segmentación y se pierden.
+
+En la \autoref{fig:perdida-segmentos} se puede ver un ejemplo de pérdida de segmentos con la frase de entrenamiento en castellano ``quiero un billete de ida por la mañana el día dieciséis de junio en ave si puede ser no fumadores clase no preferente''.
+\newline
+
+\begin{figure}[h]
+\centering
+\footnotesize
+\begin{tabular}{r l | r l}
+  \texttt{quiero un billete:}          &  \texttt{consulta}        &  \texttt{i want a ticket:}    &  \texttt{consulta}\\
+  \texttt{de ida:}                     &  \texttt{tipo\_viaje}     &  \texttt{----------------}    &  \texttt{----------------}\\
+  \texttt{por la mañana:}              &  \texttt{hora}            &  \texttt{in the morning:}     &  \texttt{hora}\\
+  \texttt{el día dieciséis de junio:}  &  \texttt{fecha}           &  \texttt{on june sixteenth:}  &  \texttt{fecha}\\
+  \texttt{en ave:}                     &  \texttt{tipo\_tren}      &  \texttt{in ave:}             &  \texttt{tipo\_tren}\\
+  \texttt{si puede ser:}               &  \texttt{consulta}        &  \texttt{if it can not be:}   &  \texttt{consulta}\\ \texttt{no fumadores:}               &  \texttt{nada}            &  \texttt{non-smoking:}        &  \texttt{nada}\\
+  \texttt{clase no preferente:}        &  \texttt{clase\_billete}  &  \texttt{business class:}     &  \texttt{clase\_billete}
+\end{tabular}
+\caption{\label{fig:perdida-segmentos}Ejemplo de pérdida de segmentos}
+\end{figure}
+
+Se puede ver como se ha perdido el segmento ``de ida''. Este segmento se ha traducido al inglés como ``\ingles{outward}'' y en el proceso de segmentación ha sufrido un borrado al no poder alinearse con ninguna secuencia de palabras de la frase completa.
+
+\subsection{Tratamiento de la salida}
+\label{subsec:tratamiento-salida}
+
+La salida que genera el \ingles{script} para la segmentación del ejemplo de la \autoref{fig:segmentacion} es ``\ingles{i want to go} | \ingles{to Segovia} | \ingles{from Valencia}''. En el caso del ejemplo de la pérdida de segmentos la salida es ``\ingles{i want a ticket} | | \ingles{in the morning} | \ingles{on june sixteenth} | \ingles{in ave} | \ingles{if it can not be} | \ingles{non-smoking} | \ingles{business class}'', donde se puede observar que hay un segmento vacío por no haberse podido segmentar.
+\newline
+\newline
+Esta información es recogida por otro \ingles{script} que se encarga de asignar las etiquetas semánticas extraídas anteriormente a cada segmento calculado por el algoritmo que acaba de ser explicado. De esta forma se generan los ficheros de entrenamiento para los CRFs con cada traductor e idioma y otro con las traducciones obtenidas del conjunto de todos los traductores.
+\newline
+\newline
+En las etiquetas semánticas se ha utilizado la notación IOB2. Por ello, aquellas palabras cuya etiqueta asociada comienza con una B (\ingles{Begin}) son las que marcan el inicio del concepto. Las que por el contrario tienen asociada una etiqueta que empieza con una I (\ingles{Inner}) denotan continuidad del concepto. Un ejemplo de los ficheros resultantes de entrenamiento con la frase que se ha utilizado para mostrar el proceso de segmentación se puede ver en la \autoref{fig:ejemplo-entrenamiento}.\\
+
+\begin{figure}[h]
+\centering
+\footnotesize
+\begin{tabular}{l@{\hspace{3em}}l@{\hspace{3em}}l}
+  \texttt{i}         &  \texttt{B\_consulta}\\
+  \texttt{want}      &  \texttt{I\_consulta}\\
+  \texttt{to}        &  \texttt{I\_consulta}\\
+  \texttt{go}        &  \texttt{I\_consulta}\\
+  \texttt{to}        &  \texttt{B\_ciudad\_destino}\\
+  \texttt{Segovia}   &  \texttt{I\_ciudad\_destino}\\
+  \texttt{from}      &  \texttt{B\_ciudad\_origen}\\
+  \texttt{Valencia}  &  \texttt{B\_ciudad\_origen}\\
+  \texttt{.}         &  \texttt{0}
+\end{tabular}
+\caption{\label{fig:ejemplo-entrenamiento}Ejemplo de frase de entrenamiento etiquetada para el \ingles{toolkit} \texttt{CRF++}}
+\end{figure}
+
+En el caso de los segmentos que no se consiguen alinear con la frase, se pierde también su correspondiente etiqueta semántica para el proceso de entrenamiento. Por ejemplo en el caso visto en la \autoref{fig:perdida-segmentos} no se entrenará ningún segmento de la frase con la etiqueta ``tipo\_viaje'' a pesar de existir en la frase original en castellano.
+
+El \ingles{script} que realiza la preparación de las frases segmentadas para ser compatible con el \ingles{toolkit} \texttt{CRF++} está disponible en el enlace siguiente.
+\newline
+\newline
+\begin{tabular}{@{}>{\footnotesize}l@{\hspace{8em}}>{\footnotesize}l@{}}
+  \hspace{2em}\small\url{www.github.com/carmilso/TFG/blob/master/scripts/generateCRFTrain.sh}
+\end{tabular}

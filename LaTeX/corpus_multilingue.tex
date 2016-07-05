@@ -1,0 +1,511 @@
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+
+\chapter{Obtención del \ingles{corpus} multilingüe}
+\label{ch:procesamiento}
+
+\section{Motivación}
+\label{sec:procesamiento:motivacion}
+
+La obtención del \ingles{corpus} multilingüe ha sido una de las partes más importantes y delicadas del presente proyecto. Partimos de la base de que los traductores \ingles{online} utilizados para las traducciones de distintas frases del \ingles{corpus} \texttt{DIHANA}, descrito anteriormente en el \autoref{ch:corpus}, están construidos de forma diferente y por tanto realizan un tratamiento léxico que difiere significativamente del de sus respectivos competidores. Es por esta razón que resulta necesario realizar un preproceso de las frases que se traducirán en cada uno de los traductores y un postproceso en las propias traducciones con el objetivo de que todas estén normalizadas de la misma manera, ya que como se explicará en la \autoref{sec:postproceso}, cada traductor \ingles{online} genera unas traducciones con un tratamiento léxico diferente, como puede ser el uso de números en vez de letras o la utilización de caracteres especiales para aclarar algún aspecto sobre la traducción, tal y como se verá en los siguientes apartados.
+
+\section{Herramientas utilizadas}
+\label{sec:herramientas}
+
+Para la implementación de los \ingles{scripts} utilizados en el preproceso y el postproceso se ha hecho uso de la herramienta \texttt{sed} de los sistemas \textsc{UNIX}, además de los lenguajes de programación \texttt{AWK} y \texttt{Python}, que se describen brevemente a continuación.
+
+\subsection{sed}
+\label{sed}
+
+\textbf{s}\texttt{tream}~\textbf{ed}\texttt{itor} es un potente editor de flujo \cite{sed} propio de los sistemas \textsc{UNIX} diseñado por Lee E. McMahon entre los años 1973 y 1974 que permite realizar modificaciones para una entrada de texto dada. Resulta además una herramienta especialmente potente cuando se requiere del uso de expresiones regulares y patrones de búsqueda. Para el presente proyecto ha sido una de las herramientas más útiles en el postproceso por resultar realmente eficaz y rápida en la normalización de las traducciones, como se explicará en la \autoref{sec:postproceso}.
+
+\subsection{AWK}
+\label{awk}
+
+\textbf{A}\texttt{ho}~\textbf{W}\texttt{einberger}~\textbf{K}\texttt{ernighan} es un lenguaje de programación interpretado \cite{awk} que recibe el nombre de las iniciales de los apellidos de sus creadores y que apareció por primera vez el año 1977. Es una de las primeras herramientas que apareció en los sistemas \textsc{UNIX} y que posteriormente se convirtió en una de las herramientas imprescindibles en los citados sistemas. Al igual que la herramienta \texttt{sed} concentra su mayor utilidad en el tratamiento de texto y es a su vez un potente motor de búsqueda y tratamiento de patrones, por lo que su uso tanto en el preproceso, para generar el fichero de traducción, como en el postproceso para la normalización de las traducciones se ha convertido en imprescindible para el proyecto.
+
+\subsection{Python}
+\label{python}
+
+El nombre de este lenguaje de programación interpretado \cite{python} es un homenaje de su creador, Van Rossum, a los humoristas británicos Monty Python, siendo el año 1991 el de la primera aparición del código del lenguaje. Destaca por su flexibilidad y baja curva de aprendizaje, además de ser uno de los más populares y extendidos lenguajes de programación de la actualidad tal y como explica se puede observar en la revista mensual Tiobe \cite{tiobe0516}. Para este proyecto se ha hecho uso de la versión 2.7 para la parte del postproceso, concretamente en el alineamiento de los segmentos traducidos con las frases traducidas, cuya explicación se puede leer en la \autoref{sec:segmentacion}.
+
+\newpage
+
+\section{Preproceso del fichero a traducir}
+\label{sec:contenido_fichero}
+
+En primer lugar debemos especificar el contenido que se debe traducir. Dado que necesitamos traducciones tanto de las frases enteras como de sus respectivos segmentos, con las que posteriormente se realizará un postproceso que se explicará más adelante en el \autoref{sec:postproceso}, se ha optado por generar un fichero formado por secuencias de palabras en las que se incluye a dichas frases y los segmentos que le corresponden. De esta forma, se ha usado un separador que marca el inicio de una frase y que los traductores \ingles{online} ignorarán, seguido de un salto de linea y la frase completa, para a continuación colocar cada uno de los segmentos separados por el mismo salto de linea. En el ejemplo de la~\autoref{fig:tabla_segmentos} se puede observar un ejemplo de dos de las frases del fichero con sus respectivos segmentos que serán traducidas por los traductores \ingles{online}.
+\newline
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+  \texttt{|||}\\
+  \texttt{el próximo sábado día trece antes de las once}\\
+  \texttt{el próximo sábado día trece}\\
+  \texttt{antes de las once}\\
+  \texttt{|||}\\
+  \texttt{sí quiero los horarios antes de las once}\\
+  \texttt{sí}\\
+  \texttt{quiero los horarios}\\
+  \texttt{antes de las once}\\
+  \texttt{|||}
+\end{tabular}
+\caption{\label{fig:tabla_segmentos}Subconjunto de grupos a traducir}
+\end{figure}
+
+\subsection{Palabras invariantes}
+\label{subsec:palabrasInvariantes}
+
+Cabe destacar que uno de los requisitos fundamentales de las traducciones es que deben preservar ciertas palabras o conjunto de palabras ya normalizadas en el \ingles{corpus} \texttt{DIHANA} y que en los ficheros de test encontraremos escritas exactamente de la misma manera, como es el caso de las ciudades, los tipos de trenes o algunos nombres de fiestas, como los que se puede observar en negrita en la \autoref{fig:palabras_clave}, y del que se puede ver el listado completo en el anexo \ref{a:palabras_clave}.
+\newline
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+  \texttt{U0410:quiero conocer horario y precio a}~\textbf{Valencia}\\
+  \texttt{U0642:sí repítame los horarios del}~\textbf{talgo}~\texttt{que me viene mejor}\\
+  \texttt{U0641:a qué hora sale el}~\textbf{intercity}\\
+\end{tabular}
+\caption{\label{fig:palabras_clave}Ejemplo de palabras invariantes}
+\end{figure}
+
+Uno de los problemas que encontramos en los traductores y que está relacionado con estas palabras es el hecho de que no hay un método consistente en todos los traductores utilizados para mantener dichas palabras sin traducir, por lo que ha sido necesario buscar una solución alternativa que sirviese para cualquier traductor \ingles{online} y que preservase las palabras originales. En principio se intentó mantener las palabras originales convirtiéndolas a mayúsculas con la intención de que los traductores las dejasen intactas para posteriormente devolverlas a su estado original, pero algunos de los traductores utilizados para el trabajo traducían de igual manera estas palabras.
+\newline
+\newline
+Por este motivo, finalmente se ha optado por guardar todas las palabras o conjunto de palabras que no deben ser alteradas por los traductores en un fichero que hace de diccionario, que se puede visualizar en el siguiente enlace:\\{\small\url{www.github.com/carmilso/TFG/blob/master/dictionary}}, el cual actúa como indexador de las palabras a mantener, donde cada palabra ocupa una linea diferente. De esta forma se sustituyen las apariciones de dichas palabras por un par de paréntesis que contienen su correspondiente índice en el diccionario, que como se ha explicado anteriormente hace referencia a la linea que ocupa en el mismo. En la \autoref{fig:sustituciones} se puede observar un ejemplo del resultado de la sustitución realizada. Además, las palabras a preservar se han indexado a partir de la linea cincuenta dado que algunos traductores están especialmente entrenados para detectar y traducir números con una alta frecuencia de aparición, como es el caso del traductor \ingles{online} de \texttt{Google} que se describe en la \autoref{subsec:obtencionTraducciones}, a pesar de estar entre caracteres especiales como son los paréntesis, por lo que no se respetaba el índice y esto provocaba problemas posteriores a la hora de sustituir la correspondiente palabra del diccionario.
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+  \texttt{|||}\\
+  \texttt{quiero conocer horario y precio a ((132))}\\
+  \texttt{quiero conocer}\\
+  \texttt{horario}\\
+  \texttt{y precio}\\
+  \texttt{a ((132))}\\
+  \texttt{|||}\\
+  \texttt{sí repítame los horarios del ((125)) que me viene mejor}\\
+  \texttt{sí}\\
+  \texttt{repítame}\\
+  \texttt{los horarios}\\
+  \texttt{del ((125))}\\
+  \texttt{que me viene mejor}\\
+  \texttt{|||}\\
+\end{tabular}
+\caption{\label{fig:sustituciones}Ejemplo de sustituciones}
+\end{figure}
+
+El \ingles{script} utilizado para generar el fichero que será traducido en el que se han resuelto todas las cuestiones tratadas hasta el momento se puede visualizar en el siguiente enlace:
+\newline
+\newline
+\begin{tabular}{@{}>{\footnotesize}l@{\hspace{8em}}>{\footnotesize}l@{}}
+  \hspace{2em}\small\url{www.github.com/carmilso/TFG/blob/master/scripts/prepareSentences.sh}
+\end{tabular}
+
+\subsection{Conversión a \texttt{HTML}}
+\label{subsec:conversionHtml}
+
+Además, ha sido necesario encontrar un mecanismo que permitiese traducir todas las frases debido a las restricciones que imponen algunos de los traductores \ingles{online} utilizados al número de palabras que se pueden traducir. Finalmente, y dado que esta restricción no existe en la traducción de páginas web, se ha implementado un \ingles{script} para convertir el fichero con las frases y los segmentos, con las palabras o conjunto de palabras a mantener ya sustituidas por su correspondiente índice en el diccionario, a formato \texttt{HTML}. El \ingles{script} se puede visualizar en el siguiente enlace:
+\newline
+\newline
+\begin{tabular}{@{}>{\footnotesize}l@{\hspace{8em}}>{\footnotesize}l@{}}
+  \hspace{2em}\small\url{www.github.com/carmilso/TFG/blob/master/scripts/toHtmlFormat.sh}
+\end{tabular}
+\newline
+\newline
+Se ha hecho uso del {\href{www.upv.es/entidades/ASIC/catalogo/433421normalc.html}{\texttt{Servicio de Publicación Estándar}}} para la publicación del fichero ya en formato \texttt{HTML}, pudiendo hacer uso así de la \ingles{web} personal que ofrece la universidad para conseguir las traducciones de las frases y sus segmentos.
+\newline
+\newline
+En el caso del traductor \texttt{Systranet}, que se describe en la \autoref{subsec:obtencionTraducciones}, ha sido necesario dividir el fichero principal en tres diferentes dado que el límite actual de la página \ingles{web} para poder ser traducida es de 512.000 \ingles{bytes}.
+\newline
+\newline
+La publicación donde se encuentran un subconjunto de las frases con sus segmentos es accesible desde:\\\\
+\begin{tabular}{@{}>{\footnotesize}l@{\hspace{8em}}>{\footnotesize}l@{}}
+  \hspace{2em}\small\url{http://personales.alumno.upv.es/carmilso/index.html}
+\end{tabular}
+\newline
+\newline
+Un subconjunto de las tres publicaciones preparadas para el traductor \texttt{Systranet} son accesibles desde:\\\\
+\begin{tabular}{@{}>{\footnotesize}l@{\hspace{8em}}>{\footnotesize}l@{}}
+  \hspace{2em}\small\url{http://personales.alumno.upv.es/carmilso/index0.html}\\
+  \hspace{2em}\small\url{http://personales.alumno.upv.es/carmilso/index1.html}\\
+  \hspace{2em}\small\url{http://personales.alumno.upv.es/carmilso/index2.html}
+\end{tabular}
+
+\subsection{Obtención de las traducciones}
+\label{subsec:obtencionTraducciones}
+
+Para conseguir las traducciones\index{Traducciones} del fichero preprocesado se ha usado los siguientes traductores \ingles{online}:
+
+\begin{itemize}
+
+  \item {\href{http://www.apertium.org/}{\textbf{Apertium}}}: es una plataforma de traducción automática de código abierto financiada por el \texttt{Gobierno de Español} y la \texttt{Generalitat de Catalunya} y desarrollado en la \texttt{Universitat d'Alacant} que en un principio se diseñó para la traducción de lenguas relacionadas y a la que en los últimos años se le ha dotado de una mayor potencia.
+  \item {\href{http://www.bing.com/translator}{\textbf{Bing}}}: es un traductor \ingles{online} propiedad de \texttt{Microsoft} que soporta la traducción entre más de cincuenta idiomas. Junto al traductor de \texttt{Google} es una de las referencias mundiales de la actualidad en traducción automática.
+  \item {\href{http://www.translate.google.com/}{\textbf{Google}}}: ha logrado convertirse en uno de los traductores \ingles{online} de referencia que soporta noventa idiomas. Es además el principal competidor del traductor de \texttt{Bing}.
+  \item {\href{http://www.lucysoftware.com/english/machine-translation/lucy-lt-kwik-translator-/}{\textbf{Lucy}}}: es un proveedor de traducciones automáticas con más de treinta años de experiencia en el campo de la traducción automática que ofrece además de un servicio de traducción \ingles{online}, un servicio de consultoría personalizado para empresas.
+  \item {\href{http://www.systranet.com/web}{\textbf{Systranet}}}: es un motor de traducción automática \ingles{online} con más de cuarenta idiomas disponibles que dispone también de un sistema de pago con características adicionales de traducción.
+
+\end{itemize}
+
+Una vez obtenidas las traducciones en inglés y francés de todas las frases con sus segmentos, éstas se han almacenado siendo discriminadas por traductor e idioma, resultando el nombre de fichero \texttt{$<$nombre\_del\_traductor$>$\_$<$idioma$>$.log} para cada una de ellas. Todas las traducciones han sido guardadas en una carpeta con nombre \texttt{logs}, para poder realizar sobre ellas el postproceso que se explicará a continuación en la \autoref{sec:postproceso}.
+
+\section{Postproceso de las traducciones}
+\label{sec:postproceso}
+
+Como ya se ha comentado anteriormente, uno de los principales problemas de los traductores \ingles{online} es que no generan resultados normalizados y por tanto cada uno de ellos transcribe de forma diferente palabras con un significado similar. Por ello ha sido necesario implementar una serie de métodos aplicables a todas las traducciones con los que poder hacer un uso equivalente de todas ellas.
+\newline
+\newline
+En las siguientes subsecciones se describe punto por punto cada uno de los casos que han sido detectados y tratados.
+
+\subsection{Restauración de las palabras invariantes}
+\label{subsec:restauracion_palabras_invariantes}
+
+En primer lugar lo que se ha hecho ha sido restaurar todas aquellas palabras o conjunto de palabras que debían permanecer invariantes, por lo que se ha realizado el proceso inverso al explicado previamente en la \autoref{subsec:palabrasInvariantes}. Se puede ver un ejemplo del resultado de la restauración de las palabras clave en la \autoref{fig:palabras_clave_reemplazadas}, que corresponde a un subconjunto de las traducciones para inglés obtenidas del traductor \ingles{online} de \texttt{Google}. Como se puede observar, el hecho de traducir por separado las frases completas de los segmentos provoca que la traducción de los segmentos en ocasiones no sea coherente con la frase, lo cual se justifica por la falta de contexto.
+\newline
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+  \texttt{|||}\\
+  \texttt{i want to meet schedule and price}~\textbf{Valencia}\\
+  \texttt{i want to meet}\\
+  \texttt{schedule}\\
+  \texttt{and price}\\
+  \texttt{to}~\textbf{Valencia}\\
+  \texttt{|||}\\
+  \texttt{yes repeats me schedules}~\textbf{talgo}~\texttt{that comes better}\\
+  \texttt{if}\\
+  \texttt{repeats me}\\
+  \texttt{the schedules}\\
+  \texttt{of}~\textbf{talgo}\\
+  \texttt{that comes better}\\
+  \texttt{|||}\\
+  \texttt{what time does the}~\textbf{intercity}\\
+  \texttt{what time does}\\
+  \texttt{the}~\textbf{intercity}\\
+  \texttt{|||}\\
+\end{tabular}
+\caption{\label{fig:palabras_clave_reemplazadas}Ejemplo de palabras clave restauradas}
+\end{figure}
+
+\subsection{Signos de puntuación}
+\label{subsec:signos_puntuacion}
+
+Para normalizar las traducciones se han eliminados algunos signos de puntuación, que se han obtenido como se puede ver en el código \ref{cod:signos_puntuacion}. A continuación se muestran los que no se han eliminado y una explicación del por qué.
+
+\begin{itemize}
+
+  \item Guión (-): Los guiones son utilizados en las horas tanto en inglés como en francés, además de para algunas palabras propias del francés, como podemos ver en el ejemplo de la \autoref{fig:ejemplos_guion_ingles} para el caso del inglés y en la \autoref{fig:ejemplos_guion_frances} para el caso de francés.
+
+  \item Barra baja (\_): Las barras bajas se mantienen únicamente para no corromper las palabras invariantes, explicadas en la \autoref{subsec:palabrasInvariantes}, ya que las palabras compuestas hacen uso de este signo de puntuación para mantenerse unidas como si de una única palabra se tratara.
+
+  \item Comilla simple ('): Se han mantenido las comillas simples dado que tanto en inglés como en francés son necesarias para muchas palabras, como se puede ver en el ejemplo de la \autoref{fig:ejemplos_comilla_ingles} para el caso del inglés y en la \autoref{fig:ejemplos_comilla_frances} para el caso de francés.
+
+  \item Barra de separación (|): Como ya se ha explicado en la \autoref{sec:contenido_fichero}, este signo replicado tres veces se corresponde con el separador entre cada grupo de frases y segmentos, por lo que es imprescindible mantenerlo para postprocesos posteriores.
+
+  \item Dos puntos (:): Este signo de puntuación se ha mantenido ya que como se explicará posteriormente en la \autoref{subsubsec:tratamiento_horas}, es necesario para convertir las horas en formato numérico a palabras. Sin embargo, hay un caso en el que este signo de puntuación se debe eliminar y es aquél en el que no se encuentra acompañado de un número. Para solucionar este caso se han buscado y eliminado aquellos ``:'' cuya anterior o posterior palabra no fuese un número, independientemente de los espacios que hubiese en medio.\\
+
+\end{itemize}
+
+\begin{figure}[ht]
+  \centering
+  \parbox[t]{0.475\textwidth}{
+    \centering
+    \begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+      \texttt{the}~\textbf{twenty-four}\\\texttt{the monday day}~\textbf{twenty-two}\\\texttt{for}~\textbf{twenty-five}~\texttt{june}
+    \end{tabular}
+    \caption{\label{fig:ejemplos_guion_ingles}Ejemplos de palabras con guión en inglés\\}
+  }
+  \hfill
+  \parbox[t]{0.475\textwidth}{
+    \centering
+    \begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+      \texttt{le}~\textbf{vingt-quatre}~\texttt{mai}\\\texttt{aux cinq et}~\textbf{cinquante-cinq}\\\texttt{pour passer}~\textbf{le week-end}
+    \end{tabular}
+    \caption{\label{fig:ejemplos_guion_frances}Ejemplos de palabras con guión en francés\\}
+  }
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \parbox[t]{0.475\textwidth}{
+    \centering
+    \begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+      \textbf{i'd}~\texttt{like to go ave}\\\texttt{i}~\textbf{don't}~\texttt{want to know price}\\\texttt{before ten}~\textbf{o'clock}
+    \end{tabular}
+    \caption{\label{fig:ejemplos_comilla_ingles}Ejemplos de palabras con comilla simple en inglés\\}
+  }
+  \hfill
+  \parbox[t]{0.475\textwidth}{
+    \centering
+    \begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+      \texttt{le prix}~\texttt{d'un}\texttt{voyage}\\\texttt{il me plairait}~\textbf{qu'il}~\texttt{fût un ave}\\\texttt{dans}~\textbf{l'après-midi}
+    \end{tabular}
+    \caption{\label{fig:ejemplos_comilla_frances}Ejemplos de palabras con comilla simple en francés\\}
+  }
+\end{figure}
+
+Con ello además de los signos de puntuación ya comentados y otros irrelevantes que han sido eliminados directamente como los interrogantes, las exclamaciones, los puntos o las comas, obtenemos también aquellos que son introducidos por algunos traductores cuando no comprenden la semántica de una expresión. Estos signos son dos:
+
+\begin{itemize}
+
+  \item Asterisco (*): Los asteriscos son utilizados por el traductor \ingles{online} \texttt{Apertium}, explicado anteriormente en la \autoref{subsec:obtencionTraducciones}, para marcar las palabras que no han sido analizadas. Podemos ver un ejemplo de las mismas en la \autoref{fig:ejemplo_asteriscos}.
+
+  \item Almohadilla (\#): Las almohadillas se utilizan también por parte de \texttt{Apertium} para indicar que ha habido problemas para procesar la palabra durante el análisis morfológico. En la \autoref{fig:ejemplo_almohadillas} se puede ver un ejemplo.\\
+
+\end{itemize}
+
+\begin{figure}[ht]
+  \centering
+  \parbox[t]{0.475\textwidth}{
+    \centering
+    \begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+      \texttt{Du train}~\textbf{*}\texttt{lanzadera}\\\texttt{Ne}~\textbf{*}\texttt{muchísimas grâces voilà tout}\\\texttt{Le mardi}~\textbf{*}\texttt{mismamente}
+    \end{tabular}
+    \caption{\label{fig:ejemplo_asteriscos}Ejemplos de traducciones con asterisco\\}
+  }
+  \hfill
+  \parbox[t]{0.475\textwidth}{
+    \centering
+    \begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+      \texttt{Il a}~\textbf{\#}\texttt{avoir une erreur}\\\texttt{Le sept mai deux}~\textbf{\#}\texttt{mil quatre}\\\texttt{Aux deux de}~\textbf{\#}\texttt{soir}
+    \end{tabular}
+    \caption{\label{fig:ejemplo_almohadillas}Ejemplos de traducciones con almohadilla\\}
+  }
+\end{figure}
+
+Se han utilizado las siguientes instrucciones para extraer los signos de puntuación.
+\newline
+
+\label{cod:signos_puntuacion}
+\begin{lstlisting}[style=bash, caption=Instrucciones para obtener los signos de puntuación]
+  $ cat logs/*.log | grep -o '[[:punct:]]' | sort -u
+\end{lstlisting}
+
+\subsection{Espacios y saltos de linea}
+\label{subsec:espacios_saltos_linea}
+
+Cada linea escrita en las traducciones, ya sea una frase, un segmento de la frase o el separador, es separada de su linea predecesora por una linea en blanco. Esto ocurre para todos los traductores \ingles{online} utilizados en el presente proyecto, así que estas lineas se han eliminado de las traducciones de todos los traductores.
+\newline
+\newline
+En el caso del traductor \ingles{online} de \texttt{Google} además se añade un espacio en blanco solo al inicio de la primera linea de la traducción, quedando así el separador que hay en la primera linea y que marca el inicio de la primera frase con sus segmentos desplazada a la derecha por un espacio, por lo que este caso también ha sido tratado.
+\newline
+\newline
+En la \autoref{subsec:signos_puntuacion} se ha explicado que los dos puntos se tenían que mantener a excepción de aquellos casos en los que no estuviesen acompañados por un número, y que la comilla simple se tenía que mantener en todos los casos por ser un signo propio del inglés y el francés. En el caso del traductor \texttt{Systranet} para la traducción en francés se han detectado casos en los que se separaba por un espacio la comilla simple de la palabra que la acompañaba, como se puede ver en la \autoref{fig:ejemplo_comilla_separada}, por lo que se ha tratado este caso eliminando dicho espacio de separación.
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+  \texttt{pourrait dire je si certains}~\textbf{d' eux}~\texttt{est} \\
+  \texttt{en effet je m'aimerais savoir le prix du billet}~\textbf{d' allée}\\
+  \textbf{d' ici}~\texttt{même}\\
+\end{tabular}
+\caption{\label{fig:ejemplo_comilla_separada}Ejemplo de comilla simple con espacio}
+\end{figure}
+
+\subsection{Tratamiento numérico}
+\label{subsec:tratamiento_numerico}
+
+El tratamiento de los números ha sido el más complejo de todo el postproceso de las traducciones debido a la alta variabilidad en la representación de los mismos
+\newline
+\newline
+Es importante señalar que ha sido necesario convertir todos aquellos que estaban representados de forma numérica a palabras ya que esta es la forma en la que se encuentran representados en los ficheros de test, por lo que ha habido que analizar cada caso por separado y realizar un tratamiento que se adaptase a todas las situaciones, que se describen en las siguientes secciones.
+\newline
+\newline
+Cabe destacar que un mismo traductor no tiene el mismo comportamiento esperado para todos los casos numéricos, sino que dependiendo del contexto en el que los números se encuentren los trata de una manera u otra. El único caso que se mantiene constante es el de aquellos que están entre dos paréntesis y que representan a las palabras invariantes cuyo tratamiento ha sido explicado en la \autoref{subsec:restauracion_palabras_invariantes}.
+
+\subsubsection{Tratamiento de las horas}
+\label{subsubsec:tratamiento_horas}
+
+En primer lugar ha sido necesario encontrar una forma de normalizar todos los casos de la misma manera, para posteriormente poder tratar las horas y convertirlas a palabras mediante un \ingles{script} que se explicará más adelante. Para procesar las horas se han realizado tres tratamientos diferentes, uno por cada caso que se ha localizado en las traducciones de los diferentes traductores.
+
+\begin{enumerate}
+
+  \item El traductor de \texttt{Google} en las traducciones de francés utiliza en ocasiones una ``h'' como separación entre la hora y los minutos. Este caso se ha tratado convirtiendo las ``h'' en ``:'', ya que únicamente se han contado quince casos del uso de la ``h'' como separador entre la hora y los minutos frente a trescientos ochenta y tres casos del uso de ``:'', facilitando de esta manera la posterior conversión de números a letras. Se puede observar un ejemplo de este caso en la \autoref{fig:horas_h}.
+  \label{item_dospuntos}
+
+  \item Se han detectado casos como los que se ven a modo de ejemplo en la \autoref{fig:horas_a}. Estas situaciones han aparecido únicamente en las traducciones de francés con el traductor de \texttt{Google}, igual que en el caso anterior. En estos casos, y aprovechando que el idioma en el que se producen es el francés se ha optado por tratarlos sustituyendo el separador de las horas, ya sea ``-'' o ``-à-'', por una única ``à'', ya que lo que se pretende expresar con estos separadores es un periodo donde se marca la hora de inicio y la de fin.
+  \label{item_guion}
+
+  \item En estos momentos de la ejecución del \ingles{script} se generan potencialmente nuevos casos, como se observa en la \autoref{fig:horas_sueltas}, en los que aparece una hora precedida y seguida de un espacio. Esto se debe a que en su estado anterior esta hora estaba unida a otra y alguna de las dos no tenía minutos, por lo que al separarlas, esta hora queda aislada. Posteriormente se explicará que esto es un problema únicamente para las doce horas por no poder interpretarlas correctamente cuando están expresadas como un par de ceros, por lo que se convierte todo par de ceros precedidos y seguidos por uno o más espacios en un doce.\\
+  \label{item_horassueltas}
+
+\end{enumerate}
+
+\begin{figure}[ht]
+  \centering
+  \parbox[t]{0.475\textwidth}{
+    \centering
+    \begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+      \texttt{à 00}\textbf{h}\texttt{25}\\\texttt{de quitter à 7}\textbf{h}\texttt{30 et 6:30 le calendrier}
+    \end{tabular}
+    \caption{\label{fig:horas_h}Ejemplos de horas con ``h'' como separador\\}
+  }
+  \hfill
+  \parbox[t]{0.475\textwidth}{
+    \centering
+    \begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+      \texttt{2}\textbf{-}\texttt{30 ou alors}\\\texttt{le 12 Avril midi 00}\textbf{-à-}\texttt{02h00}
+    \end{tabular}
+    \caption{\label{fig:horas_a}Ejemplos de traducciones con almohadilla\\}
+  }
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+  \texttt{feriez horaires Logroño le}~\textbf{12}~\texttt{avril midi}~\textbf{00}~\texttt{à 02:00}\\
+\end{tabular}
+\caption{\label{fig:horas_sueltas}Ejemplo de hora aislada}
+\end{figure}
+
+\subsubsection{Conversión a palabras}
+\label{subsubsec:conversion_palabras}
+
+A diferencia de los anteriores casos, que se han tratado mediante la implementación de \ingles{scripts} en \texttt{bash}, para convertir los números detectados en las traducciones a palabras se ha hecho uso del lenguaje de programación \texttt{Python} ya explicado en la \autoref{python} por la cantidad de librerías disponibles y la facilidad de uso que proporciona.
+\newline
+\newline
+Se ha utilizado la librería {\href{https://pypi.python.org/pypi/num2words}{\texttt{num2words}}} para convertir los números a palabras que está basada en una librería anterior con nombre \texttt{pynum2word} creada por Taro Ogawa en el año 2003. Actualmente es mantenida como software libre por Virgil Dupras y soporta trece idiomas diferentes. La función para convertir los números a palabras debe ser llamada pasándole como mínimo un argumento con el número a convertir pero permite además especificar un segundo argumento en el que se indica si el resultado debe ser un número ordinal o cardinal y un tercer argumento en el que se especifica el idioma objetivo al que se quiere convertir el número. Por defecto los números se devuelven en formato cardinal y en idioma inglés.
+\newline
+\newline
+Ha habido que analizar todos los casos posibles de inglés y francés y construir un conversor a medida para cada idioma y poder transformar correctamente todos los casos numéricos en palabras, para lo que se ha hecho uso de dos \ingles{scripts} que llevan a cabo esta tarea. El \ingles{script} que trata la conversión de los casos numéricos en las traducciones en francés ha sido cedido por los tutores del proyecto debido a la dificultad en la implementación del mismo por el desconocimiento sobre este idioma. Sin embargo, el \ingles{script} para las traducciones en inglés sí ha sido implementado desde cero para el presente proyecto, que es el que se procede a explicar a continuación.
+\newline
+\newline
+Para analizar todos los casos numéricos, y teniendo en cuenta que ya se han tratado los diferentes casos numéricos existentes para tener las traducciones normalizadas, se han utilizado tres expresiones regulares que pretenden abarcarlos todos.\\
+
+\begin{lstlisting}[style=python, caption=Expresiones regulares para detectar números]
+  hourspattern = compile('\d+:\d+(:\d+)?')
+  numeralspattern = compile('\d+(th|st|nd|rd)(-[a-zA-Z]+)?')
+  worddatepattern = compile('[a-zA-Z]+\d+')
+\end{lstlisting}
+
+Podemos observar que de esta manera tenemos control sobre todos los casos explicados anteriormente. En primer lugar encontramos la variable \texttt{hourspattern}, con la que tenemos acceso a las horas unidas a los minutos mediante dos puntos, que han sido explicadas en el \autoref{item_dospuntos} del tratamiento de las horas. Para seguir, con la variable \texttt{numeralspattern} podemos acceder a aquellos números que por representar una fecha tienen un formato ordinal y como consecuencia van acompañados por uno de los siguientes sufijos: ``th'', ``st'', ``nd'' o ``rd''. Además se ha detectado un caso en la traducción de \texttt{Bing} para el inglés, \texttt{19th-Friday}, en la que además se añade un guión con el día de la semana, por lo que se ha añadido esa posibilidad a la expresión regular que estamos describiendo. Por último, encontramos la variable \texttt{worddatepattern}, con la que analizamos los cuatro casos aislados que aparecen en la traducción de \texttt{Bing} para el inglés y que se pueden ver en la \autoref{fig:anomalias_bing} en los que aparece una palabra pegada a un número.\\
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+  \texttt{departure17}\\
+  \texttt{on17}\\
+  \texttt{Madrid29}\\
+  \texttt{no26}
+\end{tabular}
+\caption{\label{fig:anomalias_bing}Casos aislados del traductor \texttt{Bing}}
+\end{figure}
+
+Una vez concretadas las variables que se utilizarán para manipular los diferentes casos numéricos se define una lista con los meses, que servirán para comprobar si el número analizado corresponde al día de un mes o es independiente. Se ha definido también una función que es la que se encarga de transformar el número que recibe como argumento a palabras, a la que además se le especifica también si el número es ordinal o cardinal, siendo cardinal la opción por defecto.\\
+
+\begin{lstlisting}[style=python, caption={\label{cod:toword}Función para convertir números a palabras}]
+  def toWord(num, ord=False):
+    return strip(num2words(int(num), ordinal=ord))
+\end{lstlisting}
+
+Para poder trabajar todos los casos se ha analizado cada traducción linea a linea con todos los tratamientos anteriormente comentados ya realizados. La estructura del \ingles{script} donde se ve claramente la estructura con la que se localizan los diferentes casos numéricos es la que se muestra a continuación.\\
+
+\begin{lstlisting}[style=python, caption=Estructura básica del conversor]
+  if word.isdigit():
+    (...)
+  elif hourspattern.match(word):
+    (...)
+  elif numeralspattern.match(word):
+    (...)
+  elif worddatepattern.match(word):
+    (...)
+  else:
+    (...)
+\end{lstlisting}
+
+Para seguir, se analiza cada palabra de la linea y se intenta localizar cuatro casos diferentes.
+
+\begin{enumerate}
+
+  \item La palabra es un dígito: el hecho de que se cumpla esta condición implica que la palabra que está siendo analizada es un número aislado. En este caso puede pasar que la palabra que le acompaña directamente bien sea por la izquierda o por la derecha sea un mes, pero también podría ser que esté seguida por un ``\ingles{of}'', lo cual denotaría que hace referencia al día de un mes, o precedida por un ``\ingles{the}'', en cuyo caso se trataría también de un número que indica o bien el día de un mes o bien un número de ordenación. En cualquiera de estos casos hay que transformar el número en palabras que representen a ese número en formato ordinal.
+
+  \item La palabra es una hora: en caso de que la palabra haga \ingles{matching} con la expresión regular que representa las horas, cuyo formato se ha explicado en el \autoref{item_dospuntos} del tratamiento de las horas, se ha de tratar por separado las horas y los minutos. Si la hora son uno o dos ceros entonces hay que convertir ese cero o ceros en un doce, ya que la función \hyperref[cod:toword]{\texttt{toWord}} no interpreta que se está haciendo referencia a una hora y por tanto escribiría la palabra ``zero''. En el caso de los minutos se ha llegado a un convenio para decidir cómo deben ser interpretados, ya que se han tratado un total de cinco casos diferentes para el inglés.
+
+  \begin{itemize}
+
+    \item 00: se escribe en primer lugar la hora en palabras seguida por un ``o'clock''.
+
+    \item 15: en este caso se escribe ``quarter past'' seguido de la hora en palabras.
+
+    \item 30: para cuando pasan treinta minutos de la hora se ha decidido escribir ``half past'' con la hora en palabras a continuación.
+
+    \item 45: para este caso se ha escrito ``quarter to'' y a continuación la hora en palabras.
+
+    \item $<$ 30: si los minutos son inferiores a treinta y además no se han cumplido las condiciones anteriores, entonces se escriben los minutos en palabras seguido de un ``past'' y las horas en palabras.
+
+    \item $<$= 60: en el caso de que tampoco se haya cumplido la condición de que los minutos sean menores de treinta y tampoco ninguna de las condiciones anteriores, entonces se escribe en primer lugar la hora y a continuación los minutos en palabras.
+
+  \end{itemize}
+
+  \item La palabra es un número ordinal: si la palabra que se está analizando es un número que además tiene como sufijo uno de los términos citados anteriormente que denotan una ordenación, entonces se transforma el número en palabras a formato ordinal y se elimina el sufijo. En el caso de que además el número estuviese unido a un guión como es el caso anteriormente citado, se elimina el guión y se deja un espacio entre el número ya transformado en palabras y la palabra que previamente estaba a la parte derecha del guión.
+
+  \item La palabra está compuesta por una palabra y un número: este es el caso que se puede ver en la \autoref{fig:anomalias_bing}. Para tratarlo se escribe la palabra y a continuación se comprueba si la palabra anterior o posterior está en la lista de los meses. En caso afirmativo se escribe el número en palabras con formato ordinal, mientras que en caso contrario se escribe en formato cardinal.
+
+\end{enumerate}
+
+En el caso de que ninguna de estas condiciones se cumpla, simplemente se añade la palabra a la frase final de salida por no haberse detectado ningún caso numérico.
+\newline
+\newline
+El \ingles{script} donde se han implementado todos los tratamientos que se han comentado en el postproceso de las traducciones se puede visualizar en el siguiente enlace:
+
+\begin{tabular}{@{}>{\footnotesize}l@{\hspace{8em}}>{\footnotesize}l@{}}
+  \hspace{2em}\small\url{www.github.com/carmilso/TFG/blob/master/scripts/treatTranslations.sh}
+\end{tabular}
+
+\subsection{Resultados}
+\label{subsec:preproceso:resultados}
+
+Después de haber realizado el preproceso del fichero que posteriormente se ha traducido y el postproceso y normalización de cada una de las traducciones, se han guardado en la carpeta \texttt{logs} las traducciones normalizadas  cuyo nombre es \texttt{$<$nombre\_del\_traductor$>$\_$<$idioma$>$\_treated.log}. En la \autoref{fig:ejemplo_normalizaciones} se puede observar un ejemplo de las traducciones antes y después del proceso de normalización.\\
+
+\begin{figure}[ht]
+  \centering
+  \parbox[t]{0.475\textwidth}{
+    \centering
+    \begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+      \texttt{|||}\\
+      \texttt{would leave on March 24}\\
+      \texttt{I would want}\\
+      \texttt{get out}\\
+      \texttt{the March 24}\\
+      \texttt{|||}\\
+      \texttt{I wanted to go to ((129)) on Saturday}\\
+      \texttt{I wanted to go}\\
+      \texttt{to ((129))}\\
+      \texttt{next Saturday}\\
+      \texttt{|||}\\
+      \texttt{yes that leaves at 0:25}\\
+      \texttt{if}\\
+      \texttt{the leaves}\\
+      \texttt{at 0:25}\\
+      \texttt{|||}\\
+    \end{tabular}
+  }
+  \hfill
+  \parbox[t]{0.475\textwidth}{
+    \centering
+    \begin{tabular}{@{}>{\footnotesize}l@{\hspace{-1.25em}}>{\footnotesize}l@{}}
+      \texttt{|||}\\
+      \texttt{would leave on march twenty-fourth}\\
+      \texttt{i would want}\\
+      \texttt{get out}\\
+      \texttt{the march twenty-fourth}\\
+      \texttt{|||}\\
+      \texttt{i wanted to go to Toledo on saturday}\\
+      \texttt{i wanted to go}\\
+      \texttt{to Toledo}\\
+      \texttt{next saturday}\\
+      \texttt{|||}\\
+      \texttt{yes that leaves at twenty-five past twelve}\\
+      \texttt{if}\\
+      \texttt{the leaves}\\
+      \texttt{at twenty-five past twelve}\\
+      \texttt{|||}\\
+    \end{tabular}
+  }
+  \caption{\label{fig:ejemplo_normalizaciones}Ejemplos de normalizaciones realizadas\newline}
+\end{figure}
+
+En los siguientes capítulos se explicará la utilización que se ha hecho de las traducciones normalizadas y la experimentación realizada.

@@ -1,0 +1,180 @@
+% ---------------------------------------------------------------------
+%                      DOCUMENTO DE EJEMPLO
+%                    QUE UTILIZA LA PLANTILLA
+%                      DE LA EDITORIAL DE LA
+%                UNIVERSITAT POLITÈCNICA DE VALÈNCIA
+% ---------------------------------------------------------------------
+
+\documentclass[tesi, nocrop, rm, castellano]{editorialupv}
+
+% Opciones de la clase 'editorialupv'
+%
+% llibre      - Libro docente
+% ebookpdf    - Libro en formato PDF para e-Readers
+% tesi        - Formato de tesis
+% a4          - Formato A4
+% rm          - Tipo de letra roman
+% sf          - Tipo de letra sanserif
+% crop        - Marcas de corte (cruz) 17x24 cm (+3 mm por los cuatro lados) centrada en una A4 
+% nocrop     - Sin marcas de corte, respeta el tamaño 17x24 cm 
+% nomathskip  - No se modifican las distancias de las ecuaciones 
+%
+% castellano  - La publicación está escrita en castellano
+% valencia    - La publicació està escrita en valencià
+% english     - La publicación está escrita en inglés
+
+% ---------------------------------------------------------------------
+% Configuraciones presonalizadas 
+
+\input{./preambulo}
+
+\bibliography{referencias}
+
+% ---------------------------------------------------------------------
+% Las carpetas para los gráficos
+
+\graphicspath{
+	{../figuras/}
+	{../logos/}
+	{./figuras/}
+	{./logos/}
+	}
+
+% ---------------------------------------------------------------------
+
+\title{
+	Diseño de mecanismos basados en traducción automática para la portabilidad entre idiomas en un sistema de comprensión del habla\\[3ex]
+}
+\author{
+	Carlos Millán Soler
+}
+\tutor{Encarna Segarra Soriano\\
+       Fernando García Granada}
+\curs{2015-2016}
+
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+
+\begin{document}
+
+% ---------------------------------------------------------------------
+% Referencias cruzadas personalizadas y texto automático de LaTeX
+
+\ifcastellano % Las definiciones predefinidas empiezan con mayúscula
+	\renewcommand{\itemautorefname}{punto}
+	\renewcommand{\sectionautorefname}{sección}
+	\renewcommand{\subsectionautorefname}{subsección}
+	\renewcommand{\subsubsectionautorefname}{subsección}
+	\renewcommand{\figureautorefname}{figura}
+	\renewcommand{\tableautorefname}{tabla}
+  \renewcommand{\lstlistingname}{Código}% Listing -> Algorithm
+	
+  \renewcommand{\lstlistlistingname}{Listado de \lstlistingname s}
+	\renewcommand{\indexname}{Índice alfabético}
+	\renewcommand{\bibname}{Bibliografía}
+	\renewcommand{\contentsname}{Índice general}
+	\renewcommand{\abstractname}{Resumen}	
+\fi
+
+\ifvalencia % És molt important fer aquestes definicions, si no, apareixeran en anglès
+	\renewcommand{\itemautorefname}{punt}
+	\renewcommand{\sectionautorefname}{secció}
+	\renewcommand{\subsectionautorefname}{subsecció}
+	\renewcommand{\subsubsectionautorefname}{subsecció}
+	\renewcommand{\figureautorefname}{figura}
+	\renewcommand{\tableautorefname}{taula}
+
+	\renewcommand{\indexname}{Índex alfabètic}
+	\renewcommand{\bibname}{Bibliografia}
+	\renewcommand{\contentsname}{Índex}
+	\renewcommand{\abstractname}{Resum}	
+\fi
+
+% -------------------------------------------------------
+
+\frontmatter
+
+% -------------------------------------------------------
+% Página de título
+
+\maketitle	
+\cleardoublepage
+
+% -------------------------------------------------------
+% Resumen, prólogo o prefacio
+
+\input{resumen}
+\cleardoublepage
+
+% -------------------------------------------------------
+% Índice: tabla de contenidos
+
+\ifEPUB
+	% Nada, es decir no se incluye el índice general, 
+	% se genera en el proceso de creación del EPUB
+\else
+	\cleardoublepage
+	\phantomsection
+	\addcontentsline{toc}{chapter}{\contentsname}
+
+	\tableofcontents
+  \listoffigures
+  % \lstlistoflistings
+\fi
+
+% -------------------------------------------------------
+% Numeración de páginas números arábicos
+% Primer capítulo en página 1
+
+\mainmatter
+
+% -------------------------------------------------------
+% -------------------------------------------------------
+% -------------------------------------------------------
+% Capítulos de la publicación
+
+\input{introduccion}
+
+\input{corpus}
+
+\input{corpus_multilingue}
+
+\input{comprension_habla}
+
+\input{experimentacion}
+
+\input{conclusion}
+
+% -------------------------------------------------------
+% -------------------------------------------------------
+% -------------------------------------------------------
+% Bibliografía
+
+\bibitemsep = 3ex
+\bibhang = 2em
+
+\printbibliography[heading=bibintoc,title=\bibname]
+
+% -------------------------------------------------------
+% Apéndices
+
+\input{apendices}
+
+% -------------------------------------------------------
+% Índice alfabético
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\indexname}
+
+\printindex
+
+% -------------------------------------------------------
+% Fin del documento
+
+\end{document}
+
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------

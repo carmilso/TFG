@@ -1,0 +1,32 @@
+\chapter{Conclusiones y trabajo futuro}
+\label{ch:conclusion}
+
+\section{Conclusiones}
+\label{sec:conslusiones}
+
+En este proyecto se han tratado los problemas de la obtención de un sistema de comprensión del habla multilingüe. Tal y como se ha explicado al inicio del proyecto en el \autoref{ch:introduccion}, se parte de un sistema de comprensión en castellano y el objetivo es adquirir uno en inglés y francés.
+\newline
+\newline
+Para conseguir el sistema de comprensión en inglés y francés se ha seguido la aproximación \ingles{train-on-target}. Lo primero que se ha conseguido es la obtención de un conjunto de entrenamiento en ambos idiomas, haciendo uso de cinco traductores \ingles{online} de propósito general (\texttt{Apertium}, \texttt{Bing}, \texttt{Google}, \texttt{Lucy} y \texttt{Systranet}), a partir de un subconjunto del \ingles{corpus} original en castellano. Estos conjuntos de entrenamiento han sido normalizados para eliminar las particularidades de cada traductor \ingles{online} tal y como se ha explicado en el \autoref{ch:procesamiento}. Con los conjuntos de entrenamiento ya normalizados, se ha realizado un proceso de segmentación para alinear los segmentos con las frases enteras como se muestra en el \autoref{ch:comprension_habla}. De esta forma se obtiene la frase completa segmentada y preparada para el entrenamiento mediante CRFs. A partir de los conjuntos de entrenamiento segmentados se entrenan los modelos semánticos. Se ha obtenido un modelo por cada idioma y traductor \ingles{online} utilizado, pero además se han entrenado modelos con la combinación de las traducciones de diferentes traductores.
+\newline
+\newline
+Con los modelos semánticos en inglés y francés entrenados se ha realizado pruebas por cada idioma con todas las combinaciones de modelos entrenados. Los resultados han sido comparados con los presentados siguiendo la aproximación \ingles{test-on-source}. Se ha podido demostrar en base a estos resultados que siguiendo la aproximación \ingles{train-on-target} y utilizando diferentes combinaciones de traductores se obtienen resultados que mejoran ligeramente los obtenidos por la aproximación \ingles{test-on-source}. A pesar de esta mejora, se puede ver como la aproximación \ingles{train-on-target} conlleva mucho más trabajo y tiempo que la aproximación \ingles{test-on-source}.
+\newline
+\newline
+Como se ha podido ver a lo largo del proyecto, es difícil evitar la acumulación de errores en el proceso de obtención del sistema de comprensión multilingüe. Los traductores \ingles{online} cometen errores semánticos que no pueden ser tratados en la normalización por la naturaleza de los mismos. Estos errores se propagan al proceso de segmentación donde tal y como se ha mostrado en la \autoref{subsec:impl_realizada} se pierden algunos de los segmentos. Esta acumulación de errores provoca que el entrenamiento de los modelos semánticos tampoco quede exento de ellos.
+
+\section{Trabajo futuro}
+\label{sec:trabajo-futuro}
+
+En vista de que los resultados obtenidos con el sistema de comprensión siguiendo la aproximación \ingles{train-on-target} son satisfactorios, conviene estudiar diferentes propuestas de optimización.
+\newline
+\newline
+Se puede hacer uso de la herramienta MOSES para la generación de un traductor automático a partir de las traducciones obtenidas por todos los traductores \ingles{online} para inglés y francés. Esto permitiría entrenar un nuevo modelo de comprensión con el que obtener nuevos resultados que se podrían comparar con los obtenidos en este proyecto. De esta forma se podría comprobar si las traducciones mejoran significativamente respecto a las de los traductores \ingles{online}. Además, se puede usar los resultados obtenidos por diferentes combinaciones de traductores para entrenar un traductor automático a partir de las mejores combinaciones de los mismos.
+\newline
+\newline
+Respecto al proceso de segmentación, se pueden probar otras aproximaciones diferentes a la implementada en este proyecto. Segmentar correctamente es fundamental a la hora de conseguir un conjunto de entrenamiento de calidad. Esto se podría conseguir considerando la posible permutación de los segmentos para alinearlos con la frase debido a la conversión de algunas frases en voz activa a voz pasiva y la introducción de frases hechas propias del idioma. Otra posibilidad sería la de obligar a respetar el número de etiquetas por frase, con lo que no se perdería ninguna etiqueta semántica.
+
+\section{Asignaturas relacionadas}
+\label{sec:asignaturas}
+
+En este proyecto se ha hecho uso del material y los conocimientos adquiridos en el transcurso del grado. Han resultado muy relevantes asignaturas como ``Sistemas de almacenamiento y recuperación de la información'' o ``Algorítmica'' relacionadas con el tratamiento del lenguaje y la programación eficiente. Otras asignaturas como ``Percepción'' o ``Aprendizaje automático'' han servido también para asentar las bases para la comprensión de las técnicas de aprendizaje y clasificación usadas en el proyecto como son los CRFs.

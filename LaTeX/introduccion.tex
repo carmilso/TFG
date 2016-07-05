@@ -1,0 +1,240 @@
+\chapter{Introducción}
+\label{ch:introduccion}
+
+\section{Comprensión del habla}
+\label{sec:comprension_habla}
+
+La comprensión del habla se enmarca dentro de lo que en la actualidad se denomina como ``Ingeniería del lenguaje''. Dentro de este ámbito hay un gran volumen de aplicaciones prácticas que son útiles en muchos ámbitos de la vida. Se pueden encontrar desde sistemas que pueden interpretar el idioma en el que está escrito un texto, pasando por herramientas de reconocimiento de la voz hasta aplicaciones de diálogo y etiquetado semántico del habla.
+\newline
+\newline
+Una de las características más importantes de estos sistemas es la posibilidad de ser dotados de multilingüismo, que consiste en la capacidad de poder ser usados en otros idiomas diferentes al original. Esta característica no fue posible hasta los años noventa, en los que se realizaron grandes avances de aplicación en traducción automática. Esta ha sido la motivación principal en le realización de este proyecto.
+\newline
+\newline
+Uno de las principales aplicaciones de los sistema de comprensión del habla es la de proveer un sistema de diálogo para un dominio limitado. Estos sistemas se basan en la interacción de los usuarios con un sistema capaz de etiquetar semánticamente la información proporcionada por el usuario mediante lenguaje natural. A partir de esta información se extraen los datos que el usuario solicita al sistema y se genera una respuesta acorde a la información requerida. Estos sistemas suelen estar formados por un reconocedor del habla que transcribe la voz del usuario, un módulo semántico que se encarga del etiquetado semántico y un módulo que genera la consulta que necesita el sistema de información para proporcionar la respuesta al usuario.
+\newline
+\newline
+En la \autoref{fig:sistema-comprension} se puede visualizar el esquema general de un sistema de comprensión diálogo hablado de consulta a un sistema de información. En él se pueden ver todos los módulos que se han comentado y dónde se encuentra el componente de comprensión del habla. Se puede observar que el analizador semántico depende de un modelo semántico, cuyo proceso de obtención se explicará a lo largo del presente proyecto.
+
+\begin{figure}[h]
+\centering
+  \includegraphics[scale=0.40]{./logos/sistema-dialogo}
+\caption{\label{fig:sistema-comprension}Esquema general de un sistema de diálogo de consulta a un sistema de información}
+\end{figure}
+
+El proceso de comprensión se puede resumir en seis puntos que se enuncian a continuación.
+
+\begin{enumerate}
+
+  \item Reconocimiento y transcripción de la voz del usuario. Esta acción se realiza mediante un módulo de reconocimiento del habla entrenado previamente en el idioma destino que sea capaz de reconocer frases dentro del contexto de aplicación del sistema. Este módulo hace uso de unos modelos acústicos ya entrenados y de un modelo de lenguaje para la transcripción.
+
+  \item Etiquetado semántico de las palabras de entrada al sistema de comprensión del habla. Estas etiquetas semánticas se corresponden con los conceptos que entiende el sistema de consulta con el que interactúa el usuario. Tras el proceso de reconocimiento del habla, el analizador semántico se encarga de generar la representación semántica de la entrada. Además, este último módulo nombrado depende del modelo semántico, cuya obtención se explicará en los siguientes capítulos.
+
+  \item Creación de la consulta. Es la acción que se realiza una vez se ha obtenido la representación semántica de la entrada al sistema. Este módulo (gestor de diálogo) recibe información de la historia de diálogo y de una estrategia definida previamente. Se encarga de generar la salida en un formato comprensible para la interfaz de la base de datos.
+
+  \item Consulta a la base de datos. La interfaz de la base de datos realiza la consulta y extrae la información solicitada por el usuario.
+
+  \item Recuperación de la información solicitada. A partir de la información obtenida de la base de datos y de su representación semántica se genera la respuesta en forma de lenguaje natural siguiendo unas reglas predefinidas para su correcta realización.
+
+  \item Generación del habla. Si la respuesta al usuario se hace de forma hablada, se transforma el texto proporcionado por el generador de respuestas a voz. Una vez generada la salida en forma de voz, ésta se transmite al usuario.
+
+\end{enumerate}
+
+Es un reto actualmente conseguir reducir el porcentaje de error de los sistemas de comprensión del habla. Esto es un problema más fácilmente abordable cuando se trata de un sistema que trabaja en un ámbito semántico restringido. En estos casos la tasa de error se ha conseguido reducir drásticamente durante los últimos años.
+
+\section{Estado del arte}
+\label{sec:estado_del_arte}
+
+\subsection{Inicios}
+\label{subsec:estado_del_arte:inicios}
+
+Como se ha comentado, en los años noventa surgieron los primeros avances relevantes en el campo de la comprensión del habla.
+\newline
+\newline
+Una de las principales propuestas de sistema de comprensión del lenguaje natural de esta época fue realizada por el MIT (\ingles{Massachusetts Institute of Technology}) con el analizador lingüístico TINA \cite{266526}. Se trata de un conjunto probabilístico de reglas basadas en gramáticas incontextuales que en tiempo de ejecución actúa como una red donde cada nodo representa una categoría sintáctica o semántica. Las probabilidades estimadas a partir de los datos de entrenamiento permiten acotar la búsqueda durante el proceso de reconocimiento y etiquetar cada palabra de la frase con la categoría del nodo que le corresponde.
+
+Actualmente existen otras tecnologías utilizadas en el ámbito de la ``Ingeniería del lenguaje'' que han mejorado mucho en los últimos años llegando a arrojar resultados muy relevantes en este campo.
+
+\subsection{Máquinas de vectores de soporte}
+\label{subsec:svm}
+
+Se trata de un método aparecido en 1979 pero muy usado en la actualidad. Se basa en el uso de algoritmos de aprendizaje supervisado y es altamente utilizado en problemas de clasificación y regresión.
+\newline
+\newline
+Los SVM (\ingles{Support Vector Machines}) construyen un modelo de clasificación a partir de los datos de entrenamiento que se les proporciona. Este modelo representa la posición de las muestras en el espacio separando cada clase lo más ampliamente posible. Para ello, los SVM construyen un hiperplano o conjunto de hiperplanos separadores que maximicen la distancia entre las clases.
+\newline
+\newline
+Un ejemplo de la correcta clasificación de dos clases en un espacio de dos dimensiones se puede ver en la \autoref{fig:svm}.
+
+\begin{figure}[h]
+\centering
+  \includegraphics[scale=0.45]{./logos/svm-ejemplo}
+\caption{\label{fig:svm}Ejemplo de clasificación usando SVM}
+\end{figure}
+
+Para el ámbito de la comprensión del habla existen trabajos \cite{citeulike:11988645} que hacen uso de esta técnica para la clasificación de las palabras de las frases de entrada en distintas categorías gramaticales.
+\newline
+\newline
+En el caso citado por ejemplo, se hace uso de esta técnica para entrenar modelos a partir de tuplas de categorías y valores. La salida del algoritmo es un árbol semántico con conceptos en los nodos terminales asociados a los valores de la base de datos.
+
+\subsection{Redes neuronales}
+\label{subsec:rnn}
+
+Es una de las técnicas que más está siendo utilizada en los últimos años. En 1943 surgieron los primeros modelos de ANN (\ingles{Artificial Neural Networks}), pero no fue hasta 1960 cuando gracias al desarrollo del ADALINE se aplicaron por primera vez de forma industrial.
+\newline
+\newline
+Se basan en un paradigma de aprendizaje y procesamiento de la información automático y se inspiran en el funcionamiento de las redes neuronales del sistema nervioso. Se componen de una capa de entrada y una de salida además de una o más capas ocultas. Cada una de las capas está formada por una o más neuronas que tienen su correspondiente función de activación. El resultado de cada neurona es enviado a la neurona siguiente para su correspondiente cálculo. En la capa de salida se produce la salida final de la ANN.
+\newline
+\newline
+Se puede ver un ejemplo de ANN en la \autoref{fig:ann} con $i$ neuronas en la capa de entrada, $k$ en la de salida y una capa oculta con $j$ neuronas.
+\newline
+
+\tikzset{%
+ every neuron/.style={
+ circle,
+ draw,
+ minimum size=1cm
+ },
+ neuron missing/.style={
+ draw=none,
+ scale=4,
+ text height=0.333cm,
+ execute at begin node=\color{black}$\vdots$
+ },
+}
+
+\begin{figure}[htp]
+\centering
+\begin{tikzpicture}[x=1.5cm, y=1.5cm, >=stealth]
+
+\foreach \m/\l [count=\y] in {1,2,3,missing,4}
+  \node [every neuron/.try, neuron \m/.try] (input-\m) at (0,2.5-\y) {};
+
+\foreach \m [count=\y] in {1,missing,2}
+  \node [every neuron/.try, neuron \m/.try ] (hidden-\m) at (2,2-\y*1.25) {};
+
+\foreach \m [count=\y] in {1,missing,2}
+  \node [every neuron/.try, neuron \m/.try ] (output-\m) at (4,1.5-\y) {};
+
+\foreach \l [count=\i] in {1,2,3,i}
+  \draw [<-] (input-\i) -- ++(-1,0)
+    node [above, midway] {$E_\l$};
+
+\foreach \l [count=\i] in {1,j}
+  \node [above] at (hidden-\i.north) {$N_\l$};
+
+\foreach \l [count=\i] in {1,k}
+  \draw [->] (output-\i) -- ++(1,0)
+    node [above, midway] {$S_\l$};
+
+\foreach \i in {1,...,4}
+  \foreach \j in {1,...,2}
+    \draw [->] (input-\i) -- (hidden-\j);
+
+\foreach \i in {1,...,2}
+  \foreach \j in {1,...,2}
+    \draw [->] (hidden-\i) -- (output-\j);
+
+\foreach \l [count=\x from 0] in {Capa de entrada, Capa oculta, Capa de salida}
+  \node [align=center, above] at (\x*2,2) {\l \\};
+
+\end{tikzpicture}
+\caption{\label{fig:ann}Ejemplo de red neuronal}
+\label{fig_m_3}
+\end{figure}
+
+Las ANN se utilizan también para tratar problemas de comprensión del habla \cite{1318502} en los que como ya se ha descrito hace falta un etiquetado semántico de las frases.
+\newline
+\newline
+En el ejemplo citado se hace uso de las ANN para extraer los conceptos semánticos asociados a las palabras de las frases de entrada y rellenar los campos en una representación basada en \ingles{frames} que son utilizados para la interacción con el usuario.
+
+\subsection{CRFs}
+\label{subsec:crfs_estado_del_arte}
+
+Los CRFs (\ingles{Conditional Random Fields}) son modelos discriminativos ``log-lineal'' en los que se realiza una normalización a nivel de toda la frase.
+\newline
+\newline
+Un CRF se define como un grafo de dependencias y una serie de características con un peso asociado que es calculado durante el proceso de aprendizaje. Los CRFs reúnen características de los sistemas generativos y discriminativos. Con ellos se puede tener en cuenta tanto las características de la entrada que se han aprendido de forma discriminativa como las decisiones previas a la hora de escoger la mejor etiqueta semántica en cada momento.
+\newline
+\newline
+Es una de las técnicas de referencia actuales para la creación de sistemas de comprensión del habla \cite{Lafferty:2001:CRF:645530.655813} por su precisión a la hora de asignar etiquetas semánticas a cada palabra de las frases de entrada al sistema.
+\newline
+\newline
+En el artículo que se acaba de citar se explican ampliamente los CRFs y se hace uso de ellos para realizar una comparación con los MEMMs (\ingles{Maximum entropy Markov models}). Los modelos no generativos de estados finitos como los MEMMs o los HMMs (\ingles{Hidden Markov Models}) poseen una desventaja respecto a los CRFs, que se trata del \ingles{label bias problem}. Esta debilidad consiste en el hecho de que las salidas de un estado dado en estos modelos solo compite contra otro, en lugar de hacerlo contra todas las transiciones del modelo como ocurre en los CRFs. En el artículo se explican también como funciona el algoritmo que implementa la estimación de parámetros en los CRFs.
+\newline
+\newline
+Los CRFs serán explicados detalladamente en la \autoref{sec:crf} ya que han sido la técnica utilizada para entrenar los modelos semánticos multilingües obtenidos en este proyecto.
+
+\subsection{Máquinas de estados finitos}
+\label{subsec:maquinas-estados-finitos}
+
+Las FSMs (\ingles{Finite State Machines}) son un modelo de computación que genera una salida a partir de una entrada dada y un conjunto de operaciones que se realizan de forma automática. En 1943 surge el modelo neuronal de McCulloch-Pitts como primera aproximación formal de las FSMs.
+\newpage
+Una máquina de estados finitos se puede definir formalmente por una tupla con cinco componentes ($Q$, $\Sigma$, $q_0 \in Q$, $\delta \colon Q \otimes \Sigma \rightarrow Q$, $F \subseteq Q$) formada respectivamente por un conjunto finito de estados, un alfabeto finito, un estado inicial perteneciente al conjunto de estados, una función de transición y un conjunto de estados finales o de aceptación. El estado en el que se encuentra la máquina en cada momento (solo puede estar en uno de ellos a la vez) se denomina ``estado actual''. Al analizar la cadena entrada, la máquina pasa de un estado a otro y finaliza cuando se computa el último símbolo de la cadena. Si el estado en el que acaba pertenece al conjunto de estados finales, entonces se acepta la cadena.
+\newline
+\newline
+En la \autoref{fig:mef} se puede observar un ejemplo FSM con las transiciones definidas y un total de tres estados, siendo uno de ellos inicial y final.
+
+\begin{figure}[htp]
+\centering
+\begin{tikzpicture}[>=stealth',shorten >=1pt,auto,node distance=2cm,initial text={inicio}]
+  \node[initial,state,accepting] (S)      {$S$};
+  \node[state]         (q1) [right of=S]  {$q_1$};
+  \node[state]         (q2) [right of=q1] {$q_2$};
+
+
+  \path[->] (S)  edge [loop above] node {a} (S)
+             edge              node {a} (q1)
+        (q1) edge [bend left]  node {a} (S)
+             edge              node {b} (q2)
+        (q2) edge [loop above] node {b} (q2)
+             edge [bend left]  node {b} (q1);
+\end{tikzpicture}
+\caption{\label{fig:mef}Ejemplo de autómata de estados finitos}
+\end{figure}
+
+Actualmente son usados también en comprensión del habla \cite{Calvo:2016:MSL:2899534.2899729, segarra2002, ortega2010} principalmente para la decodificación semántica. En el artículo citado se desarrollan dos grafos. El primero de ellos consiste en un grafo de traducciones generado a partir de las traducciones de las frases de entrada al sistema. Este grafo está construido a partir de un lenguaje finito que representa la generalización de todas las traducciones. El segundo grafo trata la entrada para proporcionar la mejor ruta en el grafo de traducciones de acuerdo a un modelo semántico.
+
+\section{Objetivos}
+\label{sec:objetivos}
+
+El presente proyecto trata de buscar un método de creación de un sistema de comprensión del habla multilingüe en los idiomas inglés y francés a partir de un sistema en castellano. Este sistema se ha aplicado a la tarea del \ingles{corpus} \texttt{DIHANA} de consulta de horarios, precios y servicios de trenes de largo recorrido en España, que se explica detalladamente en el \autoref{ch:corpus}.
+\newline
+\newline
+El propósito de un sistema de comprensión del habla es el de proporcionar una interpretación semántica a la frase de entrada en términos de unidades semánticas. Lo que se busca es identificar la información relevante que es necesaria para proporcionar una respuesta al usuario. Con la incorporación del multilingüismo se consigue un sistema de comprensión válido para una entrada tanto en inglés como en francés. De esta forma, un sistema que originalmente está diseñado para tratar frases en castellano se adapta para hacerlo también con estos dos idiomas.
+\newline
+\newline
+Para lograr este objetivo se puede hacer uso de dos aproximaciones diferentes.
+
+\begin{itemize}
+
+  \item El primer caso se trata de la aproximación \ingles{test-on-source}, donde se espera una entrada al sistema en un idioma distinto a aquél para el que ha sido diseñado. Esta estrategia centra su esfuerzo en la traducción y el tratamiento de la entrada para poder ser analizada por el sistema de comprensión.
+  \item En segundo lugar se encuentra la aproximación \ingles{train-on-target}, que es la que se ha decidido emplear en este trabajo para la implementación del multilingüismo. Se trata de una aproximación en la que el trabajo recae sobre la obtención de un nuevo sistema de comprensión en los idiomas a los que se quiere portar a partir del sistema original. Es decir, dado un sistema de comprensión del habla funcional para un idioma se obtiene otro para un idioma objetivo. Para conseguirlo es necesario traducir el \ingles{corpus} de entrenamiento del idioma original a los nuevos idiomas y entrenar los correspondientes modelos semánticos a partir de estas traducciones. Cabe destacar que el proceso de obtención de los nuevos modelos semánticos no consiste solo en la traducción del \ingles{corpus} de entrenamiento, sino también en la segmentación y el correcto etiquetado semántico de las frases de entrenamiento traducidas en los nuevos idiomas.
+
+\end{itemize}
+
+Por ello, este trabajo se divide en varios capítulos en los que se explican los diferentes pasos seguidos para la obtención de un sistema de comprensión del habla en inglés y francés a partir de un \ingles{corpus} disponible en castellano.
+
+\begin{itemize}
+
+  \item Descripción del \ingles{corpus} (\autoref{ch:corpus}): se describe el \ingles{corpus} utilizado tanto para el entrenamiento de los nuevos modelos semánticos como para las pruebas realizadas.
+
+  \item Obtención del \ingles{corpus} multilingüe (\autoref{ch:procesamiento}): en este capítulo se explica la forma de obtención de las frases de entrenamiento en inglés y francés así como el tratamiento realizado en todas ellas con el fin de normalizarlas y los traductores \ingles{online} utilizados.
+
+  \item Sistema de comprensión del habla (\autoref{ch:comprension_habla}): se desarrolla el proceso de segmentación y de obtención de los segmentos de las frases de entrenamiento traducidas.
+
+  \item Experimentación (\autoref{ch:experimentacion}): se discuten los resultados obtenidos con la aproximación utilizada para la obtención del sistema de comprensión multilingüe y se compara con otras aproximaciones.
+
+  \item Conclusiones y trabajo futuro (\autoref{ch:conclusion}): en este último capítulo se resume el trabajo realizado y se abre la posibilidad de lineas futuras de investigación.
+
+\end{itemize}
+
+Para conseguir las traducciones de las frases de entrenamiento se ha hecho uso de diferentes traductores \ingles{online} de propósito general (\texttt{Apertium}, \texttt{Bing}, \texttt{Google}, \texttt{Lucy} y \texttt{Systranet}), de los cuales se puede ver una explicación en la \autoref{subsec:obtencionTraducciones}.
+\newline
+\newline
+Mediante estos traductores se han conseguido las traducciones tanto en inglés como en francés de un subconjunto de frases del \ingles{corpus} \texttt{DIHANA} que han sido normalizadas tal y como se explica en el \autoref{ch:procesamiento}. Una vez conseguido esto, se ha realizado un proceso de segmentación cuya explicación se puede leer en la \autoref{sec:segmentacion}. Mediante este proceso se consigue alinear los segmentos traducidos con la frase y se etiqueta cada segmento con la etiqueta semántica que le corresponde.
+\newline
+\newline
+Cuando se tienen los segmentos etiquetados correctamente, se procede a entrenar los modelos semánticos haciendo uso de CRFs. Se ha entrenado un modelo por cada traductor utilizado y otro en el que intervienen todos ellos. También se han realizado combinaciones con las traducciones de diferentes traductores. La idea de esto es la de poder realizar una comparación de los resultados obtenidos para cada modelo semántico diferente, tal y como se comenta en el \autoref{ch:conclusion}.
+\newline
+\newline
+Cuando se tienen los modelos semánticos entrenados, el sistema de comprensión ya está preparado para recibir la consulta del usuario. Esta consulta en forma de lenguaje natural se interpreta por el modelo semántico y es etiquetada a nivel de concepto. A partir de estas etiquetas se genera una consulta formal en el lenguaje que entiende el sistema de información. Por último se construye la respuesta y ésta es transmitida al usuario.

@@ -1,0 +1,267 @@
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+% Configuración general
+
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{appendix}
+
+\usepackage{multirow}
+\usepackage{rotating}
+
+\usepackage{amsmath}
+
+\usepackage{pdfpages}
+
+\usepackage{listings}
+
+
+
+\ifEPUB
+	% Soluciona error "Undefined control sequence 			\blx@shorthands" cuando backend=biber (con bibtex 		no da este error)
+
+	\makeatletter
+	\def\blx@shorthands{} 
+	\makeatother 
+
+
+	\ifcastellano\usepackage[spanish,es-tabla,es-sloppy]{babel}\fi
+	\ifvalencia\usepackage[catalan]{babel}\fi
+	\ifenglish\usepackage[english]{babel}\fi
+	\newcommand{\sen}{\on{sen}}
+	\date{}
+\else
+	\ifcastellano\usepackage[spanish,es-tabla]{babel}\fi
+	\ifvalencia\usepackage[catalan]{babel}\fi
+	\ifenglish\usepackage[english]{babel}						\usepackage{csquotes}\fi
+	\newcommand{\sen}{\on{sen}}	
+\fi
+
+
+\usepackage{xcolor, colortbl}
+\usepackage{array,booktabs}
+\usepackage{tabularx,multicol}
+\usepackage{amssymb}
+
+\ifenglish
+	\raggedright % No justifica, i no divide las palabras con guiones
+\fi
+
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+% Bibliografía
+
+\usepackage[
+	url = false,
+	% style = authortitle,
+	style = numeric,
+	hyperref = true,
+	backref = true,
+  sorting = none,
+	backend = biber, % Otra opción es 'backend = bibtex'
+	]{biblatex}
+
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+% Documento electrónico
+
+\usepackage{makeidx}
+\makeindex
+
+\ifEBOOKPDF
+	\colorlet{colorEnlace}{red!75!black} 
+\else 
+	\colorlet{colorEnlace}{black} 
+\fi
+
+\usepackage[
+	{colorlinks},
+	{linkcolor=colorEnlace},
+	{citecolor=colorEnlace},
+	{urlcolor=colorEnlace},
+	{bookmarksnumbered},
+	{breaklinks},
+	]{hyperref}
+
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+% Expresión de unidades según el Sistema Internacional, monedas
+
+\usepackage{eurosym}
+\usepackage{siunitx}
+
+\ifenglish
+	\sisetup{output-decimal-marker={.}}
+\else
+	\sisetup{output-decimal-marker={,}}
+\fi
+
+\DeclareSIUnit[number-unit-product = {\;}] \EURO{\geneuro}
+
+
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+% Comandos y entornos personalizados
+
+\ifEPUB
+	\newcommand{\incluyeGrafico}[2][]{\Picture[#2]{./figuras/#2.png width="500px"}}
+%	\newcommand{\incluyeGrafico}[2][]{\Picture[#2]{./figuras/#2.png}}
+\else		
+	\newcommand{\incluyeGrafico}[2][]{\includegraphics[#1]{#2}}
+\fi
+
+% ---------------------------------------------------------------------
+
+\newcommand{\ingles}[1]{\textit{#1}}
+
+% ------------------------------------------------------------------------
+
+\usepackage{xspace}
+
+\newcommand{\angles}[1]{\textit{#1}\/}
+\newcommand{\miUrl}[1]{{\small%
+	%\texttt%
+	{\underline{#1}}}}
+
+\newcommand{\matlabr}{{\sc Matlab}$^\circledR$\xspace}
+\newcommand{\simulinkr}{\textit{Simulink}$^\circledR$\xspace}
+\newcommand{\matlab}{{\textsc{Matlab}}\xspace}
+\newcommand{\simulink}{\textit{Simulink}\xspace}
+
+\newcommand{\scr}{\textit{script\/}\xspace}
+\newcommand{\scrs}{\textit{scripts\/}\xspace}
+
+% ------------------------------------------------------------------------
+
+\definecolor{griset}{rgb}{.925, .925, .925}
+
+\ifEPUB
+
+	\newenvironment{parrafoDestacado}
+		{
+		\HCode{<div class="parrafoDestacado">}
+		}
+		{
+		\HCode{</div>}	
+		}
+
+\else
+
+	\newsavebox{\mybox}
+	\newenvironment{parrafoDestacado}
+		{%
+		\fboxsep = 2ex
+		\fboxrule = .4pt
+	  	\begin{lrbox}{\mybox}%
+	  	\begin{minipage}{.85\textwidth-2\fboxsep}\itshape\parskip=2ex
+		}
+		{%
+		\end{minipage}
+	  	\end{lrbox}%
+		\begin{flushright}
+			\colorbox{griset}{\usebox{\mybox}}%
+	  		%\fcolorbox{black}{griset}{\usebox{\mybox}}%
+		\end{flushright}
+		}
+		
+%	\newenvironment{parrafoDestacado} % Si no nos gusta el sombreado
+%		{
+%		\vspace{0ex}
+%		\begin{quote}\noindent
+%		\itshape
+%		\samepage
+%		\parskip=2ex
+%		%\color{NavyBlue}
+%		}
+%		{
+%		\end{quote}
+%		}
+
+\fi
+
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+% Símbolos matemáticos
+
+\newcommand{\on}{\operatorname}
+
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+% Teoremas y ejemplos
+
+\ifcastellano
+	\newtheorem{teorema}{\upshape\bfseries Teorema}[section]
+	\newtheorem{lema}{\mdseries\scshape Lema}[section]
+	\newtheorem{proposicion}{\upshape\bfseries Proposición}[section]
+	\newtheorem{ejemplo}{\bfseries\scshape Ejemplo}[section]
+\fi
+
+\ifvalencia % Es mantenen els mateixos noms per compatibilitat, però l'autor els pot personalitzar
+	\newtheorem{teorema}{\upshape\bfseries Teorema}[section]
+	\newtheorem{lema}{\mdseries\scshape Lema}[section]
+	\newtheorem{proposicion}{\upshape\bfseries Proposició}[section]
+	\newtheorem{ejemplo}{\bfseries\scshape Exemple}[section]
+\fi
+
+\ifenglish
+	\newtheorem{teorema}{\upshape\bfseries Theorem}[section]
+	\newtheorem{lema}{\mdseries\scshape Lemma}[section]
+	\newtheorem{proposicion}{\upshape\bfseries Proposition}[section]
+	\newtheorem{ejemplo}{\bfseries\scshape Example}[section]
+\fi
+
+
+% ---------------------------------------------------------------------
+% Obsoleto
+
+% En esta versión de la plantilla no es necesario utilizar el comando \ parBlanca 
+% Pero lo mantenemos para compatibilidad
+
+\newcommand
+	{\parBlanca}
+	{\clearpage{\thispagestyle{empty}\cleardoublepage}}
+
+
+% ---------------------------------------------------------------------
+
+\usepackage{xcolor}
+\usepackage{listings}
+% \usepackage{bera}% optional; just for the example
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{codered}{rgb}{0.95,0.1,0.2}
+ 
+\lstset {
+  basicstyle=\footnotesize\ttfamily,
+  captionpos=b,
+  numbers=left,
+  numbersep=5pt,
+  breaklines=true,
+  backgroundcolor=\color{backcolour},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codegreen}
+}
+
+\lstdefinestyle{python} {
+  language=Python,
+  keywordstyle=\color{blue!90!black},
+  keywordstyle={[2]\color{red}},
+  morekeywords=[2]{match, isdigit}
+}
+
+\lstdefinestyle{bash} {
+  language=Bash,
+  morestring=[b]',
+  keywordstyle=\color{magenta},
+  morekeywords={grep, sort}
+}
+
+
+\usepackage{babel}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+\usetikzlibrary{babel}

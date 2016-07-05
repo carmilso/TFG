@@ -1,0 +1,357 @@
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+% ---------------------------------------------------------------------
+
+\chapter{Experimentación}
+\label{ch:experimentacion}
+
+\section{Conjuntos de entrenamiento y prueba}
+\label{sec:conjuntos_entrenamiento_prueba}
+
+El conjunto de entrenamiento consiste en un subconjunto del \ingles{corpus} \texttt{DIHANA} compuesto por 4.887 turnos y etiquetado y segmentado como se ha explicado en el \autoref{ch:corpus}. Se han estimado dos sistemas de comprensión, uno para el inglés y otro para el francés. En ambos casos se ha definido un conjunto de prueba de 1.000 turnos de usuario. En la experimentación se usan entradas transcritas y de voz. Estas últimas han sido adquiridas por locutores nativos y reconocidas por el {\href{https://www.google.com/intl/es/chrome/demos/speech.html}{\texttt{Google ASR (Automatic Speech Recognizer)}}}. En el caso del inglés se ha adquirido las 1.000 frases de pruebas pero en el caso del francés solo se dispone de 500 frases adquiridas por nativos del total de frases del conjunto de pruebas transcrito.
+\newline
+\newline
+El WER (\ingles{Word Error Rate}), cuya fórmula se muestra en la \autoref{eq:WER} y que calcula la distancia de \texttt{Levenshtein} a nivel de palabra entre una frase y otra, calculado sobre las frases reconocidas con el {\href{https://www.google.com/intl/es/chrome/demos/speech.html}{\texttt{Google ASR}}} ha sido de 20,0 para el inglés y 19,5 para el francés.
+
+\begin{equation}
+ \label{eq:WER}
+ WER=\frac{S+B+I}{N}
+\end{equation}
+
+{\footnotesize
+\hspace{10em} donde:
+\begin{itemize}[noitemsep,topsep=0em]
+\addtolength{\itemindent}{10.5em}
+  \item $S$ representa el número de palabras sustituidas
+  \item $B$ representa el número de palabras borradas
+  \item $I$ representa el número de palabras insertadas
+  \item $N$ es el número de palabras de la referencia\\\\
+\end{itemize}}
+
+Para entrenar los modelos se han usado CRFs teniendo en cuenta dos palabras por delante y dos por detrás y se ha generado un modelo por cada idioma y por cada traductor \ingles{online} utilizado. Además se ha entrenado un modelo para cada idioma en el que se ha utilizado el conjunto de todas las traducciones obtenidas por los traductores \ingles{online}. De esta forma, los modelos se han entrenado con traducciones en el idioma objetivo, que coincide con el mismo en el que estará la prueba de entrada al sistema de comprensión. En la \autoref{fig:esquema_sistema} se puede observar el sistema general del proceso de comprensión.
+\newline
+\newline
+Cabe destacar que a las pruebas tanto de texto como de voz se les ha aplicado parte del postproceso explicado en la \autoref{sec:postproceso}. Esto se debe a que ambos contienen signos de puntuación y letras en mayúsculas, además de números en el caso de las pruebas de voz.
+
+\begin{figure}[h]
+\centering
+  \includegraphics[scale=0.45]{./logos/esquema}
+\caption{\label{fig:esquema_sistema}Esquema del sistema de comprensión usando \ingles{train-on-target}}
+\end{figure}
+
+Una vez las pruebas están normalizadas, se obtienen los resultados en los que se muestran los conceptos asociados a cada palabra de la frase tal y como se puede ver en la \autoref{fig:resultados_crf}.
+\newline
+\newline
+Los resultados se obtienen en dos columnas, de las cuales la primera es una palabra de la frase y la segunda es el concepto asociado a la palabra resultado de la comprensión. Los conceptos con los que se etiquetan las palabras de las frases de las pruebas siguen la notación IOB2, explicada anteriormente en la \autoref{subsec:tratamiento-salida}. Cada frase del resultado se separa de la siguiente por un punto en la primera columna y un 0 en la última.\\
+
+\begin{figure}[h]
+\centering
+\footnotesize
+\begin{tabular}{l@{\hspace{3em}}l@{\hspace{3em}}l}
+  \texttt{yes}      &  \texttt{B\_<afirmacion>}\\
+  \texttt{i\rq{d}}  &  \texttt{B\_<hora>}\\
+  \texttt{like}     &  \texttt{I\_<hora>}\\
+  \texttt{times}    &  \texttt{I\_<hora>}\\
+  \texttt{for}      &  \texttt{I\_<hora>}\\
+  \texttt{trains}   &  \texttt{I\_<hora>}\\
+  \texttt{going}    &  \texttt{I\_<hora>}\\
+  \texttt{to}       &  \texttt{B\_ciudad\_destino}\\
+  \texttt{Cuenca}   &  \texttt{I\_ciudad\_destino}\\
+  \texttt{.}        &  \texttt{0}
+\end{tabular}
+\caption{\label{fig:resultados_crf}Ejemplo de frase resultado}
+\end{figure}
+
+\section{Resultados de la experimentación}
+\label{sec:resultados_experimentacion}
+
+Para la experimentación se han utilizado cinco traductores \ingles{online} (\texttt{Apertium}, \texttt{Bing}, \texttt{Google}, \texttt{Lucy}, \texttt{Systranet}). Se han llevado a cabo los experimentos usando diferentes combinaciones de los traductores, que se codifican en las tablas de forma binaria (1 - se ha utilizado; 0 - no se ha utilizado) y se ordenan alfabéticamente, ocupando de esta manera \texttt{Apertium} el bit más significativo y \texttt{Systranet} el bit menos significativo.
+\newline
+\newline
+El CER (\ingles{Concept Error Rate}), cuya fórmula se puede observar en la \autoref{eq:CER} ha sido la medida utilizada para evaluar la calidad del sistema, que calcula la distancia de edición mínima entre la hipótesis (los conceptos asignados a cada frase por el sistema de comprensión) y la referencia (los conceptos reales de la frase) normalizado por la longitud de la referencia.
+
+\begin{equation}
+ \label{eq:CER}
+ CER=\frac{S+B+I}{N}
+\end{equation}
+
+{\footnotesize
+\hspace{10em} donde:
+\begin{itemize}[noitemsep,topsep=0em]
+\addtolength{\itemindent}{10.5em}
+  \item S representa el número de conceptos sustituidos
+  \item B representa el número de conceptos borrados
+  \item I representa el número de conceptos insertados
+  \item N es el número de conceptos de la referencia\\\\
+\end{itemize}}
+
+Además, con el fin de valorar la confianza de los resultados se ha calculado un intervalo de confianza (IC) del 95\% para cada uno de los resultados empleando la fórmula disponible en la \autoref{eq:IC}, donde la medida de la cual debe ser estimado su intervalo es el CER, que está representada por el parámetro $p$, y donde la suma de longitudes de las secuencias de conceptos de referencia se representa por el parámetro $n$.
+
+\begin{equation}
+\label{eq:IC}
+  IC=\pm 1,96\cdot\sqrt{\frac{(p\cdot(1-p))}{n}}
+\end{equation}
+\newline
+
+En la \autoref{tab:individuales_en} se pueden ver los resultados obtenidos del inglés para las pruebas de 1.000 frases de texto y voz utilizando los modelos de cada traductor de forma individual y el de todos juntos.
+
+\begin{table}[h]
+\centering
+\vspace{1em}
+\small
+\begin{tabular}{|l|c|c||c|c|}\cline{2-5}
+\multicolumn{1}{c|}{}&\multicolumn{2}{c||}{\texttt{Texto}}&\multicolumn{2}{c|}{\texttt{Voz}}\\\cline{1-5}
+\multicolumn{1}{|c|}{\texttt{Traductores}}  &     CER     &  IC$\pm$  &     CER   &  IC$\pm$  \\\hline\hline
+Apertium       (10000)&     30,5    &  1,66     &     37,6  &  1,75     \\\hline
+Bing           (01000)&     24,8    &  1,56     &     30,4  &  1,66     \\\hline
+Google         (00100)&\bf  23,0    &  1,52     &\bf  28,1  &  1,62     \\\hline
+Lucy           (00010)&     34,8    &  1,72     &     40,4  &  1,77     \\\hline
+Systranet      (00001)&     31,1    &  1,67     &     38,6  &  1,75     \\\hline
+Todos          (11111)&\bf  21,9    &  1,49     &\bf  27,0  &  1,60     \\\hline
+\end{tabular}
+\caption{\label{tab:individuales_en}Resultados individuales y totales de inglés con 1.000 frases}
+\end{table}
+
+Como se puede observar, el mejor resultado tanto para las pruebas de texto como para las de voz en inglés se ha obtenido con el conjunto de todos los traductores. Este modelo semántico se ha adquirido a partir del entrenamiento de las traducciones normalizadas de todos los traductores. Se puede apreciar también que el modelo semántico obtenido a partir de las traducciones de \texttt{Google} es el que mejor resultado ha obtenido después de la combinación de todos los traductores, siendo especialmente notable en el caso de las pruebas de voz. Cabe destacar por tanto que éste ha sido el traductor que más ha aportado positivamente al modelo semántico obtenido de la combinación de todos los traductores
+\newline
+\newline
+Por el contrario, se puede comprobar que \texttt{Lucy} es el traductor a partir del cual se ha generado el modelo semántico que peores aportaciones ha hecho al proceso de comprensión.
+\newline
+\newline
+Con el objetivo de poder comparar las 500 frases de voz de francés con las de texto se ha generado una prueba de 500 frases de texto en francés producto del subconjunto de las 1.000 de la prueba original. En la \autoref{tab:individuales_fr} se pueden ver los resultados de las 500 frases de texto y voz en francés.
+
+\begin{table}[h]
+\centering
+\vspace{1em}
+\small
+\begin{tabular}{|l|c|c||c|c|}\cline{2-5}
+\multicolumn{1}{c|}{}&\multicolumn{2}{c||}{\texttt{Texto}}&\multicolumn{2}{c|}{\texttt{Voz}}\\\cline{1-5}
+\multicolumn{1}{|c|}{\texttt{Traductores}}  &     CER     &  IC$\pm$  &     CER   &  IC$\pm$  \\\hline\hline
+Apertium       (10000)&     37,7    &  2,45     &     38,8  &  2,47     \\\hline
+Bing           (01000)&\bf  22,8    &  2,12     &\bf  25,9  &  2,22     \\\hline
+Google         (00100)&\bf  22,9    &  2,13     &\bf  25,1  &  2,19     \\\hline
+Lucy           (00010)&     29,9    &  2,32     &     32,4  &  2,37     \\\hline
+Systranet      (00001)&     27,6    &  2,26     &     31,7  &  2,35     \\\hline
+Todos          (11111)&\bf  18,9    &  1,98     &\bf  22,2  &  2,10     \\\hline
+\end{tabular}
+\caption{\label{tab:individuales_fr}Resultados individuales y totales de francés con 500 frases\\}
+\end{table}
+
+En la tabla que se acaba de mostrar se demuestra como el modelo semántico generado a partir de la combinación de todos los traductores vuelve a ser el que mejor resultados arroja para los dos tipos de prueba. En este caso tanto \texttt{Bing} como \texttt{Google} demuestran ser los traductores con los que mejor resultado se obtiene en las pruebas de francés.
+\newline
+\newline
+Cabe señalar que en el caso del francés, el intervalo de confianza aumenta considerablemente con respecto al inglés. Esta situación provoca que los resultados obtenidos sean más relativos y la diferencia entre cada uno de los traductores con resultados aproximados no sea tan destacable como en el caso del inglés.
+\newline
+\newline
+Se han calculado también los resultados para las pruebas de texto en francés con 1.000 frases que se pueden ver en la \autoref{tab:text_fr}.
+
+\begin{table}[h]
+\centering
+\vspace{1em}
+\small
+\begin{tabular}{|l|c|c|}\cline{2-3}
+\multicolumn{1}{c|}{}&\multicolumn{2}{c|}{\texttt{Texto}}\\\cline{1-3}
+\multicolumn{1}{|c|}{\texttt{Traductores}}  &     CER   &  IC$\pm$  \\\hline\hline
+Apertium   (10000)&     35,9  &  1,73     \\\hline
+Bing       (01000)&     24,5  &  1,55     \\\hline
+Google     (00100)&\bf  21,7  &  1,49     \\\hline
+Lucy       (00010)&     27,4  &  1,61     \\\hline
+Systranet  (00001)&     26,9  &  1,60     \\\hline
+Todos      (11111)&\bf  19,8  &  1,43     \\\hline
+\end{tabular}
+\caption{\label{tab:text_fr}Resultados de texto en francés con 1.000 frases\\}
+\end{table}
+
+En los resultados obtenidos para francés con 1.000 frases usando el modelo semántico de todos los traductores aumenta en nueve décimas el error con respecto a las pruebas con 500 frases. Sin embargo si nos fijamos en el intervalo de confianza se puede concluir que los resultados son similares a los obtenidos con 1.000 frases.
+\newline
+\newline
+Las tablas que se muestran a continuación siguen la codificación binaria explicada anteriormente, con lo que por ejemplo la secuencia $00011$ representa la combinación de traductores \texttt{Lucy} y \texttt{Systranet}, mientras que la secuencia $11100$ representa la combinación de \texttt{Apertium}, \texttt{Bing} y \texttt{Google}.
+\newline
+\newline
+Se ha realizado una experimentación que recoge todas las posibles combinaciones de uso de los cinco traductores \ingles{online} para la obtención del conjunto de entrenamiento en inglés y francés.
+\newline
+\newline
+En la \autoref{tab:comb_en} se pueden observar los resultados de las diferentes combinaciones realizadas para las pruebas tanto de texto como de voz con 1.000 frases cada una para el inglés.
+
+\begin{table}[h]
+\centering
+\vspace{1em}
+\small
+\begin{tabular}{|c|c|c||c|c|}\cline{2-5}
+\multicolumn{1}{c|}{}&\multicolumn{2}{c||}{\texttt{Texto}}&\multicolumn{2}{c|}{\texttt{Voz}}\\\cline{1-5}
+\texttt{Traductores}  &     CER   &  IC$\pm$  &     CER   &  IC$\pm$  \\\hline\hline
+00011        &     25,7  &  1,57     &     33,3  &  1,70     \\\hline
+00101        &     22,0  &  1,49     &     27,7  &  1,61     \\\hline
+00110        &     22,2  &  1,50     &     27,8  &  1,61     \\\hline
+01001        &     24,7  &  1,55     &     30,6  &  1,66     \\\hline
+01010        &     24,1  &  1,54     &     30,0  &  1,65     \\\hline
+01100        &     22,5  &  1,50     &     27,6  &  1,61     \\\hline
+10001        &     26,4  &  1,59     &     33,6  &  1,70     \\\hline
+10010        &     26,5  &  1,59     &     33,7  &  1,70     \\\hline
+10100        &     21,9  &  1,49     &     27,6  &  1,61     \\\hline
+11000        &     24,0  &  1,54     &     30,2  &  1,66     \\\hline
+00111        &     22,0  &  1,49     &     27,7  &  1,61     \\\hline
+01011        &     24,0  &  1,54     &     30,3  &  1,66     \\\hline
+01101        &     22,2  &  1,50     &     27,6  &  1,61     \\\hline
+01110        &     22,3  &  1,50     &     27,3  &  1,61     \\\hline
+10011        &     25,3  &  1,57     &     32,7  &  1,69     \\\hline
+10101        &\bf  21,5  &  1,48     &\bf  27,1  &  1,60     \\\hline
+10110        &\bf  21,6  &  1,48     &\bf  27,0  &  1,60     \\\hline
+11001        &     24,1  &  1,54     &     30,3  &  1,66     \\\hline
+11010        &     22,9  &  1,51     &     29,5  &  1,64     \\\hline
+11100        &     22,5  &  1,50     &     27,9  &  1,62     \\\hline
+01111        &     22,2  &  1,50     &\bf  27,2  &  1,60     \\\hline
+10111        &\bf  21,5  &  1,48     &\bf  27,1  &  1,60     \\\hline
+11011        &     23,5  &  1,53     &     30,1  &  1,65     \\\hline
+11101        &     22,4  &  1,50     &     27,8  &  1,62     \\\hline
+11110        &     22,4  &  1,50     &     27,4  &  1,61     \\\hline
+\end{tabular}
+\caption{\label{tab:comb_en}Combinación de traductores para inglés con 1.000 frases}
+\end{table}
+
+En la tabla que se acaba de mostrar se puede ver como ha habido varias combinaciones de traductores en las que el resultado ha sido similar. Estas combinaciones han sido las siguientes: \texttt{Apertium}, \texttt{Google} y \texttt{Systranet} (10101); \texttt{Apertium}, \texttt{Google} y \texttt{Lucy} (10110); \texttt{Apertium}, \texttt{Google}, \texttt{Lucy} y \texttt{Systranet}. Además en el caso de las pruebas de voz hay que destacar también la combinación de \texttt{Bing}, \texttt{Google}, \texttt{Lucy} y \texttt{Systranet} (0111).
+\newline
+\newline
+En la \autoref{tab:individuales_en} se puede ver que la combinación de todos los traductores obtiene un CER de 21,9 en las pruebas de texto y un 27,0 en las de voz. Debido al intervalo de confianza se puede concluir que la mejor elección a la hora de entrenar un modelo semántico para inglés es utilizar todas las traducciones, lo cual evita tener que elegir entre una combinación u otra.
+\newline
+\newline
+Siguiendo el mismo procedimiento que se ha realizado para calcular los resultados de la \autoref{tab:comb_en}, se muestran en la \autoref{tab:comb_fr} los resultados de diferentes combinaciones realizadas para las pruebas de texto y voz con 500 frases de francés.
+
+\begin{table}[h]
+\centering
+\vspace{1em}
+\small
+\begin{tabular}{|c|c|c||c|c|}\cline{2-5}
+\multicolumn{1}{c|}{}&\multicolumn{2}{c||}{\texttt{Texto}}&\multicolumn{2}{c|}{\texttt{Voz}}\\\cline{1-5}
+\texttt{Traductores}  &     CER   &  IC$\pm$  &     CER   &  IC$\pm$  \\\hline\hline
+00011        &     24,3  &  2,17     &     26,0  &  2,22     \\\hline
+00101        &     21,2  &  2,07     &\bf  22,0  &  2,10     \\\hline
+00110        &     21,6  &  2,08     &     23,1  &  2,13     \\\hline
+01001        &     20,3  &  2,04     &     23,9  &  2,16     \\\hline
+01010        &     21,4  &  2,08     &     23,5  &  2,14     \\\hline
+01100        &\bf  19,9  &  2,02     &     24,4  &  2,17     \\\hline
+10001        &     25,0  &  2,19     &     27,6  &  2,26     \\\hline
+10010        &     27,2  &  2,25     &     29,3  &  2,30     \\\hline
+10100        &     22,2  &  2,10     &     23,3  &  2,14     \\\hline
+11000        &     21,7  &  2,08     &     24,7  &  2,18     \\\hline
+00111        &     20,9  &  2,06     &\bf  21,7  &  2,08     \\\hline
+01011        &     20,3  &  2,04     &     23,4  &  2,14     \\\hline
+01101        &\bf  19,1  &  1,99     &     23,1  &  2,13     \\\hline
+01110        &\bf  19,3  &  2,00     &     23,1  &  2,13     \\\hline
+10011        &     24,8  &  2,19     &     26,2  &  2,23     \\\hline
+10101        &     21,1  &  2,07     &\bf  22,1  &  2,10     \\\hline
+10110        &     21,5  &  2,08     &     23,0  &  2,13     \\\hline
+11001        &     20,0  &  2,02     &     23,7  &  2,15     \\\hline
+11010        &     21,2  &  2,07     &     23,9  &  2,16     \\\hline
+11100        &\bf  19,1  &  1,99     &     23,4  &  2,14     \\\hline
+01111        &\bf  18,9  &  1,98     &\bf  22,3  &  2,11     \\\hline
+10111        &     21,3  &  2,07     &\bf  22,0  &  2,10     \\\hline
+11011        &     20,8  &  2,05     &     23,5  &  2,15     \\\hline
+11101        &\bf  19,1  &  1,99     &\bf  22,7  &  2,12     \\\hline
+11110        &\bf  19,1  &  1,99     &\bf  22,8  &  2,12     \\\hline
+\end{tabular}
+\caption{\label{tab:comb_fr}Combinación de traductores para francés con 500 frases}
+\end{table}
+
+Como se muestra en la tabla anterior para las pruebas de texto en francés, la combinación de \texttt{Bing}, \texttt{Google}, \texttt{Lucy} y \texttt{Systranet} (0111) obtiene el mismo resultado que con la combinación de todos los traductores, que es de 19,8 tal y como se puede observar en la \autoref{tab:individuales_fr}. Además, en las pruebas de voz con la combinación de los traductores \texttt{Google} y \texttt{Systranet} (00101), y con la de \texttt{Bing}, \texttt{Google}, \texttt{Lucy} y \texttt{Systranet} (0111), se obtiene mejor resultado que con la combinación de todos ellos. Igual que en el caso del inglés y debido al intervalo de confianza, se puede asegurar que la mejor opción es usar la combinación de todos los traductores.
+\newline
+\newline
+Por último, se muestra en la \autoref{tab:combinaciones_fr} los resultados para las pruebas de texto en francés con un total de 1.000 frases.
+
+\begin{table}[h]
+\centering
+\vspace{1em}
+\small
+\begin{tabular}{|c|c|c|}\cline{2-3}
+\multicolumn{1}{c|}{}&\multicolumn{2}{c|}{\texttt{Texto}}\\\cline{1-3}
+\texttt{Traductores}  &     CER   &  IC$\pm$  \\\hline\hline
+00011        &     22,6  &  1,51  \\\hline
+00101        &     20,1  &  1,45  \\\hline
+00110        &     20,3  &  1,45  \\\hline
+01001        &     21,5  &  1,48  \\\hline
+01010        &     21,9  &  1,49  \\\hline
+01100        &     21,1  &  1,47  \\\hline
+10001        &     23,3  &  1,52  \\\hline
+10010        &     24,8  &  1,56  \\\hline
+10100        &     20,6  &  1,46  \\\hline
+11000        &     22,2  &  1,50  \\\hline
+00111        &     20,0  &  1,44  \\\hline
+01011        &     21,1  &  1,47  \\\hline
+01101        &     20,3  &  1,45  \\\hline
+01110        &     20,2  &  1,45  \\\hline
+10011        &     22,6  &  1,51  \\\hline
+10101        &\bf  19,9  &  1,44  \\\hline
+10110        &     20,2  &  1,45  \\\hline
+11001        &     20,6  &  1,46  \\\hline
+11010        &     21,8  &  1,49  \\\hline
+11100        &\bf  19,9  &  1,44  \\\hline
+01111        &\bf  19,8  &  1,44  \\\hline
+10111        &     20,1  &  1,45  \\\hline
+11011        &     21,1  &  1,47  \\\hline
+11101        &\bf  19,8  &  1,44  \\\hline
+11110        &\bf  19,8  &  1,44  \\\hline
+\end{tabular}
+\caption{\label{tab:combinaciones_fr}Combinación de traductores para texto en francés con 1.000 frases\\}
+\end{table}
+
+Ésta es la última tabla que se ha obtenido y en ella se puede ver como con una prueba de texto con 500 frases de prueba más de las que se han utilizado para la \autoref{tab:comb_fr} se empeoran ligeramente los resultados. Por ello tampoco se obtiene ninguna combinación de traductores que funcione mejor que la combinación de todos ellos.
+
+\section{Valoración de los resultados}
+\label{sec:valoracion_resultados}
+
+En el apartado anterior se han mostrado los resultados obtenidos por los sistemas de comprensión entrenados con CRFs a partir de diferentes combinaciones de traductores.
+\newline
+\newline
+Como se ha explicado previamente, las combinaciones más interesantes de traductores son aquellas en las que todos participan. A pesar de haber combinaciones concretas que arrojan un resultado levemente más positivo, el intervalo de confianza indica que no son resultados que difieran significativamente de los que se obtienen con la combinación de todos los traductores.
+\newline
+\newline
+Anteriormente en el \autoref{ch:comprension_habla}, se ha explicado que la aproximación que se ha seguido para construir el sistema de comprensión ha sido la del \ingles{train-on-target}. Por ello, todos los modelos de comprensión han sido entrenados a partir de traducciones normalizadas en el idioma destino.
+\newline
+\newline
+Existe otra aproximación diferente que es la del \ingles{test-on-source} \cite{Calvo:2016:MSL:2899534.2899729}. Esta técnica consiste en entrenar los modelos de comprensión en el idioma origen y traducir al idioma destino las pruebas de entrada al sistema. Un esquema básico de esta aproximación se puede ver en la \autoref{fig:test_on_source}.
+
+\begin{figure}[h]
+\centering
+  \includegraphics[scale=0.45]{./logos/esquema-test_on_source}
+\caption{\label{fig:test_on_source}Esquema del sistema de comprensión usando \ingles{test-on-source}}
+\end{figure}
+
+Como se puede ver, la aproximación \ingles{test-on-source} centra su trabajo en la traducción de las frases de entrada al sistema. En el artículo citado se usan los mismos de conjuntos de prueba que en el presente proyecto. Además, se utilizaron diferentes aproximaciones para entrenar los modelos semánticos. Entre ellas se encuentra la misma que la que se ha utilizado en este proyecto para entrenar los modelos semánticos, es decir, los CRFs.
+\newline
+\newline
+En la \autoref{tab:article} se pueden ver los resultados que se presentan en el artículo usando diferentes combinaciones de traductores y entrenando los modelos semánticos con CRFs. Concretamente se muestran las combinaciones de traductores que proporcionaron mejores resultados.
+
+\begin{table}[h]
+\centering
+\vspace{1em}
+\small
+\begin{tabular}{|l|l|c|c|}\cline{3-4}
+\multicolumn{2}{c}{} & \multicolumn{1}{|c|}{\ingles{test-on-source}} & \multicolumn{1}{c|}{\ingles{train-on-target}} \\\cline{3-4}
+\multicolumn{2}{l|}{}  & \texttt{CER} & \texttt{CER}\\\hline
+\multirow{2}{*}{Inglés}&\texttt{Texto} & 22,1 & 21,9\\\cline{2-4}
+  &\texttt{Voz}& 32,2 & 27,0\\\hline\hline
+\multirow{2}{*}{Francés}&\texttt{Texto}& 23,1 & 19,8\\\cline{2-4}
+  &\texttt{Voz}& 28,9 & 22,2\\\hline
+\end{tabular}
+\caption{\label{tab:article}Comparación de resultados con CRFs usando las dos estrategias}
+\end{table}
+
+Como se puede observar, los resultados obtenidos siguiendo la aproximación de \ingles{train-on-target} mejoran en todos los casos los obtenidos siguiendo la aproximación de \ingles{test-on-source}.
+\newline
+\newline
+Mientras que en el artículo, siguiendo la aproximación \ingles{test-on-source}, se obtuvo una puntuación de 22,1 de CER para las pruebas de texto en inglés, con la aproximación utilizada en este proyecto se ha conseguido rebajar esta cifra hasta 21,9. En el caso de las pruebas de voz para este mismo idioma, en el artículo se muestra una puntuación de 32,2 de CER siendo de solo 27,0 la conseguida mediante la aproximación de \ingles{train-on-target}.
+\newline
+\newline
+En el caso del francés también se han obtenido mejores resultados siguiendo la aproximación de \ingles{train-on-target}. En las pruebas de texto con 1.000 frases se obtuvieron en el artículo 23,1 puntos mientras que esa cifra se ve reducida hasta los 19,8 puntos en este proyecto. Cabe recordar que en las pruebas de voz para francés tanto en el artículo como en el presente proyecto se han utilizado tan solo 500 frases. En este último caso, la puntuación obtenida en el artículo fue de 28,9 de CER, que pasa a ser 22,2 siguiendo la aproximación de \ingles{train-on-target}.
+\newline
+\newline
+Se puede apreciar que la diferencia de resultados siguiendo una aproximación u otra es significativa. A pesar de ser mejores los resultados, el proceso de obtención de los modelos semánticos en la aproximación de \ingles{train-on-target} es mucho más costosa que el tratamiento de la entrada al sistema de comprensión de la aproximación de \ingles{test-on-source}.
+\newline
+\newline
+En la aproximación de \ingles{train-on-target} que se ha utilizado en el presente proyecto ha sido necesario traducir todas las frases y sus segmentos, para lo que es necesario una tarea previa de análisis de los traductores \ingles{online} a utilizar. A continuación se ha analizado y tratado cada una de las traducciones obtenidas de los diferentes traductores para hacerlas todas consistentes entre sí. Por último y previo al entrenamiento de los modelos semánticos se ha realizado un proceso de alineamiento de segmentos para poder etiquetar cada segmento de la frase con el concepto semántico que le corresponde. Todo este proceso está detalladamente explicado en los Capítulos \ref{ch:procesamiento} y \ref{ch:comprension_habla}.
+\newline
+\newline
+Sin embargo, para la aproximación de \ingles{test-on-source} utilizada en el artículo no es necesario un proceso tan costoso. Esto se debe a que en la citada aproximación el entrenamiento de los modelos semánticos se realiza en el idioma destino, y como ya se ha explicado anteriormente es la entrada la que se encuentra en el idioma origen y la que debe ser tratada.
+\newline
+\newline
+Por todo esto se puede concluir que la elección de una aproximación u otra dependerá de el nivel de error que se esté dispuesto a asumir, ya que como se acaba de explicar, la aproximación de \ingles{test-on-source} es mucho menos costosa que la de \ingles{train-on-target} aunque los resultados obtenidos sean unos puntos peores.

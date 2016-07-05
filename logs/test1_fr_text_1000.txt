@@ -1,0 +1,1000 @@
+U0000:bonjour je voudrais connaître les horaires des trains pour aller à Cuenca
+U0001:oui je voudrais connaître les horaires des trains pour aller à Cuenca
+U0002:et bien, je voudrais partir le trente juin
+U0003:non merci
+U0004:bonjour je voudrais connaître les horaires des trains pour aller à Barcelona
+U0005:Et bien, je voudrais partir le trente juillet
+U0006:je voudrais partir le trente juillet
+U0007:oui effectivement, je voudrais prendre un train direct car je dois arriver avant huit heures du soir
+U0008:je voudrais connaître les horaires des trains qui arrivent à destination avant huit heures
+U0009:oui je voudrais savoir quel est le prix du premier et du dernier train
+U0010:non merci
+U0011:bonjour je voudrais connaître les horaires des trains pour aller de Castellón à Barcelona
+U0012:Et bien je voudrais connaître les horaires des trains pour aller de Castellón à Barcelona
+U0013:oui de Castellón à Barcelona
+U0014:je voudrais partir samedi prochain dans un euromed si possible, s'il vous plaît
+U0015:oui s'il vous plaît
+U0016:oui s'il vous plaît pourriez-vous m'indiquer le prix du billet?
+U0017:pourriez-vous m'indiquer le prix du dernier train?
+U0018:non merci
+U0019:bonjour je voudrais connaître les horaires des trains pour aller à Ciudad_Real
+U0020:à Ciudad_Real?
+U0021:je pourrais partir samedi prochain
+U0022:oui s'il vous plaît, le retour serait pour samedi prochain
+U0023:oui maintenant je voudrais connaître les horaires des trains pour un retour samedi prochain
+U0024:oui s'il vous plaît
+U0025:pourriez-vous m'indiquer le prix d'un trajet aller-retour?
+U0026:oui pourriez-vous m'indiquer s'il vous plaît le prix du billet aller-retour
+U0027:non merci
+U0028:je voudrais un billet pour Alicante lundi prochain
+U0029:oui
+U0030:lundi matin, le premier train
+U0031:Et bien non, merci beaucoup et au revoir
+U0032:bonjour je voudrais un billet aller pour Avila pour vendredi prochain, à partir de quatre heures de l'après-midi, avec un horaire d'arrivée samedi matin avant onze heures.
+U0033:je voudrais connaître les horaires des trains et le prix d'un billet aller pour Avila vendredi prochain
+U0034:oui
+U0035:oui je voudrais connaître le prix du billet
+U0037:pourriez-vous m'indiquer à nouveau les horaires des trains?
+U0038:non merci
+U0039:bonjour je voudrais connaître les horaires des trains aller de Palencia à Oviedo vendredi dix-huit juin
+U0040:oui
+U0041:le dix-huit juin
+U0042:oui
+U0043:oui je voudrais savoir quel est le prix 
+U0044:oui je voudrais connaître les différents horaires 
+U0045:Et quel est le prix du billet du talgo?
+U0046:non merci
+U0047:je voudrais connaître les horaires des trains pour San_Sebastián avec un départ le six mai
+U0048:oui
+U0049:oui pardon, je voudrais connaître les horaires de retour pour le dix mai
+U0050:oui
+U0051:je voudrais connaître le prix des billets
+U0052:non merci
+U0053:je voudrais connaître les horaires des trains pour Málaga
+U0054:oui
+U0055:le trente et un août
+U0056:oui
+U0057:oui
+U0058:je voudrais connaître les horaires des trains pour le premier septembre
+U0059:oui
+U0060:non merci
+U0061:je voudrais connaître les horaires des trains avec départ de Valencia et arrivée à Almería
+U0062:le neuf avril
+U0064:oui le neuf avril deux mille cinq
+U0066:quel est le prix du billet?
+U0067:oui et en première classe quel est le prix du billet? 
+U0068:quel est le prix du billet en première classe
+U0069:non merci
+U0070:je voudrais connaître les horaires des trains de Zamora à Valladolid en intercity si possible
+U0071:oui
+U0072:oui
+U0073:le vingt-neuf avril
+U0074:non le vingt-neuf avril deux mille quatre
+U0075:oui
+U0076:oui je désire partir de Zamora, destination Valladolid le vingt-neuf avril
+U0077:je voudrais savoir quel est le prix du billet
+U0078:non merci
+U0079:je voudrais connaître les horaires des trains de Valencia à Barcelona
+U0080:le onze août
+U0081:oui d'accord
+U0082:oui il y a un train qui part avant deux heures du matin
+U0083:je voudrais connaître les horaires des trains de Barcelona à Valencia
+U0084:le train pour le quinze août
+U0085:quel est le prix du billet?
+U0086:non merci beaucoup
+U0087:bonjour je voudrais connaître les horaires des trains pour Córdoba vendredi prochain 
+U0088:pour Córdoba
+U0089:oui pour Córdoba
+U0090:vendredi prochain, le vingt
+U0091:oui , n'y aurait-il pas de possibilités de voyager dans la nuit du vendredi au samedi?
+U0092:non c'est bien merci
+U0093:bonjour, voyons, je dois partir le six avril prochain pour Santander pour affaires et je voudrais savoir si je peux arriver le soir
+U0094:je voudrais partir pour Santander le six avril
+U0095:je voudrais connaître les horaires et les prix s'il vous plaît
+U0096:le six avril pour arriver le soir?
+U0097:oui quel est le prix du billet?
+U0098:non j'aurais preferé un train plus confortable mais ce n'est pas grave, ce sera tout tout merci
+U0099:bonjour je dois voyager de Castellón à Barcelona lundi prochain
+U0100:je voudrais voyager de Castellón à Barcelona lundi prochain en euromed si possible
+U0101:oui d'accord
+U0102:oui, pourriez-vous m'indiquer les horaires et les prix de l'euromed le matin ?
+U0103:oui pourriez-vous m'indiquer le prix des billets pour le train de sept heures du matin et celui de dix-neuf heures dans la soirée
+U0104:non merci beaucoup
+U0106:oui s'il te plaît les horaires des trains qui partent le matin
+U0107:le jeudi dix-sept juin
+U0108:oui je voudrais connaître les horaires des trains pour un retour le jour suivant
+U0109:non mais je veux revenir vendredi dix-huit juin
+U0110:oui indique-moi le prix du billet si je pars jeudi dix-sept à onze heures vingt et je reviens vendredi à neuf heures et quart du soir
+U0111:je veux savoir quel est le prix d' un aller-retour
+U0112:oui je voudrais connaître le prix d'un aller-retour
+U0113:de rien ce sera tout merci
+U0114:je voudrais connaître les horaires des trains pour vendredi seize avril pour Sevilla
+U0115:Pour Sevilla
+U0116:ce sera tout
+U0117:je voudrais connaître les horaires des trains qui arrivent de Pamplona l'après-midi en début de semaine
+U0118:oui je voudrais connaître le prix du billet
+U0119:non merci
+U0120:je voudrais connaître les horaires des trains qui partent de Madrid à Sevilla lundi prochain et j'aimerais voyager en ave si possible
+U0121:je voudrais connaître les horaires des trains de Madrid à Sevilla lundi prochain
+U0122:oui j'aimerais si possible voyager en ave
+U0123:oui je voudrais connaître le prix du billet
+U0124:non merci ce sera tout
+U0126:Pour Malaga
+U0127:oui je voudrais voyager à Malaga
+U0128:oui je voudrais voyager le quinze de ce mois-ci 
+U0129:je voudrais connaître le prix du billet aller-retour
+U0130:je voudrais connaître le prix du billet aller-retour, en talgo si possible 
+U0131:non merci ce sera tout
+U0132:je voudrais connaître les horaires aller pour Barcelona samedi prochain
+U0133:non merci
+U0134:je voudrais connaître les horaires des trains et le prix du billet aller pour Granada entre le vingt-six et le trente et un décembre au soir
+U0135:à granada
+U0136:oui dans un train couchette si possible
+U0137:oui le soir
+U0138:en classe économique, quelque soit le train
+U0139:non merci
+U0140:je voudrais connaître les horaires des trains et le prix du billet de Castellón à Tarragona pour arriver vendredi matin
+U0141:oui en euromed
+U0142:oui
+U0143:le train est de Castellón à Tarragona
+U0144:je veux arriver le matin
+U0145:je veux que le train arrive le matin
+U0146:je veux savoir quel est le prix du billet de train de six heures trente-cinq 
+U0147:non merci
+U0148:je voudrais connaître les horaires des trains et le prix du billet aller-retour pour Huesca le quatorze février
+U0149:je voudrais connaître les horaires des trains et le prix du billet
+U0150:quel est le prix?
+U0151:non merci
+U0152:j'aimerais voyager à Madrid samedi ou dimanche prochain
+U0153:oui
+U0154:oui
+U0155:à Madrid
+U0156:oui
+U0157:ce sera tout merci
+U0158:j'aimerais voyager à Barcelona vendredi prochain à partir de dix heures
+U0159:oui
+U0160:j'aimerais voyager dans le talgo si c'est possible
+U0161:je voudrais savoir quel est le prix s'il vous plaît
+U0162:non
+U0163:rien de plus merci
+U0164:bonjour j'aimerais avoir des informations sur les trains de Burgos à Salamanca
+U0165:oui 
+U0166:oui le samedi prochain
+U0167:oui
+U0168:pouvez-vous m'indiquer le prix s'il vous plaît
+U0169:oui je voudrais savoir si je peux voyager dans un train estrella en première classe
+U0170:oui j'aimerais savoir si je peux voyager dans un train brise en première classe
+U0171:non merci
+U0172:bonjour je voudrais voyager à Barcelona
+U0173:oui
+U0174:j'aimerais partir le dix mars à dix heures du matin si possible
+U0175:je voudrais partir le dix mars
+U0176:oui j'aimerais partir vers dix heures
+U0177:Ça pourrait être en euromed
+U0178:si le train pouvait être un euromed
+U0179:oui j'aimerais voyager de nuit en couchette
+U0180:oui
+U0181:je voudrais connaître le prix du billet
+U0182:oui j'aimerais revenir le jour de la cremá
+U0183:oui j'aimerais revenir le dix-neuf mars
+U0184:oui j'aimerais savoir quel est le prix du billet
+U0185:non plus rien
+U0186:oui bonjour je voudrais savoir quels sont les horaires pour lundi prochain
+U0187:je voudrais avoir les horaires pour lundi prochain
+U0188:à Malaga
+U0189:oui
+U0190:lundi prochain
+U0191:oui il y a un train qui part le matin
+U0192:oui celui de onze heures cinquante-cinq, à quelle heure arrive t'il?
+U0193:non merci
+U0194:oui je voudrais avoir les horaires pour samedi prochain pour aller à Castellón
+U0195:oui j'aimerais arriver avant deux heures, d'autant plus que le prix du billet n'est pas cher
+U0196:je voudrais arriver avant deux heures
+U0197:combien coûte le billet?
+U0198:non merci
+U0199:oui j'aimerais savoir quels sont les horaires des trains qui partent demain et vont de Lleida à Madrid 
+U0201:oui
+U0202:oui et si possible d'arriver avant dix heures
+U0203:et je voudrais arriver avant dix heures
+U0204:il arrive avant dix heures
+U0205:quel est le prix?
+U0206:combien coûte le billet?
+U0207:non merci
+U0208:oui je voudrais savoir quels sont les horaires et les prix pour aller à Albacete
+U0209:à Albacete
+U0210:la semaine prochaine le matin
+U0211:oui je voudrais voyager un jour de la semaine prochaine
+U0212:oui je voudrais arriver le matin
+U0213:oui quels genres de trains avez vous?
+U0214:oui combien coûte le billet?
+U0215:oui je voudrais savoir quels sont les horaires de retour
+U0216:c'est que je voudrais partir vendredi de cette semaine
+U0217:y en a t-il un qui parte vers midi
+U0218:et bien oui, il y en a un qui part vers midi
+U0219:et bien oui
+U0220:non merci
+U0221:bonjour, j'appelle pour vous demandez des informations pour un trajet aller au départ de Valencia et arrivée Madrid avec heure d'arrivée aux alentours de une heure
+U0222:je voudrais avoir des informations sur les horaires de départ des trains de Valencia à Madrid pour arriver à Madrid vers une heure au plus tard
+U0223:demain
+U0224:oui
+U0225:oui les horaires pour vendredi
+U0226:oui un train qui arrive à Madrid vers une heure
+U0227:un train qui arrive à Madrid à une heure ou à midi
+U0228:non
+U0229:bonjour j'appelle pour vous demandez des informations sur les horaires des trains qui partent de Cuenca et arrivent à Valencia le quinze mars
+U0230:un train qui arrive à destination avant huit heures
+U0231:à quelle heure part de Valencia celui qui arrive à six heures de l'après-midi?
+U0232:quel est le prix du billet?
+U0233:quel est le prix du ticket?
+U0234:non merci
+U0235:bonsoir je voudrais savoir quels sont les horaires des trains qui vont de Barcelona à Alicante mercredi prochain
+U0236:oui, il y a une place de libre dans l'euromed
+U0237:oui quel est le prix du billet?
+U0238:quel est prix du ticket?
+U0239:oui, à quelle heure arrive à Alicante le train qui part à six heures?
+U0240:oui à quelle heure part le train précédent et à quelle heure arrive t'il à Alicante?
+U0241:y-a-t'il un train qui parte avant six heures ou qui arrive avant dix heures du soir
+U0242:quel est le prix du billet?
+U0243:non merci
+U0244:bonjour j'appelle pour savoir quels sont les horaires de trains qui partent d'Albacete et ont pour destination Barcelona lundi prochain
+U0245:oui les horaires des trains qui partent lundi prochain à midi d'Albacete vers Barcelona
+U0246:lundi prochain
+U0247:oui
+U0248:oui les trains qui partent à midi
+U0249:oui un train qui parte avant onze heures
+U0250:il n'y a pas d'autres trains
+U0251:oui, et bien indiquez moi donc le prix d'un billet aller-retour
+U0252:et quels jours et à quelles heures y aurait-il un train pour revenir?
+U0253:non
+U0254:j'ai besoin d'aller à Lleida et je voudrais savoir quels sont les horaires pour partir dimanche matin
+U0255:oui
+U0256:et en partant dimanche après-midi
+U0257:non
+U0258:oui je voudrais un billet d'aller pour Tarragona jeudi ou vendredi prochains et je voudrais savoir quels sont les horaires et les prix 
+U0259:oui
+U0260:oui
+U0261:oui je voudrais acheter un billet pour un train au départ avant midi
+U0262:oui je voudrais savoir quel est le prix du billet du train qui part à six heures trente-huit du matin
+U0263:je ne désire rien de plus merci
+U0264:bonjour j'ai besoin d'aller de Vigo à la Coruña et je voudrais savoir quels sont les horaires et les prix des tickets des trains régionaux qui partent vendredi matin
+U0265:oui
+U0266:oui je voudrais savoir s'il est possible de voyager en classe économique
+U0267:non rien de plus merci
+U0268:oui je voudrais savoir quels sont les horaires des trains pour aller de Valencia à Barcelona, je partirai la première semaine d'août et reviendrai la dernière semaine d'août également
+U0269:oui
+U0270:oui je voudrais savoir quel est le prix d'un ticket aller-retour partant à huit heures quarante cinq de l'après-midi le premier août
+U0271:non rien de plus
+U0272:bonjour je voudrais connaître les horaires des trains pour voyager le quatre ou le cinq octobre à Madrid et de ceux qui partent après six heures
+U0273:oui
+U0274:oui
+U0275:non
+U0276:non
+U0277:bonjour je voudrais m'informer des horaires et des prix des tickets de train de Castellón à Ciudad_Real pour vendredi prochain, douze mars et j'aimerais bien arriver avant samedi à cinq heures
+U0278:je désirerais m'informer sur les horaires des trains pour voyager de Castellón à Ciudad_Real le douze mars prochain
+U0279:oui
+U0280:oui
+U0281:oui
+U0282:oui j'aimerais que l'arrivée soit avant dix-sept heures samedi
+U0283:oui j'aimerais consulter le prix pour ce billet
+U0284:j'aimerais connaître le prix de ce billet
+U0285:non
+U0286:je voudrais connaître les horaires des trains d'Alicante à Valencia en talgo
+U0287:lundi prochain
+U0288:oui j'aimerais connaître le prix
+U0289:oui je pourrais effectuer ce voyage en talgo
+U0290:oui
+U0291:non
+U0292:j'aimerais voyager de Valencia à Barcelona en partant mardi seize mars et en revenant lundi vingt-deux mars
+U0293:oui
+U0294:le mardi seize
+U0295:oui
+U0296:oui je voudrais aussi connaître les horaires de retour de Barcelona à Valencia lundi vingt-deux
+U0297:je ne désire pas revenir lundi vingt-deux mars deux mille quatre
+U0298:oui j'aimerais voyager en euromed
+U0299:j'aimerais effectuer le trajet dans un genre d'euromed
+U0300:oui
+U0301:oui je voudrais savoir quel est le prix d'un ticket aller-retour
+U0302:non
+U0303:non
+U0304:je voudrais connaître les horaires pour un aller simple de Valencia à Albacete pour vendredi
+U0305:vendredi quatre juin
+U0306:oui
+U0307:oui je voudrais prendre un train qui arrive à midi
+U0308:non merci
+U0309:je voudrais connaître les horaires pour un aller simple de Pamplona à Oviedo
+U0310:oui s'il vous plaît
+U0311:le dix-neuf octobre
+U0312:oui s'il vous plaît
+U0313:oui je voudrais connaître les horaires pour un aller simple d'un train qui parte vers cinq heures
+U0314:oui qui arrive avant huit heures
+U0315:oui je désirerais connaître le prix du billet
+U0316:non merci
+U0317:je voudrais connaître les horaires des trains pour un aller d'Ávila à Salamanca
+U0318:non d'Ávila
+U0319:oui s'il vous plaît
+U0320:vendredi prochain l'après-midi
+U0321:je voudrais voyager en train régional si possible
+U0322:je voudrais que ce soit vendredi dans l'après-midi
+U0323:oui je voudrais connaître le prix du ticket
+U0324:non merci
+U0325:je voudrais connaître les horaires pour un aller-retour de Valencia à La_Coruña
+U0326:vendredi
+U0327:oui s'il vous plaît
+U0328:je veux partir à onze heures du soir
+U0329:oui je voudrais connaître le prix du billet
+U0330:oui je voudrais un billet aller-retour
+U0331:je ne vous demande pas les prix
+U0332:je veux un aller-retour
+U0333:je voudrais connaître les horaires aller-retour
+U0334:je ne comprends pas ce que vous m'avez dit
+U0335:le jour suivant
+U0336:non merci
+U0337:oui je voudrais savoir qus sont les horaires des trains pour Madrid
+U0338:pour Madrid
+U0339:samedi après-midi
+U0340:à quelle heure arrive celui qui part à dix-huit heures quarante-cinq
+U0341:il arrive trop tard , je voudrais en prendre un qui arrive un peu plus tôt
+U0342:oui arriver à Madrid vers dix-neuf heures trente
+U0343:à quelle heure part celui qui arrive à dix-neuf heures ?
+U0344:ce sera tout merci beaucoup
+U0345:oui je voudrais aller de Sevilla à Granada ce week-end et j'aimerais obtenir des informations sur les horaires des trains 
+U0346:oui je voudrais savoir quels sont les horaires mais je voudrais aussi connaître les tarifs pour savoir si c'est intéressant ou non d'y aller en train
+U0347:je voudrais voyager ce week-end ou bien partir vendredi
+U0348:je voudrais partir vendredi
+U0349:oui je voudrais savoir quels sont les horaires des trains qui partent dans l'après-midi
+U0350:pouvez-vous me répéter à quelle heure part le premier train
+U0351:oui je voudrais aussi savoir quel est le prix du billet de ce train et de celui que vous m'aviez indiqué auparavant
+U0352:n'y a t'il rien de moins cher ?
+U0353:oui , combien dure le voyage ?
+U0354:non , se sera tout
+U0355:bonjour , je voudrais savoir combien coûte un billet pour Santander ?
+U0356:pour Santander ?
+U0357:et bien , je voudrais voyager un jour de la dernière semaine de juillet
+U0358:n'importe quel jour de la dernière semaine de juillet ?
+U0359:tous les talgos ont les mêmes tarifs 
+U0360:je voudrais savoir quels sont les prix des billets pour voyager en talgo
+U0361:ce sera tout
+U0362:bonjour , je voudrais savoir quels sont les horaires des trains pour aller de Barcelona à Huesca
+U0363:lundi ou mardi , et j'aimerais revenir jeudi ou vendredi
+U0364:oui voyons voir s'il vous paît quels sont les prix des tickets ?
+U0365:oui pourriez-vous me répéter les tarifs ?
+U0366:quelles possibilités ai-je pour revenir jeudi ?
+U0367:y-a-t'il un train qui parte le soir ?
+U0368:oui je voudrais profiter du voyage de retour pour dormir , y-a-t'il un train qui parte le soir ?
+U0369:vendredi , je pourrais voyager le vendredi , non ?
+U0370:oui , voyons voir un train qui parte aux environs de neuf heures du soir ou un peu avant si possible
+U0371:oui , un train qui parte dans l'après-midi 
+U0372:oui , quel est le prix du ticket pour ce talgo ?
+U0373:oui , indiquez-moi le prix du billet du talgo pour un retour
+U0374:oui , une question , dites-moi quand je pourrai partir ?
+U0375:oui , dites-moi , pourrais-je obtenir un aller simple en talgo au départ lundi prochain ?
+U0376:non , se sera tout , merci beaucoup
+U0377:bonjour , je voudrais obtenir des informations pour un trajet aller simple pour Granada le dix-neuf février
+U0378:oui
+U0379:oui
+U0380:je voudrais partir le dix-neuf février et arriver avant midi
+U0381:oui
+U0382:non
+U0383:je voudrais obtenir des informations pour un trajet aller simple de Madrid à Córdoba pour samedi prochain
+U0384:oui
+U0385:oui
+U0386:oui je voulais connaître le tarif
+U0387:non
+U0388:je voudrais avoir des informations sur les horaires des trains qui vont de Valencia à Teruel vendredi prochain
+U0389:je voudrais des informations sur les trains régionaux qui vont à Teruel vendredi prochain
+U0390:non
+U0391:non je voulais connaître le tarif
+U0392:oui
+U0393:non
+U0394:non
+U0395:bonjour , je voudrais avoir des informations pour un trajet de Valencia à Barcelona le trois septembre
+U0396:oui
+U0397:le trois septembre entre sept heures et neuf heures du matin
+U0398:oui
+U0399:oui je voudrais connaître les tarifs du trajet aller , et retour également
+U0400:je voudrais que le trajet de retour se fasse en euromed
+U0401:oui
+U0402:je voudrais obtenir les tarifs
+U0403:non
+U0428:bonjour , je voudrais savoir quels sont les horaires aller pour Málaga
+U0429:pour Málaga ?
+U0430:oui je voudrais aller à Málaga
+U0431:je voudrais partir
+U0432:je voudrais arriver vendredi
+U0433:oui je voudrais bien
+U0434:oui je voudrais arriver le soir avant onze heures
+U0435:non
+U0436:bonjour , je voudrais savoir quels sont les horaires et les tarifs d'un aller d'Albacete Alicante dimanche
+U0437:oui je veux arriver avant cinq heures de l'après-midi
+U0438:oui je veux connaître le tarifs
+U0439:non
+U0440:je voudrais savoir quel est le tarif aller-retour pour Barcelona le dix avril
+U0441:oui
+U0442:oui
+U0443:oui , j'aurais voulu voyager en arco
+U0444:oui
+U0445:non
+U0446:non
+U0447:non
+U0448:bonjour , je voudrais savoir quel est le prix d'un aller-retour pour Barcelona le dix avril
+U0449:oui
+U0450:oui
+U0451:oui , j'aurais voulu voyager en arco
+U0452:non
+U0453:non
+U3113:bonjour , je voudrais avoir des informations sur les horaires pour un trajet aller de Valencia à Alicante et je voudrais partir jeudi prochain
+U3114:non s'il vous plaît je voudrais partir le jeudi prochain
+U3115:oui s'il vous plaît , ça m'interesse d'avoir des renseignements sur les horaires pour jeudi prochain 
+U3116:non merci , se sera tout , je vous remercie pour tous ces renseignements
+U3117:bonjour , je voudrais obtenir des renseignements sur les horaires pour un trajet aller à Pamplona ce week-end
+U3118:donc je voudrais partir un samedi matin
+U3119:oui ça me convient
+U3120:non ce sera tout , merci beaucoup
+U3121:bonjour , je voudrais obtenir le prix d'un billet aller pour un trajet d'Alicante à Valencia , si possible en euromed en classe économique avec départ le week-end prochain
+U3122:oui ça me convient
+U3123:oui un aller simple
+U3124:oui s'il vous plaît , pouvez-vous m'indiquer les tarifs en classe économique en euromed ?
+U3125:non merci , ce sera tout , au revoir
+U3126:bonjour , je voudrais obtenir les tarifs des billets pour un aller simple Oviedo Orense le premier août le matin
+U3127:oui s'il vous plaît , pourriez vous m'indiquer également les prix des tickets pour un retour Orense Oviedo le quatorze dans la soirée et je désirerais effectuer le trajet en train couchette
+U3128:non je voudrais partir l'après-midi du quatorze août
+U3129:oui
+U3130:non merci ce sera tout
+U3592:je voudrais prendre un train demain matin pour Tarragona avec départ Barcelona , et je voudrais savoir à quelle heure je pourrais partir et avec quel train ?
+U3593:oui le matin
+U3594:oui
+U3595:oui quel train dois-je prendre ?
+U3596:quelle sorte de train ?
+U3597:oui pouvez vous m'indiquer à nouveau les différents trains régionaux ?
+U3598:oui l'express de douze heures quarante 
+U3599:je voudrais savoir si l'express euromed de midi est celui de douze heures quarante
+U3600:non merci
+U3601:je voudrais voyager jeudi prochain , le dix-huit , à Gasteiz avec départ Hendaya
+U3602:oui
+U3603:à Gasteiz
+U3604:Gasteiz
+U3605:le dix-huit mars ou le jeudi suivant
+U3606:oui
+U3607:oui
+U3608:oui je voudrais savoir quel genre de train part à sept heures du matin
+U3609:non
+U3610:voyons , je voudrais savoir quels sont les trains disponibles pour voyager en première classe à Madrid
+U3611:oui
+U3612:donc vendredi dix-neuf mars , le matin si possible
+U3613:non je ne veux pas partir jeudi matin , le vendredi dix-neuf en matinée ou bien jeudi dix-huit dans l'après-midi
+U3614:oui si possible le dix-huit dans l'après-midi
+U3615:oui
+U3616:oui voyons , combien coûte le billet ?
+U3617:oui est-il possible de voyager en première classe ?
+U3618:non merci
+U3619:je voudrais savoir quels sont les horaires des trains la semaine prochaine mardi seize pour aller à Bilbao avec départ de Hendaya si possible
+U3620:oui
+U3621:j'ai besoin de connaître les horaires des trains pour le mardi seize
+U3622:oui dans l'après-midi s'il vous plaît
+U3623:dans l'après-midi s'il vous plaît
+U3624:à Bilbao
+U3625:je ne voudrais pas partir de Hendaya
+U3626:non du Ferrol , non de Hendaya
+U3627:oui donc d'Iruñea
+U3628:oui d'Iruña
+U3629:oui combien coûte le billet s'il vous plaît , en classe touriste se serait bien
+U3630:non merci au revoir
+U3760:je voulais un billet aller en ave de Madrid à Sevilla pour mardi prochain , départ le matin
+U3761:oui merci
+U3762:oui merci
+U3763:oui je voudrais savoir à quelle heure arrive le train de sept du matin
+U3764:il y a un train en matinée , plus tard , qui part après sept heures 
+U3765:très bien , le train de sept du matin
+U3766:je voulais un billet aller simple
+U3767:oui s'il vous plaît
+U3768:à Santander
+U3769:à Santander
+U3770:vendredi si possible
+U3771:oui s'il vous plaît et savoir le genre de train
+U3772:oui , j'aimerais prendre un train qui parte dans l'après-midi
+U3773:ce train est très bien merci
+U3774:je voulais acheter un billet aller simple pour Santiago_de_Compostela le vingt-trois juillet
+U3775:oui s'il vous plaît , indiquez moi les horaires pour le lendemain
+U3776:oui merci
+U3777:à Santiago_de_Compostela
+U3778:oui merci
+U3779:pouvez-vous m'indiquer le prix du ticket du premier train
+U3780:non pour ce train ce sera tout merci
+U3781:je voulais un billet aller simple de Badajoz à Valencia pour le vingt-neuf mai
+U3782:non le vingt-neuf mai
+U3783:oui s'il vous plaît des horaires pour le lendemain
+U3784:oui j'aimerais savoir à quelle heure il arrive
+U3785:pouvez-vous m'indiquer le prix du billet s'il vous plaît
+U3786:non merci
+U3869:je voudrais connaître les horaires des ave de Sevilla à Madrid
+U3870:non je veux partir de Sevilla
+U3871:à Madrid
+U3872:oui
+U3873:le quinze juin
+U3874:le quinze juin
+U3875:il y a une possibilité de voyager en ave
+U3876:oui
+U3877:celui qui part à six heures trente , à quelle heure arrive t´il à Madrid ?
+U3878:non
+U3879:je voulais savoir quels sont les horaires des trains de Bilbao à Madrid
+U3880:le trente-et-un mars
+U3881:le trente-et-un mars
+U3882:oui
+U3883:non
+U3884:je voudrais savoir quels sont les horaires et les prix des trains pour La_Coruña
+U3885:oui
+U3886:le onze mars
+U3887:le onze mars
+U3888:oui
+U3889:oui
+U3890:à quelle heure arrive-t-il à La_Coruña ?
+U3891:quel est le prix du trajet ?
+U3892:non
+U3893:je voudrais savoir quel est le prix du billet pour aller à Santiago_de_Compostela
+U3894:le premier ou le deux février
+U3895:oui
+U3896:non
+U3897:je voudrais savoir quels sont les horaires pour un trajet que je dois faire , un aller simple de Valencia pour Barcelona lundi matin
+U3898:oui
+U3899:non
+U3900:je voulais savoir quels étaient les horaires pour un trajet aller simple de Bilbao à Alicante
+U3901:entre le vingt-six mars et le dix-sept avril
+U3902:je voudrais voyager de Bilbao à Alicante
+U3903:du quatre avril au dix-sept avril
+U3904:ne serait-ce pas mieux le cinq ?
+U3905:oui le cinq de ce mois ci sera mieux que le quatre 
+U3906:oui
+U3907:oui de Bilbao à Santander
+U3908:oui
+U3909:je veux voyager en train express
+U3910:oui
+U3911:le train le plus confortable qui soit
+U3912:non
+U3913:je voudrais savoir quels sont les horaires et les prix d'un trajet de Bilbao à La_Coruña vendredi avec un départ avant onze heures et demie
+U3914:oui
+U3915:savoir quel est le prix du billet le moins cher
+U3916:non
+U3917:je voudrais savoir quel est le prix d'un trajet aller simple de Bilbao à Madrid le dix-sept avril en train express
+U3918:non de Bilbao
+U3919:oui
+U3920:le dix-sept avril deux mille quatre
+U3921:le dix-sept avril
+U3922:non
+U3923:oui il voulait savoir quel est l'horaire pour un trajet aller simple
+U3924:à Barcelona
+U3925:oui il voulait voyager à Barcelona
+U3926:oui
+U3927:le douze avril
+U3928:oui
+U3929:donc si c'est le seul train qu'il y a et bien rien plus de merci beaucoup
+U3930:je voulais savoir quels sont les horaires et les prix des billets
+U3931:pour Barcelona
+U3932:pour Barcelona
+U3933:oui
+U3934:donc le quinze avril
+U3935:le quinze avril
+U3936:oui je voulais savoir quel est le prix pour un trajet aller simple
+U3937:et en quelle classe ?
+U3938:quel est le prix du billet en première classe ?
+U3939:non pas exactement
+U3940:je voulais obtenir des renseignements pour un trajet aller simple Valencia
+U3941:oui
+U3942:oui
+U3944:oui je voulais savoir quel est le prix trajet pour Valencia
+U3945:le trente mars
+U3946:oui le trente mars
+U3947:et bien qui parte dans la journée
+U3948:oui je voudrais que le train parte entre le vingt-six de ce mois ci et le trente-et-un mars
+U3949:qui parte le vingt-sept , le vingt-huit ou le vingt-neuf mars
+U3950:alors le vingt-huit mars
+U3951:et bien au lieu de Valencia je vais partir à Palencia
+U3952:oui
+U3953:y a t'il pas un autre train qui ne soit pas un talgo ou un intercity ?
+U3954:non rien de plus
+U3955:oui je voudrais savoir quels sont les horaires pour aller à Grenade en partant vendredi soir
+U3956:oui
+U3957:il y a des couchettes
+U3958:quel est le prix du trajet ?
+U3959:quel est le prix du billet ?
+U3960:je voudrais savoir quels sont les horaires retour dimanche
+U3961:donc une classe touriste
+U3962:oui quel est le prix ?
+U3963:rien de plus merci
+U3965:non de Madrid à Barcelona
+U3966:oui
+U3967:non merci
+U3968:bonsoir je voudrais savoir quels sont les horaires pour un train pour Barcelona , je veux partir mardi et revenir avant dix heures et demie le matin , un aller simple
+U3969:non je veux une arrivée à Barcelona
+U3970:je veux partir de Bilbao
+U3971:oui pouvez-vous m'indiquer le prix s'il vous plaît
+U3972:le prix du billet s'il vous plaît
+U3973:non merci
+U3974:bonjour , je voudrais connaître le prix d'un billet aller simple de Madrid à Sevilla en ave durant la première quinzaine d'avril
+U3975:la première semaine celle du deux , trois , quatre et cinq
+U3976:oui ce jour me convient
+U3977:je préfère l'ave
+U3978:je ne désire plus rien
+U3979:bonjour je voudrais m'informer sur un trajet aller-retour avec départ le deux août et retour le quatre août pour San_Sebastián
+U3980:oui s'il vous plaît
+U3981:je ne pars pas de Bilbao et je veux arriver à San_Sebastián
+U3982:le deux août en matinée
+U3983:oui avec un retour le quatre août , et un billet aller-retour
+U3984:oui s'il vous plaît
+U3985:oui quels types de trains y a-t-il ?
+U3986:oui , savoir quels sont les prix 
+U3987:du billet retour et celui du billet aller également
+U3988:je voudrais savoir quel est le prix du billet retour départ San_Sebastián et le prix du billet aller départ Bilbao arrivée San_Sebastián le deux août
+U3989:le prix du billet aller départ Bilbao arrivée San_Sebastián le deux août en talgo si possible
+U3990:non , merci beaucoup
+U3991:bonjour , et bien je voudrais obtenir les horaires et le type de trains pour un trajet à Barcelona
+U3992:je ne veux pas les horaires au départ de Bilbao pour un trajet aller simple
+U3993:vendredi vers huit heures du soir
+U3994:oui l'heure me convient
+U3995:oui s'il vous plaît un autre horaire
+U3996:non merci ce sera tout , s'il vous plaît indiquez-moi le prix
+U3997:non merci
+U3998:oui il voudrait obtenir les horaires des trains pour Alicante et aussi le prix pour un trajet aller simple
+U3999:vendredi , ce week-end 
+U4000:oui vendredi
+U4001:oui pour voyager en classe préférentielle s'il vous plaît et en ave si possible
+U4002:oui , en peut partir le jeudi en cette saison
+U4003:oui c'est cela
+U4004:et samedi
+U4005:non merci , et bien oui , connaître le prix s'il vous plaît
+U4006:non merci beaucoup
+U4007:et bien oui il voudrait savoir quel est le prix des billets de train à destination de Cádiz pour un trajet aller simple
+U4008:à Cádiz , j'aimerais voyager en train couchette si possible
+U4009:oui c'est un train couchette
+U4010:je dois arriver le vingt-et-un juin
+U4011:non , merci beaucoup
+U4012:bonjour , il voudrait savoir quels sont les horaires les prix pour un trajet aller-retour à Barcelona jeudi
+U4013:oui c'est ce jeudi-ci
+U4014:non , jeudi et arriver vendredi de ce voyage
+U4015:oui à quelle heure arriverait-il ?
+U4016:oui , quels sont les horaires pour un retour vendredi ?
+U4017:non , c'est à voir pour le trente avril , Ça pourrait être le vendredi suivant
+U4018:oui c'est cela
+U4019:et bien il n'y en a aucun qui parte avant
+U4020:et le jour précédent , jeudi
+U4021:oui c'est cela
+U4022:non merci il ne me convient pas
+U4023:cet horaire ne me convient pas
+U4024:voyons , il voudrait savoir quels sont les horaires de train pour un trajet aller de Bilbao à Madrid le huit avril
+U4025:oui je voudrais savoir quels sont les horaires du matin à aprtir de huit heures et jusqu'à dix heures maximum
+U4026:oui dans cette tranche horaire
+U4027:parce qu'il voudrait partir le huit avril
+U4028:oui donc , indiquez-moi tous les trains qui partent le matin
+U4029:non merci , au revoir
+U4030:bonsoir , je voudrais connaître les horaires des trains pour aller de Bilbao à Tarragona vendredi prochain , deux avril
+U4031:non
+U4032:oui
+U4033:oui je voudrais aussi savoir quel serait le prix du ticket pour ce train
+U4034:oui je voudrais savoir aussi quel est le prix du ticket du train que vous m'avez indiqué précédemment 
+U4035:non merci
+U4036:bonsoir , il voudrait savoir combien me coûterait un aller simple en train couchette départ Bilbao et arrivée Cádiz
+U4037:oui de Bilbao à Cádiz
+U4038:il voudrait partir entre le huit et le onze avril
+U4039:non merci
+U4040:bonjour , voyons , je voudrais effectuer un voyage à Mérida en train , un trajet aller-retour et je voudrais savoir quels sont les horaires pour le pont du huit au onze avril dans deux semaines 
+U4041:oui , voyons vous vouliez effectuer un trajet aller-retour en train pour Mérida lors du prochain pont du huit au onze avril , vous vouliez savoir quels sont les horaires et combien ça vous coûterait
+U4042:à Mérida
+U4043:il voudrait partir le huit avril
+U4044:oui , de Bilbao il voudrait connaître les horaires 
+U4045:et bien oui il voudrait savoir quel est le prix du ticket pour le train qui part à sept du matin
+U4046:oui je voudrais savoir quels trains je pourais prendre pour revenir le dimanche suivant dans l'après-midi
+U4047:oui dès que possible , c'est mieux
+U4048:et bien , alors je voudrais savoir combien me coûterais le ticket pour revenir en talgo et partir avec le train que vous m'avez indiqué auparavent , celui qui part à sept heures du matin
+U4049:non merci
+U4050:bonjour , voyons voir , je désirerais un trajet aller simple pour aller de San_Sebastián à Vigo , je voudrais prendre le train qui longe la côte parce que je voudrais découvrir le nord que je ne connais pas. alors j'aimerais partir le trois mai et pouvoir arriver le lendemain matin je voudrais savoir quels sont les horaires des trains
+U4051:et bien , je voudrais savoir quels types de trains sont disponibles
+U4052:et bien , je ne veux pas uniquement savoir lequel est le plus rapide , je veux également savoir quels sont les autres trains disponibles et combien de temps ils tardent por arriver à Vigo
+U4053:et bien , je veux savoir quels sont les horaires pour ces deux trains et à quelle heure ils arrivent à Vigo
+U4054:oui je veux savoir à quelle heure ils arrivent à Vigo s'il vous plaît
+U4055:non merci
+U4056:non merci
+U4057:bonjour , voyons voir , j'aurais besoin d'un aller simple pour La_Coruña avec départ de Bilbao jeudi prochain s'il vous plaît , et comme il s'agit d'un voyage d'affaires , en talgo ce serait parfait
+U4058:les horaires et pas les horaires uniquement , le prix du ticket également s'il vous plaît
+U4059:oui
+U4060:oui je veux savoir si ce train de jour est un talgo car je préfererais voyager en talgo
+U4061:oui c'est ce que je vous dit madame
+U4062:et bien dites-moi quel est l'autre train qui part de Bilbao pour La_Coruña
+U4063:je voudrais savoir quel est l'horaire de ce train de jour et à quelle heure il part de Bilbao et arrive à La_Coruña ainsi que le prix du ticket
+U4064:oui je désirais savoir quel est le prix d'un aller pour ce train
+U4065:oui quel est le prix du ticket en classe préférentielle
+U4066:et bien , vous me dîtes qu'il n'y a pas de classe préférentielle pour ce train
+U4067:vous ne m'avez pas répondu 
+U4068:bonjour , je voudrais faire un voyage de San_Sebastián à huelva , un aller simple pour affaires , j'aimerais voyager dans un tranche horaire oú je puisse profiter de la classe préférentielle
+U4069:ce que je veux avant tout est le prix du billet de train ainsi que les horaires bien sûr
+U4070:à huelva
+U4071:le trois mai
+U4072:je voudrais partir le trois mai deux mille quatre 
+U4073:oui s'il vous plaît
+U4074:oui je voudrais savoir quel est le prix du billet pour ces trains 
+U4075:non merci , rien de plus comme informations , au revoir
+U4076:bonjour , j'aurais voulu aller à Madrid pour voir une exposition au musée thyssen , l'exposition ouvre à dix heures du matin samedi , c'est pourquoi j'aimerais effectuer le trajet aller de bonne heure et pouvoir revenir dans la nuit 
+U4077:oui , c'est ainsi
+U4078:je voudrais savoir à quelle heure arrive le train à Madrid ainsi que le prix du ticket
+U4079:ce train ne convient pas parce que l'exposition ferme à midi et c'est du temps perdu , n'y aurait il pas un autre train ? qui arrive avant dix heures ou avant midi par exemple
+U4080:s'il vous plaît donc , et en partant vendredi soir , est ce qu'il m'offre la possibilité d'être samedi matin à Madrid ?
+U4081:oui vendredi soir
+U4082:je ne comprends pas comment c'est possible qu'il n'y ait pas un train qui arrive avant dix heures du matin à Madrid. cela parait impossible , êtes-vous sûre mademoiselle d'avoir bien vérifié vos informations ?
+U4083:oui dites-moi à quelle heure arrive le train à Madrid et combien coûte le voyage
+U4084:il voudrait un ticket aller-retour avec départ samedi de Madrid , et ce après une heure de l'après-midi et savoir quels sont les tarifs
+U4085:vous me dîtes qu'il n'existe aucune possibilité au départ de Madrid à partir d'une heure de l'après-midi à destination de Bilbao
+U4086:non merci , ce sera tout , bien que si me donniez le prix du billet du talgo de Bilbao à Madrid , je vous en remercierais
+U4087:et dites-moi quel est le prix en classe préférentielle
+U4088:non merci , au revoir
+U4089:je voudrais un aller simple pour Madrid jeudi premier mars
+U4090:oui je voudrais partir de Bilbao pour aller à Madrid entre sept et huit heures du matin
+U4091:oui
+U4092:excusez-moi , je n'ai pas compris
+U4094:je ne désire pas partir jeudi premier mars deux mille quatre
+U4095:oui je voudrais partir lundi premier mars deux mille quatre
+U4096:oui je désire changer de jour
+U4097:le lendemain du deux mars , le mardi trois mars deux mille quatre
+U4098:oui
+U4099:et bien je désire changer de frange horaire , si cela pouvait être entre six et neuf heures du matin
+U4100:oui je désire changer de frange horaire
+U4101:oui je voudrais une confirmation du billet
+U4102:et bien j'aimerais acheter un billet pour le talgo dans l'après-midi du mardi deux mars deux mille quatre
+U4103:non merci
+U4104:il voudrait savoir quels sont les horaires et les prix d'un trajet pour Pamplona le week-end suivant
+U4105:oui merci
+U4106:oui j'aimerais connaître le prix du trajet
+U4107:oui j'aimerais savoir s'il y a une possibilité pour voyager à Pamplona le week-end suivant
+U4108:non , je ne désire pas partir samedi huit mars deux mille quatre 
+U4109:non je ne désire pas partir samedi dix avril deux mille quatre , je désire partir samedi prochain
+U4110:non
+U4111:le week-end suivant
+U4112:oui
+U4113:oui j'aimerais voyager en talgo si possible et j'aimerais savoir quel est le prix du ticket s'il vous plaît
+U4114:non merci
+U4115:oui je voudrais aller à Barcelona
+U4116:oui je voudrais savoir quels sont les horaires en wagon-lits
+U4117:et bien je voudrais un ticket aller dans la nuit jeudi prochain de semaine sainte
+U4118:je ne veux pas partir jeudi huit avril deux mille quatre
+U4119:oui je voudrais savoir quel est le prix du billet s'il vous plaît
+U4120:non merci
+U4121:je voudrais un aller-retour en intercity
+U4122:et bien je voudrais partir vendredi à partir de quatre heures de l'après-midi ou samedi avec arrivée avant quinze heures
+U4123:et je voudrais arriver entre midi et trois heures de l'après-midi samedi prochain
+U4124:oui j'aimerais voyager en intercity si possible et j'aimerais savoir quel est le prix du ticket
+U4125:et bien Ça ne me dérange pas de voyager en intercity , je voudrais connaître le prix d'un billet aller-retour
+U4126:et bien , je voudrais savoir quel est le prix d'un billet aller-retour
+U4127:non merci
+U4128:j'aimerais connaître les horaires de train aller de Vitoria à Madrid pour le trois avril
+U4129:à Madrid
+U4130:oui
+U4131:non le trois avril
+U4132:oui
+U4133:oui les trains à l'arrivée avant huit heures de l'après-midi
+U4134:non entre sept et huit heures
+U4135:non
+U4136:je voudrais connaître les horaires et le prix d'un billet pour Huesca le deux
+U4137:le premier ou le deux juillet
+U4138:le premier ou le deux juillet
+U4139:oui , en express
+U4140:en express
+U4141:oui le prix du trajet
+U4142:non
+U4143:je voudrais connaître le prix d'un trajet aller simple de San_Sebastián à Barcelona
+U4144:le cinq mai à cinq heures de l'après-midi
+U4145:le cinq mai à cinq heures de l'après-midi ?
+U4146:oui
+U4147:et bien les horaires entre trois et cinq heures de l après-midi
+U4148:oui
+U4149:non
+U4150:je voudrais savoir quels sont les horaires et le prix d'un trajet de Valladolid à Burgos pour dimanche dans l'après-midi
+U4151:Valladolid
+U4152:non à Burgos
+U4153:oui
+U4154:le dimanche dans l'après-midi
+U4155:le dimanche dans l'après-midi
+U4156:oui le prix du trajet
+U4157:oui je voudrais connaître les horaires du trajet retour pour mardi
+U4158:oui l'horaire et le prix des trains du douze avec départ vers midi
+U4159:oui
+U4160:non
+U4161:bonjour , je voudrais connaître les tarifs des trains
+U4162:bonsoir , j'aimerais savoir quels horaires ont les trains s'il vous plaît
+U4163:à Ciudad_Real s'il vous plaît
+U4164:non , départ San_Sebastián
+U4166:oui
+U4167:oui
+U4168:à San_Sebastián
+U4169:non , départ Ciudad_Real
+U4170:oui
+U4171:le dix avril s'il vous plaît
+U4172:en effet
+U4173:non , merci beaucoup
+U4174:bonsoir , j'aimerais consulter les horaires et les prix de trains s'il vous plaît
+U4175:pour Sevilla
+U4176:pour Sevilla
+U4177:oui s'il vous plaît
+U4178:début novembre
+U4179:et bien je voudrais savoir à quelle fréquence partent les trains s'il vous plaît
+U4180:à quelle fréquence partent les trains
+U4181:oui il y a un train vers midi
+U4182:oui ce serait parfait oui
+U4183:et bien oui , un train qui parte entre dix et midi mais avant midi s'il vous plaît
+U4184:oui
+U4185:oui j'aimerais savoir quel est le prix des billets de ces deux trains
+U4186:pouvez-vous me répéter les prix s'il vous plaît
+U4187:non , merci beaucoup
+U4188:bonsoir , j'aimerais savoir quel est le prix du ticket
+U4189:à Barcelona s'il vous plaît
+U4190:à Barcelona
+U4191:non de Guadalajara
+U4192:le premier week-end de septembre s'il vous plaît
+U4193:le premier week-end de septembre s'il vous plaît
+U4194:oui d'accord
+U4195:et les prix pour dimanche s'il vous plaît
+U4196:ce sera tout merci beaucoup
+U4198:à Madrid
+U4199:non départ Vitoria
+U4200:le quatorze mai
+U4201:le quatorze mai
+U4202:oui j'aimerais arriver avant une heure de l'après midi s'il vous plaît
+U4203:j'aimerais arriver avant une heure de l'après midi
+U4204:oui
+U4205:indiquez-moi le prix du billet de ce train s'il vous plaît
+U4206:l'horaire et le prix des trains retour s'il vous plaît
+U4207:oui le prix du billet pour ce train
+U4208:donnez-moi le prix du billet retour s'il vous plaît
+U4209:non , merci beaucoup
+U4210:il voudrait consulter les horaires des trains
+U4211:pour Madrid
+U4212:je ne voudrais pas partir de Bilbao
+U4213:oui
+U4214:le sept de ce mois-ci
+U4215:le sept mars
+U4216:non de deux mille quatre
+U4217:oui
+U4218:non
+U4219:il voudrait obtenir l'horaire et le prix d'un trajet en train
+U4220:pour Madrid
+U4221:pour Madrid
+U4222:le vingt-huit février
+U4223:je voudrais aussi savoir quel est le prix
+U4224:non
+U4225:je voudrais obtenir les tarifs des billets pour un trajet en train
+U4226:pour Barcelona
+U4227:non de San_Sebastián
+U4228:oui
+U4229:le trois juillet
+U4230:le trois juillet
+U4231:non
+U4232:il voudrait consulter les horaires et les prix de différents trajets
+U4233:pour Madrid
+U4234:le vingt-trois octobre
+U4235:non
+U4236:le vingt-trois octobre
+U4237:oui
+U4238:je voudrais savoir quels sont les trains qui partent de Jaén pour Madrid
+U4239:oui
+U4240:je voudrais savoir quel est le prix
+U4241:je voudrais aussi savoir quels sont les horaires de Madrid à Jaén
+U4242:des trains Madrid Jaén pour le vingt-quatre octobre ?
+U4243:oui
+U4244:non
+U4245:bonsoir j'aimerais obtenir des informations sur les horaire des trains
+U4246:j'aimerais voyager de Gijón à San_Sebastián
+U4247:il ne voudrait pas partir de Gijón
+U4248:j'aimerais partir le sept juin
+U4249:y aurait-il un autre type de train avec départ à midi ?
+U4250:non , merci beaucoup
+U4251:bonjour j'aimerais savoir quel est l'horaire et le prix des trains au départ de Bilbao avec arrivée Valladolid pour un aller simple
+U4252:je n'ai pas demandé les tarifs des trains pour Valladolid
+U4253:et si possible le premier samedi de mai
+U4254:je n'aimerais pas arriver samedi , partir et arriver samedi
+U4255:il n'a pas de train
+U4256:il n'y a pas de train qui parte samedi
+U4257:j'aimerais savoir quel est le prix du billet pour ce train
+U4258:merci beaucoup
+U4259:bonsoir j'aimerais savoir quel est le prix d'u trajet aller simple d'Irún à Algeciras en train-couchette s'il vous plaît
+U4260:je ne veux pas partir d'Irún
+U4261:à Algeciras
+U4262:j'aimerais partir le trois août
+U4263:oui en train-couchette s'il vous plaît
+U4264:non , merci beaucoup
+U4265:j'aimerais obtenir le prix des billets de train ainsi que les horaires pour un trajet aller-retour de Barcelona à Valencia
+U4266:j'aimerais arriver à Valencia le dix-sept mars entre dix et onze heures du matin
+U4267:oui
+U4268:je voudrais savoir s'il y a un train qui part vers dix, onze heures du matin
+U4269:je voudrais un ticket aller-retour
+U4270:je désirerais un ticket aller-retour
+U4271:oui les horaires et les prix
+U4272:j'aimerais savoir quel est le prix du trajet
+U4273:non, merci beaucoup
+U4274:je désirerais connaître les horaires des trains à destination de Cuenca
+U4275:le trente juin
+U4276:le trente juin
+U4277:non
+U4278:oui
+U4279:non
+U4280:je désirerais connaître les horaires et les prix des trains à destination de Barcelona, arriver à huit heures du soir au plus tard et que le train ne soit pas un express
+U4281:je désirerais connaître les horaires des trains à destination de Barcelona, arrivée à huit heures au plus tard
+U4282:le trente juillet
+U4283:oui
+U4284:je voudrais savoir quels sont les trains qui arrivent avant huit heures et j'aimerais savoir quel est le prix du ticket
+U4285:j'aimerais savoir quel est le prix du ticket et combien y a t'íl de trains rapides qui partent
+U4286:non
+U4287:je voudrais connaître les horaires et les prix d'un trajet pour Castellón avec destination Barcelona
+U4288:non
+U4289:samedi prochain
+U4290:je ne veux pas les horaires de départ pour Castellón avec destination Barcelona
+U4291:je voudrais savoir quel sont les possibilités pour un trajet en euromed 
+U4292:je voudrais savoir quel est le prix du trajet
+U4293:non
+U4294:je voudrais savoir quels sont les horaires aller-retour pour un voyage à Ávila
+U4295:à Ávila
+U4296:mercredi et il doit durer une semaine maximum
+U4297:oui
+U4298:combien coute le ticket ?
+U4299:je veux savoir quel sont les horaires retour départ de Ávila dimanche 
+U4300:non
+U4301:bonjour, je vous appelait pour obtenir le prix d'un trajet aller simple pour Alicante
+U4302:à alicante
+U4303:lundi prochain
+U4304:je ne désire pas partir lundi vingt-six avril deux mille quatre 
+U4305:oui et les horaires aussi
+U4306:oui
+U4307:les horaires des trains pour Alicante mardi vingt-sept avril deux mille quatre
+U4308:les horaires des trains au départ de Zaragoza, destination Alicante dimanche vingt-cinq avril deux mille quatre
+U4309:non
+U4310:bonjour, je désire savoir quels sont les horaires aller pour Ávila vendredi prochain vingt-trois avril , avec départ après quatre heures de l'après-midi
+U4311:à Ávila
+U4312:c'est un train-couchette
+U4313:je désirerais voyager en train-couchette 
+U4314:pouvez-vous m'indiquer le prix du ticket s'ilm vous plaît
+U4315:non merci
+U4316:bonjour, je désire savoir quels sont les horaires aller de Valencia à Oviedo samedi dix-neuf juin, en talgo si possible
+U4317:samedi dix-neuf juin
+U4318:je désire partir de Palencia et arriver à Oviedo
+U4319:oui, pouvez-vous m'indiquer le prix du ticket 
+U4320:non merci
+U4321:bonjour, je désirerais savoir quels sont les horaires des trains pour San_Sebastián le vingt-et-un avril
+U4322:oui
+U4323:pouvez-vous m'indiquer le prix du ticket 
+U4324:oui,je désirerais un trajet retour également
+U4325:je désire les horaires du trajet retour pour le vingt-quatre avril
+U4326:pouvez-vous m'indiquer le prix du ticket 
+U4327:non, pas excactement, merci beaucoup
+U4328:je voudrais savoir quels sont les horaires des trains pour Málaga le vingt-et-un août
+U4329:pour Málaga?
+U4330:le vingt-neuf août
+U4331:non
+U4332:le trente août
+U4333:oui
+U4334:non
+U4335:je voudrais consulter les horaires des trains pour Almería le huit avril
+U4336:non
+U4337:pour Almería?
+U4338:le huit avril
+U4339:oui
+U4340:oui j'aimerais savoir quels sont les prix des billet de train
+U4341:non
+U4342:pouvez-vous m'indiquer les horaires et les prix des trains de Zamora à Valladolid pour après-demain, en intercity si possible ?
+U4343:pouvez-vous m'indiquer les horaires des intercity Zamora Valladolid?
+U4344:oui
+U4345:à Valladolid?
+U4346:non
+U4347:à Valladolid
+U4348:après-demain
+U4349:oui, ou tout autre type de train
+U4350:pouvez-vous m'indiquer le prix du billet?
+U4351:non
+U4352:pouvez-vous m'indiquer les horaires aller pour Madrid demain
+U4353:oui
+U4354:je voudrais savoir quels sont les horaires retour de Madrid à Zaragoza le sept mars
+U4355:oui j'aimerais savoir quel est le prix du billet du train du cinq mars à deux heures quarante huit
+U4356:pourriez-vous m'indiquer le prix du billet de train aller simple à Madrid
+U4357:pourriez-vous m'indiquer le prix d'un billet retour pour dimanche
+U4358:non merci
+U4359:bonjour, j'aimerais obtenir les horaires des trains
+U4360:j'aimerais aller à Córdoba
+U4361:je ne veux pas partir de Zaragoza
+U4362:à Córdoba
+U4363:pourquoi pas
+U4364:je voudrais partir vendredi
+U4365:non merci
