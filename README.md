@@ -21,7 +21,7 @@ In this project machine translation tools are used to create a spoken language u
 
 ## Enlace del documento
 
-[Diseño de mecanismos basados en traducción automática para la portabilidad entre idiomas en un sistema de comprensión del habla](http://riunet.upv.es)
+[Diseño de mecanismos basados en traducción automática para la portabilidad entre idiomas en un sistema de comprensión del habla](http://hdl.handle.net/10251/69290)
 
 ## Logs
 
